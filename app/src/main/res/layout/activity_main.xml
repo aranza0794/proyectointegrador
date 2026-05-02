@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="30dp"
+    android:gravity="center"
+    android:background="#FFFFFF">
+
+    <ImageView
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:src="@mipmap/ic_launcher_round"
+        android:layout_marginBottom="20dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="¡Bienvenido de vuelta!"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:textColor="#333333"
+        android:layout_marginBottom="30dp"/>
+
+    <EditText
+        android:id="@+id/loginCorreo"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:hint="Correo electrónico"
+        android:inputType="textEmailAddress"
+        android:paddingLeft="15dp"
+        android:background="@android:drawable/edit_text"/>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="15dp" />
+
+    <EditText
+        android:id="@+id/loginPass"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:hint="Contraseña"
+        android:inputType="textPassword"
+        android:paddingLeft="15dp"
+        android:background="@android:drawable/edit_text"/>
+
+    <Button
+        android:id="@+id/btnIngresar"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:text="INICIAR SESIÓN"
+        android:layout_marginTop="30dp"
+        android:backgroundTint="#4CAF50"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/txtIrARegistro"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="¿No tienes cuenta? Regístrate aquí"
+        android:textColor="#1E88E5"
+        android:layout_marginTop="20dp"
+        android:textSize="14sp" />
+
+</LinearLayout>

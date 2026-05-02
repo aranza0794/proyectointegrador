@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="25dp"
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Crea tu cuenta"
+            android:textSize="26sp"
+            android:textStyle="bold"
+            android:textColor="#4CAF50"
+            android:layout_marginBottom="20dp"/>
+
+        <EditText
+            android:id="@+id/regNombre"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:hint="Nombre completo"
+            android:inputType="textPersonName"
+            android:layout_marginBottom="10dp"/>
+
+        <EditText
+            android:id="@+id/regCorreo"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:hint="Correo electrónico"
+            android:inputType="textEmailAddress"
+            android:layout_marginBottom="10dp"/>
+
+        <EditText
+            android:id="@+id/regPass"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:hint="Contraseña (6+ caracteres)"
+            android:inputType="textPassword"
+            android:layout_marginBottom="10dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="¿Qué servicio necesitas?"
+            android:textStyle="bold"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"/>
+
+        <RadioGroup
+            android:id="@+id/radioGroupRol"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginBottom="15dp">
+
+            <RadioButton
+                android:id="@+id/rbDuenio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Soy Dueño"
+                android:checked="true"/>
+
+            <RadioButton
+                android:id="@+id/rbPaseador"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Soy Paseador"
+                android:layout_marginStart="20dp"/>
+        </RadioGroup>
+
+        <EditText
+            android:id="@+id/regTarjeta"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:hint="Número de tarjeta para cobros"
+            android:inputType="number"
+            android:visibility="gone"
+            android:layout_marginBottom="10dp"/>
+
+        <Button
+            android:id="@+id/btnRegistrarFinal"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:text="FINALIZAR REGISTRO"
+            android:backgroundTint="#4CAF50"
+            android:textColor="#FFFFFF"
+            android:layout_marginTop="20dp" />
+
+    </LinearLayout>
+</ScrollView>
