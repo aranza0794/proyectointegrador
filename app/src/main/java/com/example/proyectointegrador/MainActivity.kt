@@ -6,42 +6,41 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 
 class MainActivity : AppCompatActivity() {
 
-    // 1. Declaramos la variable de Firebase Auth
+    // 1. Declaramos Firebase Auth y Firestore
     private lateinit var auth: FirebaseAuth
+    private lateinit var db: FirebaseFirestore
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // 2. Inicializamos Firebase
+        // 2. Inicializamos las herramientas
         auth = FirebaseAuth.getInstance()
+        db = FirebaseFirestore.getInstance()
 
-        // 3. Referenciamos los elementos del XML que pegaste
+        // 3. Referenciamos los elementos del XML
         val correo = findViewById<EditText>(R.id.loginCorreo)
         val pass = findViewById<EditText>(R.id.loginPass)
         val btnIngresar = findViewById<Button>(R.id.btnIngresar)
         val txtRegistro = findViewById<TextView>(R.id.txtIrARegistro)
 
-        // 4. Programamos el botón de Ingresar
+        // 4. Lógica del botón Ingresar
         btnIngresar.setOnClickListener {
             val email = correo.text.toString()
             val password = pass.text.toString()
 
             if (email.isNotEmpty() && password.isNotEmpty()) {
-                // Función mágica de Firebase para loguear
                 auth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener { task ->
                         if (task.isSuccessful) {
-                            Toast.makeText(this, "¡Bienvenido!", Toast.LENGTH_SHORT).show()
-                            // Aquí más adelante mandaremos al usuario a su pantalla (Dueño o Paseador)
+                            // Si el login es correcto, verificamos el ROL
+                            verificarRolYRedirigir()
                         } else {
                             Toast.makeText(this, "Error: ${task.exception?.message}", Toast.LENGTH_LONG).show()
                         }
@@ -51,11 +50,35 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        // 5. Programamos el texto para ir a la pantalla de Registro (cuando la tengamos)
+        // 5. Ir a la pantalla de Registro
         txtRegistro.setOnClickListener {
-            // Esto es como un "boleto" para viajar de una pantalla a otra
             val intent = Intent(this, RegistroActivity::class.java)
             startActivity(intent)
         }
+    }
+
+    // FUNCIÓN CLAVE: Busca en Firestore si el usuario es Dueño o Paseador
+    private fun verificarRolYRedirigir() {
+        val uid = auth.currentUser?.uid ?: return
+
+        db.collection("Usuarios").document(uid).get()
+            .addOnSuccessListener { document ->
+                if (document != null && document.exists()) {
+                    val rol = document.getString("rol") ?: ""
+
+                    // CORRECCIÓN: Comparamos con la frase exacta que sale en tu Toast
+                    if (rol == "Soy Dueño" || rol == "Dueño") {
+                        val intent = Intent(this, ActivityDueno::class.java)
+                        startActivity(intent)
+                        finish()
+                    } else if (rol == "Soy Paseador" || rol == "Paseador") {
+                        val intent = Intent(this, ActivityPaseador::class.java)
+                        startActivity(intent)
+                        finish()
+                    } else {
+                        Toast.makeText(this, "Rol no reconocido: $rol", Toast.LENGTH_LONG).show()
+                    }
+                }
+            }
     }
 }
