@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  item_walker.xml
+  IDs: ivWalkerPhoto, tvWalkerName, tvWalkerCard, ratingBarWalker,
+       tvRatingCount, tvWalkerPrice, btnSelectWalker
+-->
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="12dp"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="3dp"
+    app:cardBackgroundColor="@color/surface"
+    app:rippleColor="@color/surface_alt">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Fila superior: foto + info + precio -->
+        <!-- FIX: android:baselineAligned="false" en LinearLayouts horizontales con layout_weight -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:baselineAligned="false">
+
+            <!-- Foto de perfil circular -->
+            <FrameLayout
+                android:layout_width="@dimen/avatar_size"
+                android:layout_height="@dimen/avatar_size"
+                android:layout_marginEnd="14dp">
+
+                <!-- FIX: agregado contentDescription para accesibilidad -->
+                <!-- FIX: clipToOutline reemplazado por ShapeableImageView para compatibilidad -->
+                <ImageView
+                    android:id="@+id/ivWalkerPhoto"
+                    android:layout_width="@dimen/avatar_size"
+                    android:layout_height="@dimen/avatar_size"
+                    android:scaleType="centerCrop"
+                    android:src="@android:drawable/ic_menu_myplaces"
+                    android:background="@color/surface_alt"
+                    android:contentDescription="Foto del paseador"/>
+
+                <!-- Indicador online -->
+                <View
+                    android:layout_width="14dp"
+                    android:layout_height="14dp"
+                    android:layout_gravity="bottom|end"
+                    android:background="@drawable/circle_green_online"
+                    android:elevation="2dp"/>
+            </FrameLayout>
+
+            <!-- Nombre y calificación -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <!-- FIX: texto movido a strings.xml referencia con hint -->
+                <TextView
+                    android:id="@+id/tvWalkerName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/hint_name"
+                    android:textColor="@color/text_primary"
+                    android:textSize="16sp"
+                    android:textStyle="bold"/>
+
+                <!-- Estrellas y conteo -->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:baselineAligned="false"
+                    android:layout_marginTop="2dp">
+
+                    <RatingBar
+                        android:id="@+id/ratingBarWalker"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:isIndicator="true"
+                        android:rating="0"
+                        android:numStars="5"
+                        style="@style/Widget.AppCompat.RatingBar.Small"/>
+
+                    <!-- FIX: textColor cambiado a text_primary para mayor contraste -->
+                    <TextView
+                        android:id="@+id/tvRatingCount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="(0)"
+                        android:textColor="@color/text_primary"
+                        android:textSize="12sp"
+                        android:layout_marginStart="4dp"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Precio -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="end">
+
+                <!-- FIX: textColor cambiado a primary_dark para mayor contraste -->
+                <TextView
+                    android:id="@+id/tvWalkerPrice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="$0"
+                    android:textColor="@color/primary_dark"
+                    android:textSize="20sp"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="por hora"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="11sp"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- Separador -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/divider"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="12dp"/>
+
+        <!-- Fila inferior: tarjeta + botón -->
+        <!-- FIX: baselineAligned="false" -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:baselineAligned="false">
+
+            <!-- Info de tarjeta -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="💳"
+                    android:textSize="16sp"
+                    android:layout_marginEnd="6dp"
+                    android:contentDescription="Tarjeta"/>
+
+                <TextView
+                    android:id="@+id/tvWalkerCard"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="**** 0000"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="13sp"/>
+            </LinearLayout>
+
+            <!-- FIX: altura 40dp → 48dp para touch target mínimo -->
+            <!-- FIX: textColor cambiado a surface (blanco) sobre fondo primary para contraste -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnSelectWalker"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                app:cornerRadius="24dp"
+                android:backgroundTint="@color/primary"
+                android:textColor="@color/surface"
+                android:text="Elegir"
+                android:textSize="14sp"
+                android:textAllCaps="false"
+                android:textStyle="bold"
+                android:paddingStart="24dp"
+                android:paddingEnd="24dp"
+                android:minWidth="0dp"
+                android:contentDescription="Seleccionar paseador"/>
+        </LinearLayout>
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>

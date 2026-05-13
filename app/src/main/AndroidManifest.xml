@@ -2,6 +2,19 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <!-- ─── PERMISOS ─────────────────────────────────────────────── -->
+
+    <!-- Internet: requerido para Firebase -->
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <!-- Ubicación precisa: para rastrear al paseador en tiempo real -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
+    <!-- Ubicación aproximada: respaldo -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+    <!-- ─── APLICACIÓN ────────────────────────────────────────────── -->
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -10,22 +23,114 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Proyectointegrador">
+        android:theme="@style/Theme.DogWalk"
+        tools:targetApi="31">
+
+        <!-- ─── SPLASH ── LAUNCHER PRINCIPAL ─────────────────────── -->
+        <!--
+            SplashActivity es la primera pantalla que ve el usuario.
+            Verifica si hay sesión activa y redirige al dashboard correcto.
+        -->
         <activity
-            android:name=".RegistroActivity"
-            android:exported="false" />
-        <activity
-            android:name=".MainActivity"
-            android:exported="true">
+            android:name=".activities.SplashActivity"
+            android:exported="true"
+            android:theme="@style/Theme.DogWalk">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ActivityDueno" />
-        <activity android:name=".ActivityPaseador" />
-    </application>
 
+        <!-- ─── AUTH ─────────────────────────────────────────────── -->
+        <!--
+            LoginActivity: inicio de sesión con email y contraseña.
+            RegisterActivity: registro de nuevo usuario (dueño o paseador).
+        -->
+        <activity
+            android:name=".activities.LoginActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize"/>
+
+        <activity
+            android:name=".activities.RegisterActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize"/>
+
+        <!-- ─── ONBOARDING DUEÑO ──────────────────────────────────── -->
+        <!--
+            RegisterDogActivity: registro del perro del dueño.
+            Se llama justo después de que el dueño se registra.
+        -->
+        <activity
+            android:name=".activities.RegisterDogActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize"/>
+
+        <!-- ─── DASHBOARD DUEÑO ───────────────────────────────────── -->
+        <!--
+            OwnerDashboardActivity: pantalla principal del dueño.
+            Desde aquí accede a solicitar paseo, ver su perro e historial.
+        -->
+        <activity
+            android:name=".activities.OwnerDashboardActivity"
+            android:exported="false"
+            android:launchMode="singleTop"/>
+
+        <!-- ─── FLUJO DE PASEO (DUEÑO) ────────────────────────────── -->
+        <!--
+            RequestWalkActivity: elige duración y ve el costo.
+            AvailableWalkersActivity: lista de paseadores disponibles.
+            TrackWalkActivity: seguimiento del paseo en tiempo real.
+            PaymentActivity: selección del método de pago al finalizar.
+            RatingActivity: calificación del paseador.
+            WalkHistoryActivity: historial de paseos completados.
+        -->
+        <activity
+            android:name=".activities.RequestWalkActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize"/>
+
+        <activity
+            android:name=".activities.AvailableWalkersActivity"
+            android:exported="false"/>
+
+        <activity
+            android:name=".activities.TrackWalkActivity"
+            android:exported="false"
+            android:launchMode="singleTop"/>
+
+        <activity
+            android:name=".activities.PaymentActivity"
+            android:exported="false"/>
+
+        <activity
+            android:name=".activities.RatingActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize"/>
+
+        <activity
+            android:name=".activities.WalkHistoryActivity"
+            android:exported="false"/>
+
+        <!-- ─── DASHBOARD PASEADOR ────────────────────────────────── -->
+        <!--
+            WalkerDashboardActivity: pantalla principal del paseador.
+            Muestra solicitudes pendientes y switch de disponibilidad.
+        -->
+        <activity
+            android:name=".activities.WalkerDashboardActivity"
+            android:exported="false"
+            android:launchMode="singleTop"/>
+
+        <!-- ─── FLUJO DE PASEO (PASEADOR) ─────────────────────────── -->
+        <!--
+            ActiveWalkActivity: el paseador inicia y finaliza el paseo.
+        -->
+        <activity
+            android:name=".activities.ActiveWalkActivity"
+            android:exported="false"
+            android:launchMode="singleTop"/>
+
+    </application>
 
 </manifest>

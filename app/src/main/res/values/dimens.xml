@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Tamaños de texto -->
+    <dimen name="text_xs">11sp</dimen>
+    <dimen name="text_sm">13sp</dimen>
+    <dimen name="text_md">15sp</dimen>
+    <dimen name="text_lg">18sp</dimen>
+    <dimen name="text_xl">22sp</dimen>
+    <dimen name="text_xxl">28sp</dimen>
+    <dimen name="text_hero">36sp</dimen>
+
+    <!-- Espaciado -->
+    <dimen name="spacing_xs">4dp</dimen>
+    <dimen name="spacing_sm">8dp</dimen>
+    <dimen name="spacing_md">16dp</dimen>
+    <dimen name="spacing_lg">24dp</dimen>
+    <dimen name="spacing_xl">32dp</dimen>
+    <dimen name="spacing_xxl">48dp</dimen>
+
+    <!-- Radios de esquinas -->
+    <dimen name="radius_sm">8dp</dimen>
+    <dimen name="radius_md">12dp</dimen>
+    <dimen name="radius_lg">20dp</dimen>
+    <dimen name="radius_xl">28dp</dimen>
+    <dimen name="radius_full">100dp</dimen>
+
+    <!-- Componentes -->
+    <dimen name="btn_height">52dp</dimen>
+    <dimen name="input_height">56dp</dimen>
+    <dimen name="card_elevation">4dp</dimen>
+    <dimen name="avatar_size">56dp</dimen>
+    <dimen name="icon_size">24dp</dimen>
+    <dimen name="page_margin">20dp</dimen>
+</resources>

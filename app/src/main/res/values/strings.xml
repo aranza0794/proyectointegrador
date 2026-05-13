@@ -1,3 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">proyectointegrador</string>
+    <string name="app_name">DogWalk</string>
+
+    <!-- Auth -->
+    <string name="login_title">Bienvenido de vuelta</string>
+    <string name="login_subtitle">Inicia sesión para continuar</string>
+    <string name="register_title">Crear cuenta</string>
+    <string name="register_subtitle">Únete a nuestra comunidad</string>
+    <string name="hint_email">Correo electrónico</string>
+    <string name="hint_password">Contraseña</string>
+    <string name="hint_name">Nombre completo</string>
+    <string name="hint_phone">Teléfono</string>
+    <string name="hint_birth_date">Fecha de nacimiento (DD/MM/AAAA)</string>
+    <string name="hint_card_number">Número de tarjeta</string>
+    <string name="btn_login">Iniciar sesión</string>
+    <string name="btn_register">Crear cuenta</string>
+    <string name="go_register">¿No tienes cuenta? Regístrate</string>
+    <string name="go_login">¿Ya tienes cuenta? Inicia sesión</string>
+    <string name="user_type_owner">Soy dueño de perro</string>
+    <string name="user_type_walker">Soy paseador</string>
+
+    <!-- Dog -->
+    <string name="dog_title">Cuéntanos sobre tu perro</string>
+    <string name="dog_subtitle">Tu compañero de aventuras</string>
+    <string name="hint_dog_name">Nombre del perro</string>
+    <string name="hint_breed">Raza</string>
+    <string name="hint_age">Edad (años)</string>
+    <string name="hint_allergy">Alergias (opcional)</string>
+    <string name="btn_save_dog">Guardar y continuar</string>
+    <string name="label_size">Tamaño del perro</string>
+
+    <!-- Dashboard dueño -->
+    <string name="btn_request_walk">Solicitar paseo</string>
+    <string name="btn_my_dog">Mi perro</string>
+    <string name="btn_history">Historial</string>
+    <string name="btn_logout">Cerrar sesión</string>
+
+    <!-- Walk -->
+    <string name="request_title">¿Cuánto tiempo?</string>
+    <string name="request_subtitle">Elige la duración del paseo</string>
+    <string name="label_duration">Duración</string>
+    <string name="label_cost">Costo estimado</string>
+    <string name="btn_see_walkers">Ver paseadores disponibles</string>
+    <string name="walkers_title">Paseadores disponibles</string>
+    <string name="btn_select_walker">Seleccionar</string>
+
+    <!-- Active walk -->
+    <string name="btn_start_walk">¡Iniciar paseo!</string>
+    <string name="btn_finish_walk">Finalizar paseo</string>
+    <string name="walk_status_waiting">Esperando inicio...</string>
+    <string name="walk_status_active">Paseo en curso 🐕</string>
+
+    <!-- Payment -->
+    <string name="payment_title">Método de pago</string>
+    <string name="btn_cash">Pago en efectivo</string>
+    <string name="btn_transfer">Transferencia</string>
+
+    <!-- Rating -->
+    <string name="rating_title">¿Cómo fue el paseo?</string>
+    <string name="rating_subtitle">Califica al paseador</string>
+    <string name="hint_comment">Deja un comentario (opcional)</string>
+    <string name="btn_submit_rating">Enviar calificación</string>
+    <string name="btn_skip">Omitir</string>
 </resources>
