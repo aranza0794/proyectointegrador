@@ -3,9 +3,11 @@ package com.example.proyectointegrador.activities
 import android.os.Bundle
 import android.view.View
 import android.widget.LinearLayout
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.proyectointegrador.R
@@ -25,16 +27,27 @@ class AvailableWalkersActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_available_walkers)
 
-        session = SessionManager(this)
-        duration = intent.getIntExtra("duration", 30)
-        cost = intent.getDoubleExtra("cost", 0.0)
+        // Toolbar con botón back
+        val toolbar = findViewById<Toolbar>(R.id.toolbar)
+        setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.title = "Paseadores disponibles"
 
-        val rvWalkers = findViewById<RecyclerView>(R.id.rvWalkers)
-        val layoutEmpty = findViewById<LinearLayout>(R.id.layoutEmpty)
+        session  = SessionManager(this)
+        duration = intent.getIntExtra("duration", 30)
+        cost     = intent.getDoubleExtra("cost", 0.0)
+
+        // Estos IDs existen en activity_available_walkers.xml
+        val rvWalkers         = findViewById<RecyclerView>(R.id.rvWalkers)
+        val layoutEmpty       = findViewById<LinearLayout>(R.id.layoutEmpty)
+        val tvSummaryDuration = findViewById<TextView>(R.id.tvSummaryDuration)
+        val tvSummaryCost     = findViewById<TextView>(R.id.tvSummaryCost)
+
+        tvSummaryDuration.text = "$duration min"
+        tvSummaryCost.text     = "$${"%.2f".format(cost)}"
 
         rvWalkers.layoutManager = LinearLayoutManager(this)
 
-        // Cargar paseadores disponibles de Firestore
         db.collection("usuarios")
             .whereEqualTo("userType", "walker")
             .whereEqualTo("isAvailable", true)
@@ -42,12 +55,12 @@ class AvailableWalkersActivity : AppCompatActivity() {
             .addOnSuccessListener { documents ->
                 val walkers = documents.map { doc ->
                     Walker(
-                        id = doc.id,
-                        name = doc.getString("name") ?: "",
-                        email = doc.getString("email") ?: "",
-                        phone = doc.getString("phone") ?: "",
-                        cardNumber = doc.getString("cardNumber") ?: "",
-                        rating = (doc.getDouble("rating") ?: 0.0).toFloat(),
+                        id          = doc.id,
+                        name        = doc.getString("name") ?: "",
+                        email       = doc.getString("email") ?: "",
+                        phone       = doc.getString("phone") ?: "",
+                        cardNumber  = doc.getString("cardNumber") ?: "",
+                        rating      = (doc.getDouble("rating") ?: 0.0).toFloat(),
                         ratingCount = (doc.getLong("ratingCount") ?: 0L).toInt(),
                         isAvailable = doc.getBoolean("isAvailable") ?: true
                     )
@@ -55,17 +68,21 @@ class AvailableWalkersActivity : AppCompatActivity() {
 
                 if (walkers.isEmpty()) {
                     layoutEmpty.visibility = View.VISIBLE
-                    rvWalkers.visibility = View.GONE
+                    rvWalkers.visibility   = View.GONE
                 } else {
                     layoutEmpty.visibility = View.GONE
-                    rvWalkers.visibility = View.VISIBLE
+                    rvWalkers.visibility   = View.VISIBLE
                     rvWalkers.adapter = WalkerAdapter(walkers) { selectedWalker ->
                         confirmRequest(selectedWalker)
                     }
                 }
             }
-            .addOnFailureListener {
-                Toast.makeText(this, "Error al cargar paseadores", Toast.LENGTH_SHORT).show()
+            .addOnFailureListener { exception ->
+                Toast.makeText(
+                    this,
+                    "Error al cargar paseadores: ${exception.message}",
+                    Toast.LENGTH_LONG
+                ).show()
             }
     }
 
@@ -79,19 +96,19 @@ class AvailableWalkersActivity : AppCompatActivity() {
     }
 
     private fun sendRequest(walker: Walker) {
-        // Obtener el perro del dueño primero
         db.collection("perros")
             .whereEqualTo("ownerId", session.getUserId())
             .get()
             .addOnSuccessListener { dogDocs ->
                 if (dogDocs.isEmpty) {
-                    Toast.makeText(this, "Primero registra tu perro", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this,
+                        "Primero registra tu perro",
+                        Toast.LENGTH_SHORT).show()
                     return@addOnSuccessListener
                 }
 
                 val dog = dogDocs.first()
 
-                // Obtener nombre del dueño
                 db.collection("usuarios")
                     .document(session.getUserId())
                     .get()
@@ -99,37 +116,52 @@ class AvailableWalkersActivity : AppCompatActivity() {
                         val ownerName = ownerDoc.getString("name") ?: ""
 
                         val request = hashMapOf(
-                            "ownerId" to session.getUserId(),
-                            "ownerName" to ownerName,
-                            "walkerId" to walker.id,
-                            "dogId" to dog.id,
-                            "dogName" to (dog.getString("name") ?: ""),
-                            "dogBreed" to (dog.getString("breed") ?: ""),
-                            "dogSize" to (dog.getString("size") ?: ""),
-                            "dogAge" to (dog.getLong("age") ?: 0L),
-                            "dogAllergy" to (dog.getString("allergy") ?: ""),
+                            "ownerId"         to session.getUserId(),
+                            "ownerName"       to ownerName,
+                            "walkerId"        to walker.id,
+                            "dogId"           to dog.id,
+                            "dogName"         to (dog.getString("name") ?: ""),
+                            "dogBreed"        to (dog.getString("breed") ?: ""),
+                            "dogSize"         to (dog.getString("size") ?: ""),
+                            "dogAge"          to (dog.getLong("age") ?: 0L),
+                            "dogAllergy"      to (dog.getString("allergy") ?: ""),
                             "durationMinutes" to duration,
-                            "cost" to cost,
-                            "status" to "pending",
-                            "startTime" to 0L,
-                            "endTime" to 0L,
-                            "paymentMethod" to ""
+                            "cost"            to cost,
+                            "status"          to "pending",
+                            "startTime"       to 0L,
+                            "endTime"         to 0L,
+                            "paymentMethod"   to ""
                         )
 
                         db.collection("solicitudes")
                             .add(request)
                             .addOnSuccessListener {
-                                Toast.makeText(
-                                    this,
-                                    "Solicitud enviada a ${walker.name}",
-                                    Toast.LENGTH_LONG
-                                ).show()
+                                Toast.makeText(this,
+                                    "✓ Solicitud enviada a ${walker.name}",
+                                    Toast.LENGTH_LONG).show()
                                 finish()
                             }
-                            .addOnFailureListener {
-                                Toast.makeText(this, "Error al enviar solicitud", Toast.LENGTH_SHORT).show()
+                            .addOnFailureListener { e ->
+                                Toast.makeText(this,
+                                    "Error al enviar: ${e.message}",
+                                    Toast.LENGTH_LONG).show()
                             }
                     }
+                    .addOnFailureListener { e ->
+                        Toast.makeText(this,
+                            "Error: ${e.message}",
+                            Toast.LENGTH_LONG).show()
+                    }
             }
+            .addOnFailureListener { e ->
+                Toast.makeText(this,
+                    "Error al obtener perro: ${e.message}",
+                    Toast.LENGTH_LONG).show()
+            }
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        finish()
+        return true
     }
 }

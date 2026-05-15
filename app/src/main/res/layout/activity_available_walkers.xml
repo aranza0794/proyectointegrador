@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
   activity_available_walkers.xml
-  Lista de paseadores disponibles con RecyclerView.
-  IDs: rvWalkers, tvEmpty (para cuando no hay paseadores)
+  IDs: toolbar, tvSummaryDuration, tvSummaryCost, layoutEmpty, rvWalkers
 -->
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -18,11 +17,10 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@color/primary"
-        app:navigationIcon="@drawable/ic_arrow_back_white"
-        app:title="@string/walkers_title"
-        app:titleTextColor="@color/surface"/>
+        app:titleTextColor="@color/surface"
+        app:navigationIconTint="@color/surface"/>
 
-    <!-- Resumen del paseo solicitado -->
+    <!-- Resumen del paseo -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -32,7 +30,8 @@
         android:paddingEnd="20dp"
         android:paddingTop="12dp"
         android:paddingBottom="12dp"
-        android:gravity="center_vertical">
+        android:gravity="center_vertical"
+        android:baselineAligned="false">
 
         <TextView
             android:layout_width="wrap_content"
@@ -45,7 +44,7 @@
             android:id="@+id/tvSummaryDuration"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="30 min"
+            android:text=""
             android:textColor="@color/text_primary"
             android:textSize="14sp"
             android:textStyle="bold"
@@ -63,7 +62,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="$15.00"
+            android:text=""
             android:textColor="@color/primary_dark"
             android:textSize="14sp"
             android:textStyle="bold"/>
@@ -73,58 +72,64 @@
             android:layout_height="wrap_content"
             android:text="Paseo solicitado"
             android:textSize="11sp"
+            android:textColor="@color/accent"
             android:clickable="false"
             app:chipBackgroundColor="@color/accent_light"/>
     </LinearLayout>
 
-    <!-- Estado vacío -->
-    <LinearLayout
-        android:id="@+id/layoutEmpty"
+    <!-- FrameLayout alterna vacío/lista -->
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        android:orientation="vertical"
-        android:gravity="center"
-        android:visibility="gone"
-        android:padding="32dp">
+        android:layout_weight="1">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="😴"
-            android:textSize="64sp"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Sin paseadores\ndisponibles"
-            android:textColor="@color/text_primary"
-            android:textSize="22sp"
-            android:textStyle="bold"
+        <!-- Estado vacío -->
+        <LinearLayout
+            android:id="@+id/layoutEmpty"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
             android:gravity="center"
-            android:layout_marginTop="16dp"/>
+            android:visibility="gone"
+            android:padding="32dp">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Intenta más tarde o ajusta\nlos filtros de búsqueda"
-            android:textColor="@color/text_secondary"
-            android:textSize="14sp"
-            android:gravity="center"
-            android:layout_marginTop="8dp"
-            android:lineSpacingMultiplier="1.4"/>
-    </LinearLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="😴"
+                android:textSize="64sp"/>
 
-    <!-- Lista de paseadores -->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvWalkers"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:clipToPadding="false"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
-        android:paddingTop="12dp"
-        android:paddingBottom="24dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sin paseadores disponibles"
+                android:textColor="@color/text_primary"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:layout_marginTop="16dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Intenta más tarde"
+                android:textColor="@color/text_secondary"
+                android:textSize="14sp"
+                android:gravity="center"
+                android:layout_marginTop="8dp"/>
+        </LinearLayout>
+
+        <!-- Lista de paseadores -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvWalkers"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:paddingTop="12dp"
+            android:paddingBottom="24dp"/>
+
+    </FrameLayout>
 
 </LinearLayout>

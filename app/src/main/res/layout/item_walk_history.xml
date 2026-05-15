@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+  item_walk_history.xml
+  IDs requeridos por WalkHistoryAdapter.kt:
+  tvDogName, tvDate, tvDuration, tvCost, tvPayment
+-->
 <com.google.android.material.card.MaterialCardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -15,27 +20,33 @@
         android:orientation="vertical"
         android:padding="16dp">
 
+        <!-- Fila superior: ícono + nombre + fecha -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center_vertical"
+            android:baselineAligned="false"
             android:layout_marginBottom="12dp">
 
-            <FrameLayout
+            <!-- Ícono circular -->
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="44dp"
                 android:layout_height="44dp"
                 android:layout_marginEnd="12dp"
-                android:background="@drawable/circle_primary_light_bg">
+                app:cardCornerRadius="22dp"
+                app:cardElevation="0dp"
+                app:cardBackgroundColor="@color/surface_alt">
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
                     android:text="🐕"
                     android:textSize="22sp"/>
-            </FrameLayout>
+            </com.google.android.material.card.MaterialCardView>
 
+            <!-- Nombre del perro y fecha -->
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -43,80 +54,153 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/tvHistoryDogName"
+                    android:id="@+id/tvDogName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Rex • Labrador"
+                    android:text=""
                     android:textColor="@color/text_primary"
                     android:textSize="15sp"
                     android:textStyle="bold"/>
 
                 <TextView
-                    android:id="@+id/tvHistoryDate"
+                    android:id="@+id/tvDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="12/05/2025 10:30"
+                    android:text=""
                     android:textColor="@color/text_secondary"
                     android:textSize="12sp"
                     android:layout_marginTop="2dp"/>
             </LinearLayout>
 
+            <!-- Badge completado -->
             <com.google.android.material.chip.Chip
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="✓ Completado"
+                android:text="✓ Listo"
                 android:textSize="10sp"
+                android:textColor="@color/accent"
                 android:clickable="false"
-                app:chipBackgroundColor="@color/accent_light"
-                android:textColor="@color/accent"/>
+                app:chipBackgroundColor="@color/accent_light"/>
         </LinearLayout>
 
+        <!-- Separador -->
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="@color/divider"
             android:layout_marginBottom="12dp"/>
 
+        <!-- Fila inferior: duración + costo + pago -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:baselineAligned="false">
 
+            <!-- Duración -->
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:orientation="vertical"
                 android:gravity="center">
-                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="⏱️" android:textSize="18sp"/>
-                <TextView android:id="@+id/tvHistoryDuration" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="30 min" android:textColor="@color/text_primary" android:textStyle="bold" android:textSize="14sp"/>
-                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Duración" android:textColor="@color/text_hint" android:textSize="11sp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="⏱️"
+                    android:textSize="18sp"/>
+
+                <TextView
+                    android:id="@+id/tvDuration"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textColor="@color/text_primary"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:layout_marginTop="2dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Duración"
+                    android:textColor="@color/text_hint"
+                    android:textSize="11sp"/>
             </LinearLayout>
 
-            <View android:layout_width="1dp" android:layout_height="50dp" android:background="@color/divider"/>
+            <View
+                android:layout_width="1dp"
+                android:layout_height="50dp"
+                android:background="@color/divider"/>
 
+            <!-- Costo -->
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:orientation="vertical"
                 android:gravity="center">
-                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="💰" android:textSize="18sp"/>
-                <TextView android:id="@+id/tvHistoryCost" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="$15.00" android:textColor="@color/primary_dark" android:textStyle="bold" android:textSize="14sp"/>
-                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Costo" android:textColor="@color/text_hint" android:textSize="11sp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="💰"
+                    android:textSize="18sp"/>
+
+                <TextView
+                    android:id="@+id/tvCost"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textColor="@color/primary_dark"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:layout_marginTop="2dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Costo"
+                    android:textColor="@color/text_hint"
+                    android:textSize="11sp"/>
             </LinearLayout>
 
-            <View android:layout_width="1dp" android:layout_height="50dp" android:background="@color/divider"/>
+            <View
+                android:layout_width="1dp"
+                android:layout_height="50dp"
+                android:background="@color/divider"/>
 
+            <!-- Método de pago -->
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:orientation="vertical"
                 android:gravity="center">
-                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="💳" android:textSize="18sp"/>
-                <TextView android:id="@+id/tvHistoryPayment" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Efectivo" android:textColor="@color/text_primary" android:textStyle="bold" android:textSize="14sp"/>
-                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Pago" android:textColor="@color/text_hint" android:textSize="11sp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="💳"
+                    android:textSize="18sp"/>
+
+                <TextView
+                    android:id="@+id/tvPayment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textColor="@color/text_primary"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:layout_marginTop="2dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Pago"
+                    android:textColor="@color/text_hint"
+                    android:textSize="11sp"/>
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

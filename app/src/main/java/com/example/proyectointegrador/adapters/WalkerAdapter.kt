@@ -16,12 +16,13 @@ class WalkerAdapter(
 ) : RecyclerView.Adapter<WalkerAdapter.WalkerViewHolder>() {
 
     inner class WalkerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val tvWalkerName: TextView = itemView.findViewById(R.id.tvWalkerName)
-        val tvWalkerCard: TextView = itemView.findViewById(R.id.tvWalkerCard)
-        val tvWalkerPrice: TextView = itemView.findViewById(R.id.tvWalkerPrice)
-        val tvRatingCount: TextView = itemView.findViewById(R.id.tvRatingCount)
-        val ratingBar: RatingBar = itemView.findViewById(R.id.ratingBarWalker)
-        val btnSelect: MaterialButton = itemView.findViewById(R.id.btnSelectWalker)
+        // IDs que existen en item_walker.xml
+        val tvWalkerName:  TextView     = itemView.findViewById(R.id.tvWalkerName)
+        val tvWalkerCard:  TextView     = itemView.findViewById(R.id.tvWalkerCard)
+        val tvWalkerPrice: TextView     = itemView.findViewById(R.id.tvWalkerPrice)
+        val tvRatingCount: TextView     = itemView.findViewById(R.id.tvRatingCount)
+        val ratingBar:     RatingBar    = itemView.findViewById(R.id.ratingBarWalker)
+        val btnSelect:     MaterialButton = itemView.findViewById(R.id.btnSelectWalker)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WalkerViewHolder {
@@ -32,13 +33,17 @@ class WalkerAdapter(
 
     override fun onBindViewHolder(holder: WalkerViewHolder, position: Int) {
         val walker = walkers[position]
-        holder.tvWalkerName.text = walker.name
-        holder.tvWalkerCard.text = "**** ${walker.cardNumber.takeLast(4)}"
-        holder.tvWalkerPrice.text = "$${String.format("%.0f", walker.rating * 10)}"
-        holder.ratingBar.rating = walker.rating
+        holder.tvWalkerName.text  = walker.name
+        holder.tvWalkerCard.text  = if (walker.cardNumber.length >= 4)
+            "**** ${walker.cardNumber.takeLast(4)}"
+        else
+            "****"
+        holder.ratingBar.rating   = walker.rating
         holder.tvRatingCount.text = "(${walker.ratingCount})"
+        holder.tvWalkerPrice.text = "$${String.format("%.0f", walker.rating * 10)}"
         holder.btnSelect.setOnClickListener { onSelect(walker) }
     }
 
     override fun getItemCount() = walkers.size
+
 }

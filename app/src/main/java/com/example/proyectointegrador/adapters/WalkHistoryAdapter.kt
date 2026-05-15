@@ -16,11 +16,13 @@ class WalkHistoryAdapter(
 ) : RecyclerView.Adapter<WalkHistoryAdapter.HistoryViewHolder>() {
 
     inner class HistoryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val tvDogName: TextView = itemView.findViewById(R.id.tvHistoryDogName)
-        val tvDate: TextView = itemView.findViewById(R.id.tvHistoryDate)
-        val tvDuration: TextView = itemView.findViewById(R.id.tvHistoryDuration)
-        val tvCost: TextView = itemView.findViewById(R.id.tvHistoryCost)
-        val tvPayment: TextView = itemView.findViewById(R.id.tvHistoryPayment)
+        // Estos IDs deben existir en item_walk_history.xml
+        val tvDogName:  TextView = itemView.findViewById(R.id.tvDogName)
+        val tvDuration: TextView = itemView.findViewById(R.id.tvDuration)
+        val tvCost:     TextView = itemView.findViewById(R.id.tvCost)
+        // tvDate y tvPayment — si tu XML los tiene con otro nombre, cámbialos aquí
+        val tvDate:     TextView? = itemView.findViewById(R.id.tvDate)
+        val tvPayment:  TextView? = itemView.findViewById(R.id.tvPayment)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HistoryViewHolder {
@@ -33,16 +35,17 @@ class WalkHistoryAdapter(
         val item = history[position]
         val dateFormat = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault())
 
-        holder.tvDogName.text = "${item.dogName} • ${item.dogBreed}"
-        holder.tvDate.text = if (item.endTime > 0)
-            dateFormat.format(Date(item.endTime))
-        else "—"
+        holder.tvDogName.text  = "${item.dogName} • ${item.dogBreed}"
         holder.tvDuration.text = "${item.durationMinutes} min"
-        holder.tvCost.text = "$${String.format("%.2f", item.cost)}"
-        holder.tvPayment.text = when (item.paymentMethod) {
-            "cash" -> "💵 Efectivo"
+        holder.tvCost.text     = "$${String.format("%.2f", item.cost)}"
+
+        holder.tvDate?.text = if (item.endTime > 0)
+            dateFormat.format(Date(item.endTime)) else "—"
+
+        holder.tvPayment?.text = when (item.paymentMethod) {
+            "cash"     -> "💵 Efectivo"
             "transfer" -> "💳 Transferencia"
-            else -> "—"
+            else       -> "—"
         }
     }
 

@@ -1,235 +1,262 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
   activity_register.xml
-  Pantalla de registro. Muestra campos base para ambos tipos de usuario.
-  El campo tilCardNumber se oculta/muestra según el tipo seleccionado.
   IDs: rgUserType, rbOwner, rbWalker, etName, etEmail, etPhone,
        etBirthDate, etPassword, tilCardNumber, etCardNumber, btnRegister, tvGoLogin
 -->
-<ScrollView
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true"
+    android:orientation="vertical"
     android:background="@color/background">
 
-    <LinearLayout
+    <!-- Toolbar con botón back -->
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/primary"
+        app:titleTextColor="@color/surface"
+        app:navigationIconTint="@color/surface"/>
 
-        <!-- Header -->
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:background="@color/primary">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true">
 
-            <View
-                android:layout_width="400dp"
-                android:layout_height="400dp"
-                android:layout_gravity="bottom|center_horizontal"
-                android:layout_marginBottom="-240dp"
-                android:background="@drawable/circle_background"/>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:gravity="center_vertical"
-                android:paddingStart="28dp"
-                android:paddingBottom="24dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/register_title"
-                    android:textColor="@color/surface"
-                    android:textSize="28sp"
-                    android:textStyle="bold"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/register_subtitle"
-                    android:textColor="#CCFFFFFF"
-                    android:textSize="14sp"
-                    android:layout_marginTop="4dp"/>
-            </LinearLayout>
-        </FrameLayout>
-
-        <!-- Formulario -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingStart="@dimen/page_margin"
-            android:paddingEnd="@dimen/page_margin"
-            android:paddingTop="28dp"
-            android:paddingBottom="32dp">
+            android:orientation="vertical">
 
-            <!-- Selector de tipo de usuario -->
-            <com.google.android.material.card.MaterialCardView
-                style="@style/Widget.DogWalk.Card.Accent"
+            <!-- Header -->
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp">
+                android:layout_height="160dp"
+                android:background="@color/primary">
+
+                <View
+                    android:layout_width="400dp"
+                    android:layout_height="400dp"
+                    android:layout_gravity="bottom|center_horizontal"
+                    android:layout_marginBottom="-240dp"
+                    android:background="@drawable/circle_background"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:orientation="vertical"
-                    android:padding="4dp">
+                    android:gravity="center_vertical"
+                    android:paddingStart="28dp"
+                    android:paddingBottom="16dp">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="¿Cómo quieres usar la app?"
-                        android:textColor="@color/text_secondary"
-                        android:textSize="13sp"
-                        android:layout_marginBottom="8dp"/>
+                        android:text="Crear cuenta"
+                        android:textColor="@color/surface"
+                        android:textSize="26sp"
+                        android:textStyle="bold"/>
 
-                    <RadioGroup
-                        android:id="@+id/rgUserType"
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Únete a nuestra comunidad"
+                        android:textColor="#CCFFFFFF"
+                        android:textSize="14sp"
+                        android:layout_marginTop="4dp"/>
+                </LinearLayout>
+            </FrameLayout>
+
+            <!-- Formulario -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:paddingTop="24dp"
+                android:paddingBottom="32dp">
+
+                <!-- Selector tipo de usuario -->
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="0dp"
+                    app:cardBackgroundColor="@color/surface_alt"
+                    android:layout_marginBottom="20dp">
+
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:orientation="vertical"
+                        android:padding="4dp">
 
-                        <RadioButton
-                            android:id="@+id/rbOwner"
-                            android:layout_width="0dp"
-                            android:layout_height="52dp"
-                            android:layout_weight="1"
-                            android:text="🐶 Dueño"
-                            android:textColor="@color/text_primary"
-                            android:textSize="14sp"
-                            android:buttonTint="@color/primary"
-                            android:checked="true"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="¿Cómo quieres usar la app?"
+                            android:textColor="@color/text_secondary"
+                            android:textSize="13sp"
+                            android:layout_marginBottom="8dp"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginTop="8dp"/>
 
-                        <RadioButton
-                            android:id="@+id/rbWalker"
-                            android:layout_width="0dp"
-                            android:layout_height="52dp"
-                            android:layout_weight="1"
-                            android:text="🦺 Paseador"
-                            android:textColor="@color/text_primary"
-                            android:textSize="14sp"
-                            android:buttonTint="@color/primary"/>
-                    </RadioGroup>
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
+                        <RadioGroup
+                            android:id="@+id/rgUserType"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
 
-            <!-- Nombre -->
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tilName"
-                style="@style/Widget.DogWalk.TextInputLayout"
-                android:hint="@string/hint_name">
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etName"
+                            <RadioButton
+                                android:id="@+id/rbOwner"
+                                android:layout_width="0dp"
+                                android:layout_height="48dp"
+                                android:layout_weight="1"
+                                android:text="🐶 Dueño"
+                                android:textColor="@color/text_primary"
+                                android:textSize="14sp"
+                                android:buttonTint="@color/primary"
+                                android:checked="true"/>
+
+                            <RadioButton
+                                android:id="@+id/rbWalker"
+                                android:layout_width="0dp"
+                                android:layout_height="48dp"
+                                android:layout_weight="1"
+                                android:text="🦺 Paseador"
+                                android:textColor="@color/text_primary"
+                                android:textSize="14sp"
+                                android:buttonTint="@color/primary"/>
+                        </RadioGroup>
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- Nombre -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilName"
+                    style="@style/Widget.DogWalk.TextInputLayout"
+                    android:hint="Nombre completo">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etName"
+                        android:layout_width="match_parent"
+                        android:layout_height="56dp"
+                        android:inputType="textPersonName"
+                        android:imeOptions="actionNext"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <Space android:layout_width="match_parent" android:layout_height="12dp"/>
+
+                <!-- Email -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilEmail"
+                    style="@style/Widget.DogWalk.TextInputLayout"
+                    android:hint="Correo electrónico">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etEmail"
+                        android:layout_width="match_parent"
+                        android:layout_height="56dp"
+                        android:inputType="textEmailAddress"
+                        android:imeOptions="actionNext"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <Space android:layout_width="match_parent" android:layout_height="12dp"/>
+
+                <!-- Teléfono -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilPhone"
+                    style="@style/Widget.DogWalk.TextInputLayout"
+                    android:hint="Teléfono">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etPhone"
+                        android:layout_width="match_parent"
+                        android:layout_height="56dp"
+                        android:inputType="phone"
+                        android:imeOptions="actionNext"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <Space android:layout_width="match_parent" android:layout_height="12dp"/>
+
+                <!-- Fecha de nacimiento -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilBirthDate"
+                    style="@style/Widget.DogWalk.TextInputLayout"
+                    android:hint="Fecha de nacimiento (DD/MM/AAAA)">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etBirthDate"
+                        android:layout_width="match_parent"
+                        android:layout_height="56dp"
+                        android:inputType="date"
+                        android:imeOptions="actionNext"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <Space android:layout_width="match_parent" android:layout_height="12dp"/>
+
+                <!-- Contraseña -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilPassword"
+                    style="@style/Widget.DogWalk.TextInputLayout"
+                    android:hint="Contraseña"
+                    app:endIconMode="password_toggle">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etPassword"
+                        android:layout_width="match_parent"
+                        android:layout_height="56dp"
+                        android:inputType="textPassword"
+                        android:imeOptions="actionNext"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <Space android:layout_width="match_parent" android:layout_height="12dp"/>
+
+                <!-- Número de tarjeta (solo paseadores) -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilCardNumber"
+                    style="@style/Widget.DogWalk.TextInputLayout"
+                    android:hint="Número de tarjeta"
+                    android:visibility="gone">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etCardNumber"
+                        android:layout_width="match_parent"
+                        android:layout_height="56dp"
+                        android:inputType="number"
+                        android:maxLength="16"
+                        android:imeOptions="actionDone"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <Space android:layout_width="match_parent" android:layout_height="28dp"/>
+
+                <!-- Botón registrar -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnRegister"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/input_height"
-                    android:inputType="textPersonName"
-                    android:imeOptions="actionNext"/>
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:layout_height="52dp"
+                    app:cornerRadius="100dp"
+                    android:backgroundTint="@color/primary"
+                    android:textColor="@color/surface"
+                    android:text="Crear cuenta"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    android:textAllCaps="false"/>
 
-            <Space android:layout_width="match_parent" android:layout_height="12dp"/>
+                <Space android:layout_width="match_parent" android:layout_height="16dp"/>
 
-            <!-- Email -->
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tilEmail"
-                style="@style/Widget.DogWalk.TextInputLayout"
-                android:hint="@string/hint_email">
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etEmail"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/input_height"
-                    android:inputType="textEmailAddress"
-                    android:imeOptions="actionNext"/>
-            </com.google.android.material.textfield.TextInputLayout>
+                <!-- Ir a login -->
+                <TextView
+                    android:id="@+id/tvGoLogin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="¿Ya tienes cuenta? Inicia sesión"
+                    android:textColor="@color/primary"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    android:padding="8dp"/>
 
-            <Space android:layout_width="match_parent" android:layout_height="12dp"/>
-
-            <!-- Teléfono -->
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tilPhone"
-                style="@style/Widget.DogWalk.TextInputLayout"
-                android:hint="@string/hint_phone">
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etPhone"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/input_height"
-                    android:inputType="phone"
-                    android:imeOptions="actionNext"/>
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <Space android:layout_width="match_parent" android:layout_height="12dp"/>
-
-            <!-- Fecha de nacimiento -->
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tilBirthDate"
-                style="@style/Widget.DogWalk.TextInputLayout"
-                android:hint="@string/hint_birth_date">
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etBirthDate"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/input_height"
-                    android:inputType="date"
-                    android:imeOptions="actionNext"/>
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <Space android:layout_width="match_parent" android:layout_height="12dp"/>
-
-            <!-- Contraseña -->
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tilPassword"
-                style="@style/Widget.DogWalk.TextInputLayout"
-                android:hint="@string/hint_password"
-                app:endIconMode="password_toggle">
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etPassword"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/input_height"
-                    android:inputType="textPassword"
-                    android:imeOptions="actionNext"/>
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <Space android:layout_width="match_parent" android:layout_height="12dp"/>
-
-            <!-- Número de tarjeta (solo visible para paseadores) -->
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tilCardNumber"
-                style="@style/Widget.DogWalk.TextInputLayout"
-                android:hint="@string/hint_card_number"
-                android:visibility="gone">
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etCardNumber"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/input_height"
-                    android:inputType="number"
-                    android:maxLength="16"
-                    android:imeOptions="actionDone"/>
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <Space android:layout_width="match_parent" android:layout_height="28dp"/>
-
-            <!-- Botón registrar -->
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnRegister"
-                style="@style/Widget.DogWalk.Button.Primary"
-                android:text="@string/btn_register"/>
-
-            <Space android:layout_width="match_parent" android:layout_height="16dp"/>
-
-            <!-- Ir a login -->
-            <TextView
-                android:id="@+id/tvGoLogin"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="@string/go_login"
-                style="@style/Widget.DogWalk.Text.Link"
-                android:padding="8dp"/>
-
+            </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
-</ScrollView>
+    </ScrollView>
+</LinearLayout>

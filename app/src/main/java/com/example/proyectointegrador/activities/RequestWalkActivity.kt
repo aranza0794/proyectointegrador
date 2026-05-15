@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.widget.SeekBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import com.example.proyectointegrador.R
 import com.google.android.material.button.MaterialButton
 
@@ -17,12 +18,17 @@ class RequestWalkActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_request_walk)
 
-        val seekBarDuration = findViewById<SeekBar>(R.id.seekBarDuration)
-        val tvDuration = findViewById<TextView>(R.id.tvDuration)
-        val tvCost = findViewById<TextView>(R.id.tvCost)
-        val btnSeeWalkers = findViewById<MaterialButton>(R.id.btnSeeWalkers)
+        // ── Toolbar con botón back ──────────────────────────
+        val toolbar = findViewById<Toolbar>(R.id.toolbar)
+        setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.title = "Solicitar paseo"
 
-        // Inicializar valores
+        val seekBarDuration = findViewById<SeekBar>(R.id.seekBarDuration)
+        val tvDuration      = findViewById<TextView>(R.id.tvDuration)
+        val tvCost          = findViewById<TextView>(R.id.tvCost)
+        val btnSeeWalkers   = findViewById<MaterialButton>(R.id.btnSeeWalkers)
+
         updateDisplay(tvDuration, tvCost, selectedMinutes)
 
         seekBarDuration.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
@@ -47,5 +53,10 @@ class RequestWalkActivity : AppCompatActivity() {
         val cost = minutes * pricePerMinute
         tvDuration.text = "$minutes minutos"
         tvCost.text = "$${String.format("%.2f", cost)}"
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        finish()
+        return true
     }
 }
