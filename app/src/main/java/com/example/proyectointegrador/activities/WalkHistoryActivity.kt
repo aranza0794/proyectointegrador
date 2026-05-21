@@ -24,24 +24,35 @@ class WalkHistoryActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_walk_history)
 
-        // ── Toolbar con botón back ──────────────────────────
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.title = "Historial de paseos"
 
         session = SessionManager(this)
 
-        val rvHistory   = findViewById<RecyclerView>(R.id.rvHistory)
-        val layoutEmpty = findViewById<LinearLayout>(R.id.layoutEmpty)
+        val userType = session.getUserType()
+        supportActionBar?.title = if (userType == "owner") "Mis paseos" else "Mi historial"
+
+        val rvHistory      = findViewById<RecyclerView>(R.id.rvHistory)
+        val layoutEmpty    = findViewById<LinearLayout>(R.id.layoutEmpty)
         val tvTotalWalks   = findViewById<TextView>(R.id.tvTotalWalks)
         val tvTotalSpent   = findViewById<TextView>(R.id.tvTotalSpent)
         val tvTotalMinutes = findViewById<TextView>(R.id.tvTotalMinutes)
 
+        // Cambiar labels según tipo de usuario
+        val tvSpentLabel = layoutOf(tvTotalSpent)
+        if (userType == "walker") {
+            // Para paseador "Gastado" → "Ganado"
+            findSiblingLabel(tvTotalSpent, "Gastado", "Ganado")
+        }
+
         rvHistory.layoutManager = LinearLayoutManager(this)
 
+        // FIX: Query según tipo de usuario
+        val queryField = if (userType == "owner") "ownerId" else "walkerId"
+
         db.collection("solicitudes")
-            .whereEqualTo("ownerId", session.getUserId())
+            .whereEqualTo(queryField, session.getUserId())
             .whereEqualTo("status", "finished")
             .orderBy("endTime", Query.Direction.DESCENDING)
             .get()
@@ -56,18 +67,15 @@ class WalkHistoryActivity : AppCompatActivity() {
                         status          = doc.getString("status") ?: "",
                         startTime       = doc.getLong("startTime") ?: 0L,
                         endTime         = doc.getLong("endTime") ?: 0L,
-                        paymentMethod   = doc.getString("paymentMethod") ?: ""
+                        paymentMethod   = doc.getString("paymentMethod") ?: "",
+                        walkerId        = doc.getString("walkerId") ?: "",
+                        ownedName       = doc.getString("ownerName") ?: ""
                     )
                 }
 
-                // Calcular estadísticas
-                val totalWalks   = history.size
-                val totalSpent   = history.sumOf { it.cost }
-                val totalMinutes = history.sumOf { it.durationMinutes }
-
-                tvTotalWalks.text   = totalWalks.toString()
-                tvTotalSpent.text   = "$${String.format("%.0f", totalSpent)}"
-                tvTotalMinutes.text = totalMinutes.toString()
+                tvTotalWalks.text   = history.size.toString()
+                tvTotalSpent.text   = "$${String.format("%.0f", history.sumOf { it.cost })}"
+                tvTotalMinutes.text = history.sumOf { it.durationMinutes }.toString()
 
                 if (history.isEmpty()) {
                     layoutEmpty.visibility = View.VISIBLE
@@ -75,13 +83,27 @@ class WalkHistoryActivity : AppCompatActivity() {
                 } else {
                     layoutEmpty.visibility = View.GONE
                     rvHistory.visibility   = View.VISIBLE
-                    rvHistory.adapter = WalkHistoryAdapter(history)
+                    // FIX: pasar userType para mostrar info correcta
+                    rvHistory.adapter = WalkHistoryAdapter(history, db, userType)
                 }
             }
             .addOnFailureListener {
                 layoutEmpty.visibility = View.VISIBLE
                 rvHistory.visibility   = View.GONE
             }
+    }
+
+    private fun layoutOf(view: View) = view.parent as? android.view.ViewGroup
+
+    private fun findSiblingLabel(view: TextView, oldText: String, newText: String) {
+        val parent = view.parent as? android.view.ViewGroup ?: return
+        for (i in 0 until parent.childCount) {
+            val child = parent.getChildAt(i)
+            if (child is TextView && child.text == oldText) {
+                child.text = newText
+                break
+            }
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {

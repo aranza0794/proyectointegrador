@@ -1,11 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools">
-    <style name="Base.Theme.Proyectointegrador" parent="Theme.Material3.DayNight.NoActionBar">
-        <item name="colorPrimary">@color/primary</item>
-    </style>
-    <style name="Theme.Proyectointegrador" parent="Base.Theme.Proyectointegrador" />
+<resources>
 
-    <style name="Widget.DogWalk" parent="" />
-    <style name="Widget.DogWalk.Button" parent="Widget.Material3.Button" />
-    <style name="Widget.DogWalk.Text" parent="TextAppearance.Material3.BodyMedium" />
 </resources>

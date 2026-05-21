@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
   activity_available_walkers.xml
-  IDs: toolbar, tvSummaryDuration, tvSummaryCost, layoutEmpty, rvWalkers
+  IDs: toolbar, tvSummaryDuration, tvSummaryCost,
+       progressBar, layoutEmpty, rvWalkers
 -->
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -11,7 +12,6 @@
     android:orientation="vertical"
     android:background="@color/background">
 
-    <!-- Toolbar -->
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
@@ -20,7 +20,7 @@
         app:titleTextColor="@color/surface"
         app:navigationIconTint="@color/surface"/>
 
-    <!-- Resumen del paseo -->
+    <!-- Resumen del paseo SIN chip de "Paseo solicitado" -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -66,22 +66,21 @@
             android:textColor="@color/primary_dark"
             android:textSize="14sp"
             android:textStyle="bold"/>
-
-        <com.google.android.material.chip.Chip
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Paseo solicitado"
-            android:textSize="11sp"
-            android:textColor="@color/accent"
-            android:clickable="false"
-            app:chipBackgroundColor="@color/accent_light"/>
     </LinearLayout>
 
-    <!-- FrameLayout alterna vacío/lista -->
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1">
+
+        <!-- Indicador de carga -->
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:indeterminateTint="@color/primary"
+            android:visibility="gone"/>
 
         <!-- Estado vacío -->
         <LinearLayout
@@ -128,8 +127,8 @@
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
             android:paddingTop="12dp"
-            android:paddingBottom="24dp"/>
+            android:paddingBottom="24dp"
+            android:visibility="gone"/>
 
     </FrameLayout>
-
 </LinearLayout>

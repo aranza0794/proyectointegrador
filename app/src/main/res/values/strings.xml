@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">DogWalk</string>
+    <string name="app_name">Patitas en Ruta</string>
 
     <!-- Auth -->
     <string name="login_title">Bienvenido de vuelta</string>

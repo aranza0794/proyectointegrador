@@ -9,6 +9,7 @@ import com.example.proyectointegrador.R
 import com.example.proyectointegrador.utils.SessionManager
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.firestore.FirebaseFirestore
 
 class LoginActivity : AppCompatActivity() {
@@ -22,31 +23,55 @@ class LoginActivity : AppCompatActivity() {
 
         session = SessionManager(this)
 
-        val etEmail = findViewById<TextInputEditText>(R.id.etEmail)
-        val etPassword = findViewById<TextInputEditText>(R.id.etPassword)
-        val btnLogin = findViewById<MaterialButton>(R.id.btnLogin)
+        val tilEmail     = findViewById<TextInputLayout>(R.id.tilEmail)
+        val tilPassword  = findViewById<TextInputLayout>(R.id.tilPassword)
+        val etEmail      = findViewById<TextInputEditText>(R.id.etEmail)
+        val etPassword   = findViewById<TextInputEditText>(R.id.etPassword)
+        val btnLogin     = findViewById<MaterialButton>(R.id.btnLogin)
         val tvGoRegister = findViewById<TextView>(R.id.tvGoRegister)
 
         btnLogin.setOnClickListener {
-            val email = etEmail.text.toString().trim()
+            val email    = etEmail.text.toString().trim()
             val password = etPassword.text.toString().trim()
 
-            if (email.isEmpty() || password.isEmpty()) {
-                Toast.makeText(this, "Completa todos los campos", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
+            // FIX: Validación visual con error en cada campo
+            var hasError = false
+
+            if (email.isEmpty()) {
+                tilEmail.error = "Ingresa tu correo"
+                hasError = true
+            } else if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                tilEmail.error = "Correo inválido"
+                hasError = true
+            } else {
+                tilEmail.error = null
             }
 
-            // Buscar usuario en Firestore por email y password
+            if (password.isEmpty()) {
+                tilPassword.error = "Ingresa tu contraseña"
+                hasError = true
+            } else if (password.length < 6) {
+                tilPassword.error = "Mínimo 6 caracteres"
+                hasError = true
+            } else {
+                tilPassword.error = null
+            }
+
+            if (hasError) return@setOnClickListener
+
+            btnLogin.isEnabled = false
+            btnLogin.text      = "Entrando..."
+
             db.collection("usuarios")
                 .whereEqualTo("email", email)
                 .whereEqualTo("password", password)
                 .get()
                 .addOnSuccessListener { documents ->
                     if (!documents.isEmpty) {
-                        val doc = documents.first()
+                        val doc      = documents.first()
                         val userType = doc.getString("userType") ?: ""
                         val userName = doc.getString("name") ?: ""
-                        val userId = doc.id
+                        val userId   = doc.id
 
                         session.saveSession(userId, userType, userName)
 
@@ -58,15 +83,18 @@ class LoginActivity : AppCompatActivity() {
                         startActivity(Intent(this, dest))
                         finish()
                     } else {
-                        Toast.makeText(
-                            this,
-                            "Correo o contraseña incorrectos",
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        tilEmail.error    = null
+                        tilPassword.error = "Correo o contraseña incorrectos"
+                        btnLogin.isEnabled = true
+                        btnLogin.text      = "Iniciar sesión"
                     }
                 }
-                .addOnFailureListener {
-                    Toast.makeText(this, "Error de conexión", Toast.LENGTH_SHORT).show()
+                .addOnFailureListener { e ->
+                    Toast.makeText(this,
+                        "Error de conexión: ${e.message}",
+                        Toast.LENGTH_LONG).show()
+                    btnLogin.isEnabled = true
+                    btnLogin.text      = "Iniciar sesión"
                 }
         }
 

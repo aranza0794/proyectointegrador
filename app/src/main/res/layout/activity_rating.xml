@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
   activity_rating.xml
-  Pantalla de calificación del paseador después del paseo.
-  IDs: ratingBar, etComment, btnSubmitRating, btnSkip
+  IDs: toolbar, tvRatingLabel, ratingBar, etComment,
+       btnSubmitRating, btnSkip
 -->
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -12,55 +12,15 @@
     android:orientation="vertical"
     android:background="@color/background">
 
-    <!-- Header -->
-    <FrameLayout
+    <!-- Toolbar sin back — flujo obligatorio -->
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:background="@color/primary">
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/primary"
+        app:title="Calificar paseo"
+        app:titleTextColor="@color/surface"/>
 
-        <View
-            android:layout_width="280dp"
-            android:layout_height="280dp"
-            android:layout_gravity="top|end"
-            android:layout_marginTop="-80dp"
-            android:layout_marginEnd="-60dp"
-            android:background="@drawable/circle_white_alpha"
-            android:alpha="0.15"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:gravity="center_vertical"
-            android:paddingStart="24dp"
-            android:paddingBottom="20dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="⭐"
-                android:textSize="44sp"
-                android:layout_marginBottom="8dp"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/rating_title"
-                android:textColor="@color/surface"
-                android:textSize="26sp"
-                android:textStyle="bold"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/rating_subtitle"
-                android:textColor="#CCFFFFFF"
-                android:textSize="14sp"
-                android:layout_marginTop="4dp"/>
-        </LinearLayout>
-    </FrameLayout>
-
-    <!-- Contenido -->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -75,7 +35,31 @@
             android:paddingTop="32dp"
             android:paddingBottom="32dp">
 
-            <!-- Tarjeta de calificación con estrellas -->
+            <!-- Header -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_marginBottom="28dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="⭐"
+                    android:textSize="56sp"
+                    android:layout_marginBottom="8dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="¿Cómo fue el paseo?"
+                    android:textColor="@color/text_primary"
+                    android:textSize="24sp"
+                    android:textStyle="bold"/>
+            </LinearLayout>
+
+            <!-- Tarjeta con estrellas -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -92,14 +76,14 @@
                     android:gravity="center">
 
                     <TextView
+                        android:id="@+id/tvRatingLabel"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="¿Cómo te fue con el paseador?"
+                        android:text="Toca las estrellas para calificar"
                         android:textColor="@color/text_secondary"
                         android:textSize="14sp"
                         android:layout_marginBottom="20dp"/>
 
-                    <!-- RatingBar grande -->
                     <RatingBar
                         android:id="@+id/ratingBar"
                         android:layout_width="wrap_content"
@@ -107,27 +91,17 @@
                         android:numStars="5"
                         android:rating="0"
                         android:stepSize="1"
-                        style="@style/Widget.AppCompat.RatingBar"
-                        android:layout_marginBottom="16dp"/>
+                        style="@style/Widget.AppCompat.RatingBar"/>
 
-                    <!-- Texto descriptivo de la calificación -->
-                    <TextView
-                        android:id="@+id/tvRatingLabel"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Toca las estrellas para calificar"
-                        android:textColor="@color/text_hint"
-                        android:textSize="13sp"/>
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- Campo de comentario -->
+            <!-- Comentario -->
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/tilComment"
                 style="@style/Widget.DogWalk.TextInputLayout"
-                android:hint="@string/hint_comment"
+                android:hint="Deja un comentario (opcional)"
                 android:layout_marginBottom="28dp">
-
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etComment"
                     android:layout_width="match_parent"
@@ -138,18 +112,33 @@
                     android:maxLines="5"/>
             </com.google.android.material.textfield.TextInputLayout>
 
-            <!-- Botón enviar calificación -->
+            <!-- Botón enviar -->
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnSubmitRating"
-                style="@style/Widget.DogWalk.Button.Primary"
-                android:text="@string/btn_submit_rating"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                app:cornerRadius="100dp"
+                android:backgroundTint="@color/primary"
+                android:textColor="@color/surface"
+                android:text="Enviar calificación"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:textAllCaps="false"
                 android:layout_marginBottom="12dp"/>
 
             <!-- Botón omitir -->
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnSkip"
-                style="@style/Widget.DogWalk.Button.Secondary"
-                android:text="@string/btn_skip"/>
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                app:cornerRadius="100dp"
+                android:backgroundTint="@color/surface_alt"
+                android:textColor="@color/text_secondary"
+                android:text="Omitir"
+                android:textSize="15sp"
+                android:textAllCaps="false"
+                app:strokeColor="@color/border"
+                app:strokeWidth="1dp"/>
 
         </LinearLayout>
     </ScrollView>

@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+  item_walk_request.xml
+  IDs: tvDogName, tvOwnerName, tvDogDetails, tvDogAllergy,
+       tvWalkDuration, tvWalkCost, btnReject, btnAccept
+-->
 <com.google.android.material.card.MaterialCardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -23,16 +28,13 @@
             android:gravity="center_vertical"
             android:layout_marginBottom="12dp">
 
-            <!-- FIX: reemplazado @drawable/circle_primary_light_bg
-                 por MaterialCardView con cardCornerRadius para el círculo -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:layout_marginEnd="12dp"
                 app:cardCornerRadius="24dp"
                 app:cardElevation="0dp"
-                app:cardBackgroundColor="@color/surface_alt">
-
+                app:cardBackgroundColor="@color/primary_ultra_light">
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -51,30 +53,31 @@
                     android:id="@+id/tvDogName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Nombre del perro"
+                    android:text=""
                     android:textColor="@color/text_primary"
                     android:textSize="17sp"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold"
+                    android:fontFamily="@font/poppins"/>
 
                 <TextView
                     android:id="@+id/tvOwnerName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Dueño: Juan Pérez"
+                    android:text=""
                     android:textColor="@color/text_secondary"
                     android:textSize="13sp"
+                    android:fontFamily="@font/poppins"
                     android:layout_marginTop="2dp"/>
             </LinearLayout>
 
-            <!-- FIX: app:chipTextColor en vez de android:textColor -->
             <com.google.android.material.chip.Chip
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="NUEVA"
                 android:textSize="10sp"
+                android:textColor="@color/surface"
                 android:clickable="false"
-                app:chipBackgroundColor="@color/primary"
-                android:textColor="@color/surface"/>
+                app:chipBackgroundColor="@color/primary"/>
         </LinearLayout>
 
         <!-- Detalles del perro -->
@@ -98,11 +101,11 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Labrador • Mediano • 3 años"
+                    android:text=""
                     android:textColor="@color/text_secondary"
-                    android:textSize="13sp"/>
+                    android:textSize="13sp"
+                    android:fontFamily="@font/poppins"/>
 
-                <!-- FIX: agregado tvDogAllergy que usa el KT -->
                 <TextView
                     android:id="@+id/tvDogAllergy"
                     android:layout_width="wrap_content"
@@ -146,16 +149,18 @@
                         android:layout_height="wrap_content"
                         android:text="Duración"
                         android:textColor="@color/text_hint"
-                        android:textSize="11sp"/>
+                        android:textSize="11sp"
+                        android:fontFamily="@font/poppins"/>
 
                     <TextView
                         android:id="@+id/tvWalkDuration"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="30 min"
+                        android:text=""
                         android:textColor="@color/text_primary"
                         android:textSize="15sp"
-                        android:textStyle="bold"/>
+                        android:textStyle="bold"
+                        android:fontFamily="@font/poppins"/>
                 </LinearLayout>
             </LinearLayout>
 
@@ -183,26 +188,30 @@
                         android:layout_height="wrap_content"
                         android:text="Ganancia"
                         android:textColor="@color/text_hint"
-                        android:textSize="11sp"/>
+                        android:textSize="11sp"
+                        android:fontFamily="@font/poppins"/>
 
                     <TextView
                         android:id="@+id/tvWalkCost"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="$15.00"
-                        android:textColor="@color/accent"
+                        android:text=""
+                        android:textColor="@color/primary"
                         android:textSize="15sp"
-                        android:textStyle="bold"/>
+                        android:textStyle="bold"
+                        android:fontFamily="@font/poppins"/>
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
 
-        <!-- FIX: altura de botones 44dp → 48dp para touch target mínimo -->
+        <!-- FIX: Botones con tamaño fijo y texto completo -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:baselineAligned="false">
 
+            <!-- FIX: Rechazar con texto completo y color legible -->
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnReject"
                 android:layout_width="0dp"
@@ -211,12 +220,14 @@
                 android:layout_marginEnd="8dp"
                 app:cornerRadius="24dp"
                 android:backgroundTint="@color/error_light"
-                android:textColor="@color/primary_dark"
-                android:text="✗ Rechazar"
-                android:textSize="13sp"
+                android:textColor="@color/error"
+                android:text="Rechazar"
+                android:textSize="14sp"
                 android:textStyle="bold"
+                android:fontFamily="@font/poppins"
                 android:textAllCaps="false"/>
 
+            <!-- Aceptar -->
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnAccept"
                 android:layout_width="0dp"
@@ -224,11 +235,12 @@
                 android:layout_weight="1"
                 android:layout_marginStart="8dp"
                 app:cornerRadius="24dp"
-                android:backgroundTint="@color/accent"
+                android:backgroundTint="@color/primary"
                 android:textColor="@color/surface"
                 android:text="✓ Aceptar"
-                android:textSize="13sp"
+                android:textSize="14sp"
                 android:textStyle="bold"
+                android:fontFamily="@font/poppins"
                 android:textAllCaps="false"/>
         </LinearLayout>
     </LinearLayout>

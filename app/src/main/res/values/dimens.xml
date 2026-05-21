@@ -1,15 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Tamaños de texto -->
-    <dimen name="text_xs">11sp</dimen>
-    <dimen name="text_sm">13sp</dimen>
-    <dimen name="text_md">15sp</dimen>
-    <dimen name="text_lg">18sp</dimen>
-    <dimen name="text_xl">22sp</dimen>
-    <dimen name="text_xxl">28sp</dimen>
-    <dimen name="text_hero">36sp</dimen>
+    <!-- ── Tamaños de avatar ── -->
+    <dimen name="avatar_size">48dp</dimen>
+    <dimen name="avatar_size_large">80dp</dimen>
+    <dimen name="avatar_size_small">36dp</dimen>
 
-    <!-- Espaciado -->
+    <!-- ── Espaciado general ── -->
+    <dimen name="spacing_xxs">2dp</dimen>
     <dimen name="spacing_xs">4dp</dimen>
     <dimen name="spacing_sm">8dp</dimen>
     <dimen name="spacing_md">16dp</dimen>
@@ -17,18 +14,54 @@
     <dimen name="spacing_xl">32dp</dimen>
     <dimen name="spacing_xxl">48dp</dimen>
 
-    <!-- Radios de esquinas -->
-    <dimen name="radius_sm">8dp</dimen>
-    <dimen name="radius_md">12dp</dimen>
-    <dimen name="radius_lg">20dp</dimen>
-    <dimen name="radius_xl">28dp</dimen>
-    <dimen name="radius_full">100dp</dimen>
+    <!-- ── Márgenes de pantalla ── -->
+    <!-- Margen lateral consistente en TODAS las pantallas -->
+    <dimen name="screen_margin">20dp</dimen>
+    <dimen name="screen_margin_sm">16dp</dimen>
+    <dimen name="screen_padding_top">24dp</dimen>
+    <dimen name="screen_padding_bottom">32dp</dimen>
 
-    <!-- Componentes -->
-    <dimen name="btn_height">52dp</dimen>
+    <!-- ── Tarjetas ── -->
+    <dimen name="card_radius">16dp</dimen>
+    <dimen name="card_radius_large">20dp</dimen>
+    <dimen name="card_radius_sm">12dp</dimen>
+    <dimen name="card_elevation">3dp</dimen>
+    <dimen name="card_padding">20dp</dimen>
+    <dimen name="card_padding_sm">14dp</dimen>
+
+    <!-- ── Botones ── -->
+    <dimen name="button_radius">100dp</dimen>
+    <dimen name="button_height">52dp</dimen>
+    <dimen name="button_height_sm">40dp</dimen>
+
+    <!-- ── Inputs ── -->
+    <dimen name="input_radius">12dp</dimen>
     <dimen name="input_height">56dp</dimen>
-    <dimen name="card_elevation">4dp</dimen>
-    <dimen name="avatar_size">56dp</dimen>
-    <dimen name="icon_size">24dp</dimen>
-    <dimen name="page_margin">20dp</dimen>
+    <dimen name="input_margin_bottom">14dp</dimen>
+
+    <!-- ── Header ── -->
+    <dimen name="header_height">220dp</dimen>
+    <dimen name="header_height_sm">180dp</dimen>
+
+    <!-- ── Tipografía ── -->
+    <dimen name="text_xxs">10sp</dimen>
+    <dimen name="text_xs">11sp</dimen>
+    <dimen name="text_sm">13sp</dimen>
+    <dimen name="text_body">15sp</dimen>
+    <dimen name="text_md">16sp</dimen>
+    <dimen name="text_lg">18sp</dimen>
+    <dimen name="text_xl">22sp</dimen>
+    <dimen name="text_xxl">26sp</dimen>
+    <dimen name="text_title">30sp</dimen>
+    <dimen name="text_display">36sp</dimen>
+
+    <!-- ── Íconos ── -->
+    <dimen name="icon_size_sm">18dp</dimen>
+    <dimen name="icon_size_md">24dp</dimen>
+    <dimen name="icon_size_lg">32dp</dimen>
+    <dimen name="icon_size_xl">48dp</dimen>
+
+    <!-- ── Separadores ── -->
+    <dimen name="divider_height">1dp</dimen>
+    <dimen name="section_spacing">20dp</dimen>
 </resources>

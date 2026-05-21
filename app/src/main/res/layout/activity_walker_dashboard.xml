@@ -2,7 +2,7 @@
 <!--
   activity_walker_dashboard.xml
   IDs: tvWelcome, rvPendingRequests, btnLogout, switchAvailable,
-       tvAvailableStatus, tvRequestCount, layoutEmpty
+       tvAvailableStatus, tvRequestCount, layoutEmpty, btnWalkerHistory
 -->
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -12,48 +12,78 @@
     android:orientation="vertical"
     android:background="@color/background">
 
-    <!-- Header verde -->
+    <!-- Header verde petróleo -->
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:background="@color/accent">
+        android:layout_height="250dp"
+        android:background="@color/primary">
 
+        <!-- Círculo decorativo -->
         <View
-            android:layout_width="240dp"
-            android:layout_height="240dp"
-            android:layout_gravity="top|end"
-            android:layout_marginTop="-60dp"
-            android:layout_marginEnd="-60dp"
-            android:background="@drawable/circle_white_alpha"
-            android:alpha="0.15"/>
+            android:layout_width="260dp"
+            android:layout_height="260dp"
+            android:layout_gravity="bottom|end"
+            android:layout_marginBottom="-110dp"
+            android:layout_marginEnd="-50dp"
+            android:background="@drawable/circle_background"
+            android:alpha="0.1"/>
 
-        <!-- FIX: 40dp → 48dp para touch target mínimo -->
-        <ImageButton
+        <!-- Huellas decorativas -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top|end"
+            android:layout_marginTop="60dp"
+            android:layout_marginEnd="72dp"
+            android:text="🐾"
+            android:textSize="24sp"
+            android:alpha="0.25"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|end"
+            android:layout_marginEnd="20dp"
+            android:text="🐾"
+            android:textSize="16sp"
+            android:alpha="0.18"/>
+
+        <!-- FIX: Botón perfil más abajo y más grande -->
+        <LinearLayout
             android:id="@+id/btnLogout"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_width="52dp"
+            android:layout_height="52dp"
             android:layout_gravity="top|end"
-            android:layout_margin="12dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginEnd="16dp"
+            android:gravity="center"
             android:background="@drawable/circle_white_20"
-            android:src="@android:drawable/ic_menu_close_clear_cancel"
-            app:tint="@color/accent"
-            android:contentDescription="Cerrar sesión"/>
+            android:clickable="true"
+            android:focusable="true">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="👤"
+                android:textSize="26sp"/>
+        </LinearLayout>
 
+        <!-- FIX: Info paseador más grande y abajo -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:gravity="center_vertical"
+            android:gravity="bottom"
             android:paddingStart="24dp"
-            android:paddingBottom="20dp">
+            android:paddingBottom="24dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="🦺 Modo Paseador"
-                android:textColor="#AAFFFFFF"
-                android:textSize="13sp"
-                android:layout_marginBottom="6dp"/>
+                android:text="Hola,"
+                android:textColor="#CCFFFFFF"
+                android:textSize="20sp"
+                android:fontFamily="@font/poppins"
+                android:layout_marginBottom="2dp"/>
 
             <TextView
                 android:id="@+id/tvWelcome"
@@ -61,15 +91,26 @@
                 android:layout_height="wrap_content"
                 android:text=""
                 android:textColor="@color/surface"
-                android:textSize="28sp"
-                android:textStyle="bold"/>
+                android:textSize="34sp"
+                android:textStyle="bold"
+                android:fontFamily="@font/poppins"/>
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="🦺 Modo paseador · Patitas en Ruta"
+                android:textColor="#AAFFFFFF"
+                android:textSize="13sp"
+                android:fontFamily="@font/poppins"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="12dp"/>
+
+            <!-- Switch disponibilidad -->
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:layout_marginTop="10dp">
+                android:gravity="center_vertical">
 
                 <com.google.android.material.switchmaterial.SwitchMaterial
                     android:id="@+id/switchAvailable"
@@ -79,31 +120,43 @@
                     android:thumbTint="@color/surface"
                     android:trackTint="#80FFFFFF"/>
 
-                <!-- FIX: hardcoded text → string vacío, el KT lo asigna -->
                 <TextView
                     android:id="@+id/tvAvailableStatus"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text=""
-                    android:textColor="#CCFFFFFF"
+                    android:text="Disponible para paseos"
+                    android:textColor="#EEFFFFFF"
                     android:textSize="13sp"
+                    android:fontFamily="@font/poppins"
                     android:layout_marginStart="8dp"/>
             </LinearLayout>
+
+            <!-- Botón historial blanco -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnWalkerHistory"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_marginTop="14dp"
+                app:cornerRadius="100dp"
+                android:backgroundTint="@color/surface"
+                android:textColor="@color/primary"
+                android:text="📋 Mi historial"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                android:fontFamily="@font/poppins"
+                android:textAllCaps="false"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"/>
         </LinearLayout>
     </FrameLayout>
 
-    <!-- Sección de solicitudes -->
-    <!-- FIX: Nested layout weights — se elimina el layout_weight del hijo
-         layoutEmpty para evitar doble peso anidado. Se usa un solo
-         FrameLayout contenedor que alterna visibilidad entre
-         layoutEmpty y rvPendingRequests -->
+    <!-- Solicitudes -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:orientation="vertical">
 
-        <!-- Encabezado -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -122,29 +175,33 @@
                 android:text="Solicitudes pendientes"
                 android:textColor="@color/text_primary"
                 android:textSize="18sp"
-                android:textStyle="bold"/>
-
-            <!-- FIX: textColor → surface (blanco) sobre fondo primary para contraste -->
-            <TextView
-                android:id="@+id/tvRequestCount"
-                android:layout_width="28dp"
-                android:layout_height="28dp"
-                android:gravity="center"
-                android:text="0"
-                android:textColor="@color/surface"
-                android:textSize="13sp"
                 android:textStyle="bold"
-                android:background="@drawable/circle_primary"/>
+                android:fontFamily="@font/poppins"/>
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="0dp"
+                app:cardBackgroundColor="@color/primary">
+                <TextView
+                    android:id="@+id/tvRequestCount"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="0"
+                    android:textColor="@color/surface"
+                    android:textSize="13sp"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/poppins"/>
+            </com.google.android.material.card.MaterialCardView>
         </LinearLayout>
 
-        <!-- FIX: FrameLayout reemplaza los dos hijos con layout_weight anidado
-             Solo uno es visible a la vez: layoutEmpty o rvPendingRequests -->
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1">
 
-            <!-- Estado vacío -->
             <LinearLayout
                 android:id="@+id/layoutEmpty"
                 android:layout_width="match_parent"
@@ -158,17 +215,18 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="🐾"
-                    android:textSize="56sp"/>
+                    android:textSize="64sp"
+                    android:layout_marginBottom="16dp"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Sin solicitudes"
+                    android:text="Sin solicitudes aún"
                     android:textColor="@color/text_primary"
                     android:textSize="20sp"
                     android:textStyle="bold"
-                    android:gravity="center"
-                    android:layout_marginTop="16dp"/>
+                    android:fontFamily="@font/poppins"
+                    android:gravity="center"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -176,11 +234,11 @@
                     android:text="Las nuevas solicitudes aparecerán aquí"
                     android:textColor="@color/text_secondary"
                     android:textSize="14sp"
+                    android:fontFamily="@font/poppins"
                     android:gravity="center"
                     android:layout_marginTop="8dp"/>
             </LinearLayout>
 
-            <!-- Lista de solicitudes -->
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvPendingRequests"
                 android:layout_width="match_parent"
@@ -190,7 +248,6 @@
                 android:paddingEnd="16dp"
                 android:paddingTop="8dp"
                 android:paddingBottom="24dp"/>
-
         </FrameLayout>
     </LinearLayout>
 </LinearLayout>

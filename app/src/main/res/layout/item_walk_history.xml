@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
   item_walk_history.xml
-  IDs requeridos por WalkHistoryAdapter.kt:
-  tvDogName, tvDate, tvDuration, tvCost, tvPayment
+  IDs: tvDogName, tvDate, tvDuration, tvCost, tvPayment,
+       tvWalkerName, ratingBarItem
 -->
 <com.google.android.material.card.MaterialCardView
     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -20,16 +20,15 @@
         android:orientation="vertical"
         android:padding="16dp">
 
-        <!-- Fila superior: ícono + nombre + fecha -->
+        <!-- Fila superior: ícono + perro + fecha -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center_vertical"
             android:baselineAligned="false"
-            android:layout_marginBottom="12dp">
+            android:layout_marginBottom="10dp">
 
-            <!-- Ícono circular -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="44dp"
                 android:layout_height="44dp"
@@ -37,7 +36,6 @@
                 app:cardCornerRadius="22dp"
                 app:cardElevation="0dp"
                 app:cardBackgroundColor="@color/surface_alt">
-
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -46,7 +44,6 @@
                     android:textSize="22sp"/>
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- Nombre del perro y fecha -->
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -72,15 +69,49 @@
                     android:layout_marginTop="2dp"/>
             </LinearLayout>
 
-            <!-- Badge completado -->
             <com.google.android.material.chip.Chip
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="✓ Listo"
+                android:text="✓ Completado"
                 android:textSize="10sp"
                 android:textColor="@color/accent"
                 android:clickable="false"
                 app:chipBackgroundColor="@color/accent_light"/>
+        </LinearLayout>
+
+        <!-- FIX: Nombre del paseador -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="8dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="🦺 "
+                android:textSize="14sp"/>
+
+            <TextView
+                android:id="@+id/tvWalkerName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Paseador: —"
+                android:textColor="@color/text_secondary"
+                android:textSize="13sp"/>
+
+            <!-- FIX: Calificación dada -->
+            <RatingBar
+                android:id="@+id/ratingBarItem"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:numStars="5"
+                android:rating="0"
+                android:isIndicator="true"
+                android:visibility="gone"
+                style="@style/Widget.AppCompat.RatingBar.Small"/>
         </LinearLayout>
 
         <!-- Separador -->
@@ -171,7 +202,7 @@
                 android:layout_height="50dp"
                 android:background="@color/divider"/>
 
-            <!-- Método de pago -->
+            <!-- Pago -->
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"

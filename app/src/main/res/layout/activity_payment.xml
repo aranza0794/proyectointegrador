@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
   activity_payment.xml
-  Pantalla de selección de método de pago al finalizar el paseo.
-  IDs: tvAmount, tvDuration, btnCash, btnTransfer
+  IDs: toolbar, tvAmount, tvDuration, btnCash, btnTransfer
 -->
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -12,55 +11,14 @@
     android:orientation="vertical"
     android:background="@color/background">
 
-    <!-- Header -->
-    <FrameLayout
+    <!-- Toolbar con botón back BLOQUEADO -->
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:background="@color/primary">
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/primary"
+        app:titleTextColor="@color/surface"/>
 
-        <View
-            android:layout_width="280dp"
-            android:layout_height="280dp"
-            android:layout_gravity="bottom|end"
-            android:layout_marginBottom="-120dp"
-            android:layout_marginEnd="-80dp"
-            android:background="@drawable/circle_white_alpha"
-            android:alpha="0.12"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:gravity="center_vertical"
-            android:paddingStart="24dp"
-            android:paddingBottom="20dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="💳"
-                android:textSize="44sp"
-                android:layout_marginBottom="8dp"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/payment_title"
-                android:textColor="@color/surface"
-                android:textSize="26sp"
-                android:textStyle="bold"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Elige cómo pagar el paseo"
-                android:textColor="#CCFFFFFF"
-                android:textSize="14sp"
-                android:layout_marginTop="4dp"/>
-        </LinearLayout>
-    </FrameLayout>
-
-    <!-- Contenido -->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -74,6 +32,38 @@
             android:paddingEnd="20dp"
             android:paddingTop="28dp"
             android:paddingBottom="32dp">
+
+            <!-- Header -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_marginBottom="28dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="💳"
+                    android:textSize="56sp"
+                    android:layout_marginBottom="8dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Método de pago"
+                    android:textColor="@color/text_primary"
+                    android:textSize="24sp"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Elige cómo pagar el paseo"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="14sp"
+                    android:layout_marginTop="4dp"/>
+            </LinearLayout>
 
             <!-- Tarjeta resumen del costo -->
             <com.google.android.material.card.MaterialCardView
@@ -103,7 +93,7 @@
                         android:id="@+id/tvAmount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="$15.00"
+                        android:text="$0.00"
                         android:textColor="@color/primary"
                         android:textSize="48sp"
                         android:textStyle="bold"/>
@@ -112,29 +102,12 @@
                         android:id="@+id/tvDuration"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Duración: 30 minutos"
+                        android:text=""
                         android:textColor="@color/text_secondary"
                         android:textSize="14sp"
                         android:layout_marginTop="8dp"/>
-
-                    <View
-                        android:layout_width="60dp"
-                        android:layout_height="3dp"
-                        android:background="@color/primary_light"
-                        android:layout_marginTop="16dp"/>
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
-
-            <!-- Título métodos de pago -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="ELIGE TU MÉTODO"
-                android:textColor="@color/text_secondary"
-                android:textSize="12sp"
-                android:textAllCaps="true"
-                android:letterSpacing="0.1"
-                android:layout_marginBottom="16dp"/>
 
             <!-- Botón efectivo -->
             <com.google.android.material.card.MaterialCardView
@@ -156,26 +129,26 @@
                     android:focusable="true"
                     android:foreground="?attr/selectableItemBackground">
 
-                    <FrameLayout
+                    <com.google.android.material.card.MaterialCardView
                         android:layout_width="44dp"
                         android:layout_height="44dp"
-                        android:background="@drawable/circle_primary_light_bg"
-                        android:layout_marginEnd="16dp">
-
+                        android:layout_marginEnd="16dp"
+                        app:cardCornerRadius="22dp"
+                        app:cardElevation="0dp"
+                        app:cardBackgroundColor="@color/surface_alt">
                         <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
                             android:text="💵"
                             android:textSize="22sp"/>
-                    </FrameLayout>
+                    </com.google.android.material.card.MaterialCardView>
 
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:orientation="vertical">
-
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -183,7 +156,6 @@
                             android:textColor="@color/text_primary"
                             android:textSize="16sp"
                             android:textStyle="bold"/>
-
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -208,8 +180,7 @@
                 android:layout_height="wrap_content"
                 app:cardCornerRadius="16dp"
                 app:cardElevation="3dp"
-                app:cardBackgroundColor="@color/surface"
-                android:layout_marginBottom="12dp">
+                app:cardBackgroundColor="@color/surface">
 
                 <LinearLayout
                     android:id="@+id/btnTransfer"
@@ -222,26 +193,26 @@
                     android:focusable="true"
                     android:foreground="?attr/selectableItemBackground">
 
-                    <FrameLayout
+                    <com.google.android.material.card.MaterialCardView
                         android:layout_width="44dp"
                         android:layout_height="44dp"
-                        android:background="@drawable/circle_primary_light_bg"
-                        android:layout_marginEnd="16dp">
-
+                        android:layout_marginEnd="16dp"
+                        app:cardCornerRadius="22dp"
+                        app:cardElevation="0dp"
+                        app:cardBackgroundColor="@color/surface_alt">
                         <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
                             android:text="📲"
                             android:textSize="22sp"/>
-                    </FrameLayout>
+                    </com.google.android.material.card.MaterialCardView>
 
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:orientation="vertical">
-
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -249,7 +220,6 @@
                             android:textColor="@color/text_primary"
                             android:textSize="16sp"
                             android:textStyle="bold"/>
-
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"

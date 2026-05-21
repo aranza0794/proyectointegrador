@@ -3,6 +3,7 @@ package com.example.proyectointegrador.adapters
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.RatingBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -16,13 +17,15 @@ class WalkerAdapter(
 ) : RecyclerView.Adapter<WalkerAdapter.WalkerViewHolder>() {
 
     inner class WalkerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        // IDs que existen en item_walker.xml
-        val tvWalkerName:  TextView     = itemView.findViewById(R.id.tvWalkerName)
-        val tvWalkerCard:  TextView     = itemView.findViewById(R.id.tvWalkerCard)
-        val tvWalkerPrice: TextView     = itemView.findViewById(R.id.tvWalkerPrice)
-        val tvRatingCount: TextView     = itemView.findViewById(R.id.tvRatingCount)
-        val ratingBar:     RatingBar    = itemView.findViewById(R.id.ratingBarWalker)
-        val btnSelect:     MaterialButton = itemView.findViewById(R.id.btnSelectWalker)
+        val ivWalkerPhoto:      ImageView    = itemView.findViewById(R.id.ivWalkerPhoto)
+        val tvWalkerInitial:    TextView     = itemView.findViewById(R.id.tvWalkerInitial)
+        val tvWalkerName:       TextView     = itemView.findViewById(R.id.tvWalkerName)
+        val ratingBarWalker:    RatingBar    = itemView.findViewById(R.id.ratingBarWalker)
+        val tvWalkerRating:     TextView     = itemView.findViewById(R.id.tvWalkerRating)
+        val tvWalkerRatingCount: TextView    = itemView.findViewById(R.id.tvWalkerRatingCount)
+        val tvWalkerCard:       TextView     = itemView.findViewById(R.id.tvWalkerCard)
+        val tvWalkerPrice:      TextView     = itemView.findViewById(R.id.tvWalkerPrice)
+        val btnSelectWalker:    MaterialButton = itemView.findViewById(R.id.btnSelectWalker)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WalkerViewHolder {
@@ -33,17 +36,44 @@ class WalkerAdapter(
 
     override fun onBindViewHolder(holder: WalkerViewHolder, position: Int) {
         val walker = walkers[position]
-        holder.tvWalkerName.text  = walker.name
-        holder.tvWalkerCard.text  = if (walker.cardNumber.length >= 4)
-            "**** ${walker.cardNumber.takeLast(4)}"
+
+        // Nombre
+        holder.tvWalkerName.text = walker.name
+
+        // FIX: Foto — por ahora muestra inicial del nombre
+        // Cuando se implemente Firebase Storage se cargaría la URL aquí
+        holder.ivWalkerPhoto.visibility  = View.GONE
+        holder.tvWalkerInitial.text      = walker.name
+            .firstOrNull()
+            ?.uppercaseChar()
+            ?.toString() ?: "?"
+
+        // Calificación
+        val rating = walker.rating
+        holder.ratingBarWalker.rating    = rating
+        holder.tvWalkerRating.text       = String.format("%.1f", rating)
+        holder.tvWalkerRatingCount.text  = if (walker.ratingCount > 0)
+            "(${walker.ratingCount})"
         else
-            "****"
-        holder.ratingBar.rating   = walker.rating
-        holder.tvRatingCount.text = "(${walker.ratingCount})"
-        holder.tvWalkerPrice.text = "$${String.format("%.0f", walker.rating * 10)}"
-        holder.btnSelect.setOnClickListener { onSelect(walker) }
+            "(sin reseñas)"
+
+        // FIX: Últimos 4 dígitos de la tarjeta
+        val card = walker.cardNumber
+        holder.tvWalkerCard.text = if (card.length >= 4) {
+            val last4 = card.replace("-", "").takeLast(4)
+            "**** **** **** $last4"
+        } else {
+            "No registrada"
+        }
+
+        // Precio por minuto
+        holder.tvWalkerPrice.text = "$1"
+
+        // Botón seleccionar
+        holder.btnSelectWalker.setOnClickListener {
+            onSelect(walker)
+        }
     }
 
     override fun getItemCount() = walkers.size
-
 }
