@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Seleccionado: fondo azul marino con borde -->
+    <item android:state_checked="true">
+        <shape android:shape="rectangle">
+            <solid android:color="#E8F0FB"/>
+            <stroke android:width="2dp" android:color="#1B3A6B"/>
+            <corners android:radius="14dp"/>
+        </shape>
+    </item>
+    <!-- No seleccionado: fondo blanco con borde gris -->
+    <item android:state_checked="false">
+        <shape android:shape="rectangle">
+            <solid android:color="#FFFFFF"/>
+            <stroke android:width="1dp" android:color="#A8C8E8"/>
+            <corners android:radius="14dp"/>
+        </shape>
+    </item>
+</selector>

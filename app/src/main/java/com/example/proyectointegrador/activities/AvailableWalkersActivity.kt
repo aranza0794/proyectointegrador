@@ -21,6 +21,9 @@ import com.google.firebase.firestore.FirebaseFirestore
 
 class AvailableWalkersActivity : AppCompatActivity() {
 
+    // FIX: flag para evitar selección doble
+    private var isRequestInProgress = false
+
     private val db = FirebaseFirestore.getInstance()
     private lateinit var session: SessionManager
     private var duration      = 30
@@ -55,12 +58,8 @@ class AvailableWalkersActivity : AppCompatActivity() {
 
         val rvWalkers         = findViewById<RecyclerView>(R.id.rvWalkers)
         val layoutEmpty       = findViewById<LinearLayout>(R.id.layoutEmpty)
-        val tvSummaryDuration = findViewById<TextView>(R.id.tvSummaryDuration)
-        val tvSummaryCost     = findViewById<TextView>(R.id.tvSummaryCost)
         val progressBar       = findViewById<ProgressBar>(R.id.progressBar)
 
-        tvSummaryDuration.text = "$duration min"
-        tvSummaryCost.text     = "$${"%.2f".format(cost)}"
         rvWalkers.layoutManager = LinearLayoutManager(this)
 
         // Mostrar loading
@@ -115,12 +114,22 @@ class AvailableWalkersActivity : AppCompatActivity() {
     }
 
     private fun confirmRequest(walker: Walker) {
+        // FIX: si ya hay una solicitud en proceso, ignorar nuevo click
+        if (isRequestInProgress) return
+        isRequestInProgress = true
+
         val paymentText = if (paymentMethod == "cash") "Efectivo" else "Transferencia"
         AlertDialog.Builder(this)
             .setTitle("Confirmar solicitud")
             .setMessage("¿Enviar solicitud a ${walker.name}?\n\nPerro: $dogName\nDuración: $duration min\nPago: $paymentText")
             .setPositiveButton("Sí") { _, _ -> sendRequest(walker) }
-            .setNegativeButton("Cancelar", null)
+            .setNegativeButton("Cancelar") { _, _ ->
+                // FIX: si cancela, permitir volver a seleccionar
+                isRequestInProgress = false
+            }
+            .setOnCancelListener {
+                isRequestInProgress = false
+            }
             .show()
     }
 

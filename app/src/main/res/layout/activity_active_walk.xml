@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
   activity_active_walk.xml
-  IDs: tvStatus, tvDogInfo, tvDogAllergy, tvDogAge,
-       tvWalkCost, tvLocationStatus, btnStartWalk, btnFinishWalk
+  IDs: toolbar, tvDogName, tvDogDetails, tvAllergyAlert,
+       tvWalkerName, tvDuration, tvElapsed, progressWalk, btnEndWalk
 -->
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -15,51 +15,67 @@
     <!-- Header verde -->
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="180dp"
-        android:background="@color/accent">
+        android:layout_height="200dp"
+        android:background="@color/primary">
 
-        <View
-            android:layout_width="260dp"
-            android:layout_height="260dp"
-            android:layout_gravity="top|end"
-            android:layout_marginTop="-80dp"
-            android:layout_marginEnd="-60dp"
-            android:background="@drawable/circle_white_alpha"
-            android:alpha="0.15"/>
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:layout_gravity="top|end" android:layout_marginTop="12dp" android:layout_marginEnd="14dp"
+            android:text="🐾" android:textSize="36sp" android:alpha="0.18" android:rotation="20"/>
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:layout_gravity="bottom|start" android:layout_marginBottom="16dp" android:layout_marginStart="180dp"
+            android:text="🦴" android:textSize="22sp" android:alpha="0.15" android:rotation="30"/>
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@android:color/transparent"
+            app:titleTextColor="#FFFFFF"
+            app:navigationIconTint="#FFFFFF"/>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
             android:orientation="vertical"
-            android:gravity="center_vertical"
-            android:paddingStart="24dp"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
             android:paddingBottom="20dp">
 
-            <TextView
+            <!-- Badge PASEO EN CURSO -->
+            <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="🦺 Modo paseador"
-                android:textColor="#AAFFFFFF"
-                android:textSize="13sp"
-                android:layout_marginBottom="8dp"/>
+                android:layout_height="30dp"
+                android:background="@drawable/badge_accent"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                android:gravity="center"
+                android:layout_marginBottom="8dp">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="🐕 PASEO EN CURSO"
+                    android:textColor="#FFFFFF" android:textSize="11sp" android:textStyle="bold"
+                    android:fontFamily="@font/poppins" android:letterSpacing="0.05"/>
+            </LinearLayout>
 
             <TextView
-                android:id="@+id/tvStatus"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="¡Listo para iniciar!"
-                android:textColor="@color/surface"
-                android:textSize="22sp"
-                android:textStyle="bold"/>
-
-            <TextView
-                android:id="@+id/tvLocationStatus"
+                android:id="@+id/tvDogName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=""
-                android:textColor="#AAFFFFFF"
-                android:textSize="12sp"
-                android:layout_marginTop="6dp"/>
+                android:textColor="#FFFFFF"
+                android:textSize="28sp"
+                android:textStyle="bold"
+                android:fontFamily="@font/poppins"/>
+
+            <TextView
+                android:id="@+id/tvDogDetails"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textColor="#CCFFFFFF"
+                android:textSize="13sp"
+                android:fontFamily="@font/poppins"
+                android:layout_marginTop="2dp"/>
         </LinearLayout>
     </FrameLayout>
 
@@ -74,218 +90,145 @@
             android:orientation="vertical"
             android:paddingStart="20dp"
             android:paddingEnd="20dp"
-            android:paddingTop="20dp"
+            android:paddingTop="16dp"
             android:paddingBottom="32dp">
 
-            <!-- FIX: Tarjeta con TODA la info del perro -->
+            <!-- Alerta alergia -->
             <com.google.android.material.card.MaterialCardView
+                android:id="@+id/tvAllergyAlert"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:visibility="gone"
                 app:cardCornerRadius="16dp"
-                app:cardElevation="4dp"
-                app:cardBackgroundColor="@color/surface"
-                android:layout_marginBottom="12dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="20dp">
-
-                    <!-- Nombre y raza -->
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:gravity="center_vertical"
-                        android:baselineAligned="false"
-                        android:layout_marginBottom="12dp">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="🐕"
-                            android:textSize="40sp"
-                            android:layout_marginEnd="12dp"/>
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Tu peludo de hoy"
-                                android:textColor="@color/text_secondary"
-                                android:textSize="12sp"/>
-
-                            <TextView
-                                android:id="@+id/tvDogInfo"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text=""
-                                android:textColor="@color/text_primary"
-                                android:textSize="18sp"
-                                android:textStyle="bold"
-                                android:layout_marginTop="2dp"/>
-
-                            <TextView
-                                android:id="@+id/tvDogAge"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text=""
-                                android:textColor="@color/text_secondary"
-                                android:textSize="13sp"
-                                android:layout_marginTop="2dp"/>
-                        </LinearLayout>
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@color/divider"
-                        android:layout_marginBottom="12dp"/>
-
-                    <!-- FIX: Alergias destacadas -->
-                    <LinearLayout
-                        android:id="@+id/layoutAllergy"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:background="@color/error_light"
-                        android:padding="10dp"
-                        android:layout_marginBottom="12dp"
-                        android:visibility="gone">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="⚠️"
-                            android:textSize="18sp"
-                            android:layout_marginEnd="8dp"/>
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="¡ATENCIÓN! El perro tiene alergias"
-                                android:textColor="@color/error"
-                                android:textSize="13sp"
-                                android:textStyle="bold"/>
-
-                            <TextView
-                                android:id="@+id/tvDogAllergy"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text=""
-                                android:textColor="@color/error"
-                                android:textSize="13sp"
-                                android:layout_marginTop="2dp"/>
-                        </LinearLayout>
-                    </LinearLayout>
-
-                    <!-- Ganancia -->
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:gravity="center_vertical">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="💵"
-                            android:textSize="18sp"
-                            android:layout_marginEnd="8dp"/>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Ganancia:"
-                            android:textColor="@color/text_secondary"
-                            android:textSize="13sp"
-                            android:layout_marginEnd="6dp"/>
-
-                        <TextView
-                            android:id="@+id/tvWalkCost"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text=""
-                            android:textColor="@color/accent"
-                            android:textSize="16sp"
-                            android:textStyle="bold"/>
+                app:cardElevation="0dp"
+                app:cardBackgroundColor="#FFF3E0"
+                app:strokeColor="@color/accent"
+                app:strokeWidth="2dp">
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:orientation="horizontal" android:padding="14dp" android:gravity="center_vertical">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="⚠️" android:textSize="22sp" android:layout_marginEnd="10dp"/>
+                    <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                        android:layout_weight="1" android:orientation="vertical">
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:text="¡Alergia detectada!"
+                            android:textColor="@color/accent_dark" android:textSize="14sp" android:textStyle="bold"
+                            android:fontFamily="@font/poppins"/>
+                        <TextView android:id="@+id/tvAllergyText"
+                            android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:text="" android:textColor="#666666" android:textSize="12sp"
+                            android:fontFamily="@font/poppins"/>
                     </LinearLayout>
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- Tip ubicación -->
+            <!-- Progreso del paseo -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:cardCornerRadius="14dp"
-                app:cardElevation="0dp"
-                app:cardBackgroundColor="@color/surface_alt"
-                android:layout_marginBottom="24dp">
+                android:layout_marginBottom="14dp"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="4dp"
+                app:cardBackgroundColor="#FFFFFF">
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:orientation="vertical" android:padding="20dp">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:padding="14dp"
-                    android:gravity="center_vertical">
+                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                        android:orientation="horizontal" android:gravity="center_vertical"
+                        android:layout_marginBottom="12dp" android:baselineAligned="false">
+                        <TextView android:layout_width="0dp" android:layout_height="wrap_content"
+                            android:layout_weight="1" android:text="Progreso del paseo"
+                            android:textColor="#1A1A1A" android:textSize="15sp" android:textStyle="bold"
+                            android:fontFamily="@font/poppins"/>
+                        <TextView android:id="@+id/tvElapsed"
+                            android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:text="0 min"
+                            android:textColor="@color/primary" android:textSize="14sp" android:textStyle="bold"
+                            android:fontFamily="@font/poppins"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:text=" / "
+                            android:textColor="#AAAAAA" android:textSize="14sp"/>
+                        <TextView android:id="@+id/tvDuration"
+                            android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:text="30 min"
+                            android:textColor="#AAAAAA" android:textSize="14sp"
+                            android:fontFamily="@font/poppins"/>
+                    </LinearLayout>
 
-                    <TextView
+                    <ProgressBar
+                        android:id="@+id/progressWalk"
+                        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="12dp"
+                        android:max="100"
+                        android:progress="0"
+                        android:progressTint="@color/primary"
+                        android:progressBackgroundTint="@color/primary_ultra_light"/>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Info del paseador -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="14dp"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="4dp"
+                app:cardBackgroundColor="#FFFFFF">
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:orientation="horizontal" android:padding="16dp" android:gravity="center_vertical"
+                    android:baselineAligned="false">
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="48dp" android:layout_height="48dp"
+                        android:layout_marginEnd="14dp"
+                        app:cardCornerRadius="24dp" app:cardElevation="0dp"
+                        app:cardBackgroundColor="@color/primary_ultra_light">
+                        <TextView android:layout_width="match_parent" android:layout_height="match_parent"
+                            android:gravity="center" android:text="🦺" android:textSize="22sp"/>
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                        android:layout_weight="1" android:orientation="vertical">
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:text="Paseador asignado"
+                            android:textColor="#AAAAAA" android:textSize="11sp" android:fontFamily="@font/poppins"/>
+                        <TextView android:id="@+id/tvWalkerName"
+                            android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:text=""
+                            android:textColor="#1A1A1A" android:textSize="16sp" android:textStyle="bold"
+                            android:fontFamily="@font/poppins"/>
+                    </LinearLayout>
+
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="📍"
-                        android:textSize="20sp"
-                        android:layout_marginEnd="10dp"/>
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Tu ubicación se comparte con el dueño mientras el paseo está activo"
-                        android:textColor="@color/text_secondary"
-                        android:textSize="13sp"
-                        android:lineSpacingMultiplier="1.3"/>
+                        android:background="@drawable/badge_accent"
+                        android:paddingStart="10dp" android:paddingEnd="10dp"
+                        android:paddingTop="4dp" android:paddingBottom="4dp"
+                        android:gravity="center">
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:text="En ruta 🐾"
+                            android:textColor="#FFFFFF" android:textSize="12sp" android:textStyle="bold"
+                            android:fontFamily="@font/poppins"/>
+                    </LinearLayout>
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- Botones -->
+            <!-- Botón finalizar -->
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnStartWalk"
+                android:id="@+id/btnEndWalk"
                 android:layout_width="match_parent"
-                android:layout_height="52dp"
-                app:cornerRadius="100dp"
-                android:backgroundTint="@color/accent"
-                android:textColor="@color/surface"
-                android:text="🐾 ¡Iniciar paseo!"
-                android:textSize="15sp"
+                android:layout_height="58dp"
+                app:cornerRadius="29dp"
+                android:backgroundTint="@color/error"
+                android:textColor="#FFFFFF"
+                android:text="🏁  Finalizar paseo"
+                android:textSize="17sp"
                 android:textStyle="bold"
-                android:textAllCaps="false"
-                android:layout_marginBottom="12dp"/>
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnFinishWalk"
-                android:layout_width="match_parent"
-                android:layout_height="52dp"
-                app:cornerRadius="100dp"
-                android:backgroundTint="@color/primary"
-                android:textColor="@color/surface"
-                android:text="🏁 Finalizar paseo"
-                android:textSize="15sp"
-                android:textStyle="bold"
-                android:textAllCaps="false"
-                android:enabled="false"/>
-
+                android:fontFamily="@font/poppins"
+                android:textAllCaps="false"/>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

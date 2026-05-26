@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
   activity_register_dog.xml
-  IDs: etDogName, etBreed, chipGroupSize, chipSmall, chipMedium,
-       chipLarge, etAge, etAllergy, btnSaveDog
+  IDs: toolbar, ivDogPhoto, tvDogPhotoLabel, btnChangeDogPhoto,
+       etDogName, etBreed, etAge, etAllergy,
+       btnGenderMale, btnGenderFemale,
+       chipGroupSize, chipSmall, chipMedium, chipLarge, btnSaveDog
 -->
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -10,212 +12,288 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/background">
+    android:background="#FFF8EE">
 
-    <!-- Toolbar con botón back -->
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@color/primary_dark"
-        app:titleTextColor="@color/surface"
-        app:navigationIconTint="@color/surface"/>
+        android:background="#F5A623"
+        app:titleTextColor="#FFFFFF"
+        app:navigationIconTint="#FFFFFF"/>
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        android:fillViewport="true">
+        android:layout_weight="1">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:paddingTop="24dp"
+            android:paddingBottom="40dp">
 
-            <!-- Header -->
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="180dp"
-                android:background="@color/primary_dark">
-
-                <View
-                    android:layout_width="360dp"
-                    android:layout_height="360dp"
-                    android:layout_gravity="bottom|end"
-                    android:layout_marginBottom="-180dp"
-                    android:layout_marginEnd="-80dp"
-                    android:background="@drawable/circle_primary_light"
-                    android:alpha="0.25"/>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:gravity="center_vertical"
-                    android:paddingStart="28dp"
-                    android:paddingBottom="16dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="🐕"
-                        android:textSize="48sp"
-                        android:layout_marginBottom="8dp"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Cuéntanos sobre tu perro"
-                        android:textColor="@color/surface"
-                        android:textSize="22sp"
-                        android:textStyle="bold"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Tu compañero de aventuras"
-                        android:textColor="#CCFFFFFF"
-                        android:textSize="13sp"
-                        android:layout_marginTop="4dp"/>
-                </LinearLayout>
-            </FrameLayout>
-
-            <!-- Formulario -->
+            <!-- Foto de la mascota — FIX: botón cámara ABAJO, no encima -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:paddingStart="20dp"
-                android:paddingEnd="20dp"
-                android:paddingTop="24dp"
-                android:paddingBottom="32dp">
+                android:gravity="center"
+                android:layout_marginBottom="24dp">
 
-                <!-- Nombre del perro -->
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/tilDogName"
-                    style="@style/Widget.DogWalk.TextInputLayout"
-                    android:hint="Nombre del perro">
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/etDogName"
+                <!-- Foto circular -->
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_marginBottom="12dp"
+                    app:cardCornerRadius="50dp"
+                    app:cardElevation="6dp"
+                    app:cardBackgroundColor="#FFF3D6"
+                    app:strokeColor="#F5A623"
+                    app:strokeWidth="2dp">
+
+                    <ImageView
+                        android:id="@+id/ivDogPhoto"
                         android:layout_width="match_parent"
-                        android:layout_height="56dp"
-                        android:inputType="textPersonName"
-                        android:imeOptions="actionNext"/>
-                </com.google.android.material.textfield.TextInputLayout>
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop"
+                        android:visibility="gone"/>
 
-                <Space android:layout_width="match_parent" android:layout_height="12dp"/>
+                    <TextView
+                        android:id="@+id/tvDogInitial"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="🐕"
+                        android:textSize="44sp"/>
+                </com.google.android.material.card.MaterialCardView>
 
-                <!-- Raza -->
+                <!-- FIX: Botón cámara SEPARADO debajo de la foto -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnChangeDogPhoto"
+                    android:layout_width="wrap_content"
+                    android:layout_height="38dp"
+                    app:cornerRadius="19dp"
+                    android:backgroundTint="#F5A623"
+                    android:textColor="#FFFFFF"
+                    android:text="📷 Agregar foto"
+                    android:textSize="13sp"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/poppins"
+                    android:textAllCaps="false"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"/>
+
+                <TextView
+                    android:id="@+id/tvDogPhotoLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Nombre de la Mascota"
+                    android:textColor="#777777"
+                    android:textSize="13sp"
+                    android:fontFamily="@font/poppins"
+                    android:layout_marginTop="10dp"/>
+            </LinearLayout>
+
+            <!-- Nombre -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilDogName"
+                style="@style/Widget.DogWalk.TextInputLayout"
+                android:hint="Nombre de la mascota *"
+                android:layout_marginBottom="14dp">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etDogName"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:inputType="textPersonName|textCapWords"
+                    android:textColor="#1A1A1A"
+                    android:fontFamily="@font/poppins"
+                    android:imeOptions="actionNext"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Raza y Edad en una fila -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="14dp"
+                android:baselineAligned="false">
+
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/tilBreed"
                     style="@style/Widget.DogWalk.TextInputLayout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="8dp"
                     android:hint="Raza">
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/etBreed"
                         android:layout_width="match_parent"
                         android:layout_height="56dp"
-                        android:inputType="textCapSentences"
+                        android:inputType="textCapWords"
+                        android:textColor="#1A1A1A"
+                        android:fontFamily="@font/poppins"
                         android:imeOptions="actionNext"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <Space android:layout_width="match_parent" android:layout_height="12dp"/>
-
-                <!-- Edad -->
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/tilAge"
                     style="@style/Widget.DogWalk.TextInputLayout"
-                    android:hint="Edad (años)">
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:hint="Edad">
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/etAge"
                         android:layout_width="match_parent"
                         android:layout_height="56dp"
                         android:inputType="number"
+                        android:textColor="#1A1A1A"
+                        android:fontFamily="@font/poppins"
                         android:imeOptions="actionNext"/>
                 </com.google.android.material.textfield.TextInputLayout>
+            </LinearLayout>
 
-                <Space android:layout_width="match_parent" android:layout_height="20dp"/>
+            <!-- Género -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Género"
+                android:textColor="#1A1A1A"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:fontFamily="@font/poppins"
+                android:layout_marginBottom="10dp"/>
 
-                <!-- Tamaño -->
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Tamaño del perro"
-                    android:textColor="@color/text_secondary"
-                    android:textSize="13sp"
-                    android:layout_marginBottom="10dp"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="16dp"
+                android:baselineAligned="false">
 
-                <com.google.android.material.chip.ChipGroup
-                    android:id="@+id/chipGroupSize"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:singleSelection="true"
-                    app:selectionRequired="true">
-
-                    <com.google.android.material.chip.Chip
-                        android:id="@+id/chipSmall"
-                        android:layout_width="wrap_content"
-                        android:layout_height="48dp"
-                        android:text="🐩 Pequeño"
-                        android:textSize="14sp"
-                        android:checkable="true"
-                        app:chipBackgroundColor="@color/surface"
-                        app:chipStrokeColor="@color/border"
-                        app:chipStrokeWidth="1.5dp"/>
-
-                    <com.google.android.material.chip.Chip
-                        android:id="@+id/chipMedium"
-                        android:layout_width="wrap_content"
-                        android:layout_height="48dp"
-                        android:text="🐕 Mediano"
-                        android:textSize="14sp"
-                        android:checkable="true"
-                        app:chipBackgroundColor="@color/surface"
-                        app:chipStrokeColor="@color/border"
-                        app:chipStrokeWidth="1.5dp"/>
-
-                    <com.google.android.material.chip.Chip
-                        android:id="@+id/chipLarge"
-                        android:layout_width="wrap_content"
-                        android:layout_height="48dp"
-                        android:text="🦮 Grande"
-                        android:textSize="14sp"
-                        android:checkable="true"
-                        app:chipBackgroundColor="@color/surface"
-                        app:chipStrokeColor="@color/border"
-                        app:chipStrokeWidth="1.5dp"/>
-                </com.google.android.material.chip.ChipGroup>
-
-                <Space android:layout_width="match_parent" android:layout_height="20dp"/>
-
-                <!-- Alergias -->
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/tilAllergy"
-                    style="@style/Widget.DogWalk.TextInputLayout"
-                    android:hint="Alergias (opcional)">
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/etAllergy"
-                        android:layout_width="match_parent"
-                        android:layout_height="56dp"
-                        android:inputType="textCapSentences"
-                        android:imeOptions="actionDone"/>
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <Space android:layout_width="match_parent" android:layout_height="28dp"/>
-
-                <!-- Botón guardar -->
                 <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btnSaveDog"
-                    android:layout_width="match_parent"
-                    android:layout_height="52dp"
-                    app:cornerRadius="100dp"
-                    android:backgroundTint="@color/primary"
-                    android:textColor="@color/surface"
-                    android:text="Guardar y continuar"
-                    android:textSize="15sp"
+                    android:id="@+id/btnGenderMale"
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="8dp"
+                    app:cornerRadius="24dp"
+                    android:backgroundTint="#F5A623"
+                    android:textColor="#FFFFFF"
+                    android:text="♂ Macho"
+                    android:textSize="14sp"
                     android:textStyle="bold"
+                    android:fontFamily="@font/poppins"
                     android:textAllCaps="false"/>
 
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnGenderFemale"
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:layout_weight="1"
+                    app:cornerRadius="24dp"
+                    android:backgroundTint="#EEEEEE"
+                    android:textColor="#777777"
+                    android:text="♀ Hembra"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/poppins"
+                    android:textAllCaps="false"/>
             </LinearLayout>
+
+            <!-- Tamaño -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tamaño"
+                android:textColor="#1A1A1A"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:fontFamily="@font/poppins"
+                android:layout_marginBottom="10dp"/>
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/chipGroupSize"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:singleSelection="true"
+                app:selectionRequired="true">
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chipSmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="44dp"
+                    android:text="🐩 Pequeño"
+                    android:textColor="#1A1A1A"
+                    android:textSize="13sp"
+                    android:checkable="true"
+                    app:chipBackgroundColor="#FFFFFF"
+                    app:chipStrokeColor="#FFD080"
+                    app:chipStrokeWidth="1.5dp"
+                    app:checkedIconTint="#F5A623"/>
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chipMedium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="44dp"
+                    android:text="🐕 Mediano"
+                    android:textColor="#1A1A1A"
+                    android:textSize="13sp"
+                    android:checkable="true"
+                    app:chipBackgroundColor="#FFFFFF"
+                    app:chipStrokeColor="#FFD080"
+                    app:chipStrokeWidth="1.5dp"
+                    app:checkedIconTint="#F5A623"/>
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chipLarge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="44dp"
+                    android:text="🦮 Grande"
+                    android:textColor="#1A1A1A"
+                    android:textSize="13sp"
+                    android:checkable="true"
+                    app:chipBackgroundColor="#FFFFFF"
+                    app:chipStrokeColor="#FFD080"
+                    app:chipStrokeWidth="1.5dp"
+                    app:checkedIconTint="#F5A623"/>
+            </com.google.android.material.chip.ChipGroup>
+
+            <!-- Alergias -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilAllergy"
+                style="@style/Widget.DogWalk.TextInputLayout"
+                android:hint="Cuidados especiales / Alergias"
+                app:helperText="Escribe 'ninguna' si no tiene"
+                android:layout_marginBottom="28dp">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etAllergy"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:inputType="textCapSentences"
+                    android:textColor="#1A1A1A"
+                    android:fontFamily="@font/poppins"
+                    android:imeOptions="actionDone"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnSaveDog"
+                android:layout_width="match_parent"
+                android:layout_height="54dp"
+                app:cornerRadius="27dp"
+                android:backgroundTint="#F5A623"
+                android:textColor="#FFFFFF"
+                android:text="GUARDAR MASCOTA"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:letterSpacing="0.05"
+                android:fontFamily="@font/poppins"
+                android:textAllCaps="false"/>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

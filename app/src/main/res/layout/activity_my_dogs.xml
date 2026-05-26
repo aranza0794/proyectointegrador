@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  activity_available_walkers.xml
-  IDs: toolbar, rvWalkers, layoutEmpty, progressBar
+  activity_my_dogs.xml
+  IDs: toolbar, rvDogs, btnAddNewDog, layoutEmpty
 -->
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -9,20 +9,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/background">
+    android:background="#D6E8F5">
 
-    <!-- Header -->
+    <!-- Header naranja -->
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="140dp"
-        android:background="@color/primary">
+        android:layout_height="120dp"
+        android:background="#1B3A6B">
 
         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:layout_gravity="top|end" android:layout_marginTop="10dp" android:layout_marginEnd="16dp"
-            android:text="🐾" android:textSize="32sp" android:alpha="0.18" android:rotation="20"/>
-        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:layout_gravity="bottom|start" android:layout_marginBottom="16dp" android:layout_marginStart="180dp"
-            android:text="🦴" android:textSize="20sp" android:alpha="0.15" android:rotation="30"/>
+            android:text="🐾" android:textSize="28sp" android:alpha="0.2" android:rotation="20"/>
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
@@ -36,51 +33,20 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:orientation="vertical"
             android:paddingStart="20dp"
-            android:paddingBottom="16dp">
-
+            android:paddingBottom="14dp">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Paseadores disponibles"
+                android:text="Mis Mascotas 🐕"
                 android:textColor="#FFFFFF"
                 android:textSize="22sp"
                 android:textStyle="bold"
                 android:fontFamily="@font/poppins"/>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:layout_marginTop="4dp">
-                <View
-                    android:layout_width="8dp"
-                    android:layout_height="8dp"
-                    android:background="@drawable/circle_background"
-                    android:layout_marginEnd="6dp"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="En línea ahora"
-                    android:textColor="#CCFFFFFF"
-                    android:textSize="13sp"
-                    android:fontFamily="@font/poppins"/>
-            </LinearLayout>
         </LinearLayout>
     </FrameLayout>
 
-    <!-- Loading -->
-    <ProgressBar
-        android:id="@+id/progressBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:visibility="gone"
-        android:indeterminateTint="@color/primary"/>
-
-    <!-- Lista -->
+    <!-- Lista de perros -->
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -95,28 +61,42 @@
             android:gravity="center"
             android:padding="40dp"
             android:visibility="gone">
-
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:text="🐕" android:textSize="72sp" android:layout_marginBottom="16dp"/>
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:text="Sin paseadores disponibles"
-                android:textColor="#1A1A1A" android:textSize="20sp" android:textStyle="bold"
+                android:text="Aún no tienes mascotas"
+                android:textColor="#1A1A1A" android:textSize="18sp" android:textStyle="bold"
                 android:fontFamily="@font/poppins" android:gravity="center"/>
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:text="Intenta más tarde o en otra zona 🦴"
-                android:textColor="#888888" android:textSize="14sp"
+                android:text="Registra a tu peludo tocando el botón de abajo"
+                android:textColor="#777777" android:textSize="14sp"
                 android:fontFamily="@font/poppins" android:gravity="center"
                 android:layout_marginTop="8dp"/>
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvWalkers"
+            android:id="@+id/rvDogs"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clipToPadding="false"
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
-            android:paddingTop="12dp"
-            android:paddingBottom="24dp"/>
+            android:paddingTop="16dp"
+            android:paddingBottom="80dp"/>
     </FrameLayout>
+
+    <!-- Botón agregar nuevo perro -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnAddNewDog"
+        android:layout_width="match_parent"
+        android:layout_height="54dp"
+        android:layout_margin="16dp"
+        app:cornerRadius="27dp"
+        android:backgroundTint="#1B3A6B"
+        android:textColor="#FFFFFF"
+        android:text="+ Registrar Nueva Mascota"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:fontFamily="@font/poppins"
+        android:textAllCaps="false"/>
 </LinearLayout>

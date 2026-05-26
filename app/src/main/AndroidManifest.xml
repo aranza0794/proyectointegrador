@@ -7,6 +7,12 @@
     <!-- Internet: requerido para Firebase -->
     <uses-permission android:name="android.permission.INTERNET" />
 
+    <!-- Cámara y galería: para foto de perfil y perro -->
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="32" />
+
     <!-- Ubicación precisa: para rastrear al paseador en tiempo real -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
@@ -54,7 +60,7 @@
         <activity
             android:name=".activities.RegisterActivity"
             android:exported="false"
-            android:windowSoftInputMode="adjustResize"/>
+            android:windowSoftInputMode="adjustPan"/>
 
         <!-- ─── ONBOARDING DUEÑO ──────────────────────────────────── -->
         <!--
@@ -64,7 +70,7 @@
         <activity
             android:name=".activities.RegisterDogActivity"
             android:exported="false"
-            android:windowSoftInputMode="adjustResize"/>
+            android:windowSoftInputMode="adjustPan"/>
 
         <!-- ─── DASHBOARD DUEÑO ───────────────────────────────────── -->
         <!--
@@ -120,7 +126,19 @@
         <activity
             android:name=".activities.WalkerDashboardActivity"
             android:exported="false"
-            android:launchMode="singleTop"/>
+            android:launchMode="singleTop"
+            android:windowSoftInputMode="adjustPan"/>
+
+        <!-- ─── MIS MASCOTAS ────────────────────────────────────────────── -->
+        <activity
+            android:name=".activities.MyDogsActivity"
+            android:exported="false"/>
+
+        <!-- ─── PERFIL ──────────────────────────────────────────────── -->
+        <activity
+            android:name=".activities.ProfileActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustPan"/>
 
         <!-- ─── FLUJO DE PASEO (PASEADOR) ─────────────────────────── -->
         <!--
@@ -129,17 +147,9 @@
         <activity
             android:name=".activities.ActiveWalkActivity"
             android:exported="false"
-            android:launchMode="singleTop"/>
-
-        <activity
-            android:name=".activities.ProfileActivity"
-            android:exported="false"/>
-
-        <activity
-            android:name=".activities.WalkerEarningsActivity"
-            android:exported="false"/>
+            android:launchMode="singleTask"
+            android:windowSoftInputMode="adjustPan"/>
 
     </application>
 
 </manifest>
-

@@ -9,10 +9,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="12dp"
-    app:cardCornerRadius="16dp"
-    app:cardElevation="3dp"
-    app:cardBackgroundColor="@color/surface">
+    android:layout_marginBottom="14dp"
+    app:cardCornerRadius="24dp"
+    app:cardElevation="5dp"
+    app:cardBackgroundColor="#FFFFFF"
+    app:strokeColor="@color/primary_ultra_light"
+    app:strokeWidth="1dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -20,48 +22,51 @@
         android:orientation="vertical"
         android:padding="16dp">
 
-        <!-- Fila superior: foto + info -->
+        <!-- Fila: foto + info + precio -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center_vertical"
-            android:baselineAligned="false"
-            android:layout_marginBottom="12dp">
+            android:layout_marginBottom="14dp"
+            android:baselineAligned="false">
 
-            <!-- FIX: Foto del paseador -->
+            <!-- Foto con punto verde de disponibilidad -->
             <FrameLayout
-                android:layout_width="56dp"
-                android:layout_height="56dp"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
                 android:layout_marginEnd="14dp">
 
-                <!-- Foto real (visible si tiene foto) -->
-                <ImageView
-                    android:id="@+id/ivWalkerPhoto"
-                    android:layout_width="56dp"
-                    android:layout_height="56dp"
-                    android:scaleType="centerCrop"
-                    android:visibility="gone"/>
-
-                <!-- Inicial del nombre (visible si no tiene foto) -->
                 <com.google.android.material.card.MaterialCardView
-                    android:layout_width="56dp"
-                    android:layout_height="56dp"
-                    app:cardCornerRadius="28dp"
-                    app:cardElevation="0dp"
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    app:cardCornerRadius="32dp"
+                    app:cardElevation="3dp"
                     app:cardBackgroundColor="@color/primary_ultra_light">
-
+                    <ImageView
+                        android:id="@+id/ivWalkerPhoto"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop"
+                        android:visibility="gone"/>
                     <TextView
                         android:id="@+id/tvWalkerInitial"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:gravity="center"
-                        android:text="?"
+                        android:text="\?"
                         android:textColor="@color/primary"
-                        android:textSize="22sp"
+                        android:textSize="24sp"
                         android:textStyle="bold"
                         android:fontFamily="@font/poppins"/>
                 </com.google.android.material.card.MaterialCardView>
+
+                <!-- Punto verde disponible -->
+                <View
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_gravity="bottom|end"
+                    android:background="@drawable/circle_green_online"/>
             </FrameLayout>
 
             <!-- Nombre y calificación -->
@@ -76,12 +81,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text=""
-                    android:textColor="@color/text_primary"
+                    android:textColor="#1A1A1A"
                     android:textSize="16sp"
                     android:textStyle="bold"
                     android:fontFamily="@font/poppins"/>
 
-                <!-- Estrellas + número -->
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -96,7 +100,7 @@
                         android:numStars="5"
                         android:rating="0"
                         android:isIndicator="true"
-                        android:progressTint="@color/primary"
+                        android:progressTint="@color/accent"
                         style="@style/Widget.AppCompat.RatingBar.Small"/>
 
                     <TextView
@@ -104,7 +108,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="0.0"
-                        android:textColor="@color/text_secondary"
+                        android:textColor="#666666"
                         android:textSize="12sp"
                         android:fontFamily="@font/poppins"
                         android:layout_marginStart="4dp"/>
@@ -114,70 +118,65 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text=""
-                        android:textColor="@color/text_hint"
+                        android:textColor="#AAAAAA"
                         android:textSize="11sp"
                         android:fontFamily="@font/poppins"
                         android:layout_marginStart="2dp"/>
                 </LinearLayout>
             </LinearLayout>
 
-            <!-- Precio por minuto -->
+            <!-- Badge precio naranja -->
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:gravity="center">
-
+                android:gravity="center"
+                android:background="@drawable/badge_accent"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                android:paddingTop="6dp"
+                android:paddingBottom="6dp">
                 <TextView
                     android:id="@+id/tvWalkerPrice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="$1"
-                    android:textColor="@color/primary"
-                    android:textSize="20sp"
+                    android:textColor="#FFFFFF"
+                    android:textSize="18sp"
                     android:textStyle="bold"
                     android:fontFamily="@font/poppins"/>
-
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="por min"
-                    android:textColor="@color/text_hint"
+                    android:textColor="#EEFFFFFF"
                     android:textSize="10sp"
-                    android:fontFamily="@font/poppins"
-                    android:gravity="center"/>
+                    android:fontFamily="@font/poppins"/>
             </LinearLayout>
         </LinearLayout>
 
         <!-- Separador -->
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/divider"
-            android:layout_marginBottom="12dp"/>
+        <View android:layout_width="match_parent" android:layout_height="1dp"
+            android:background="@color/divider" android:layout_marginBottom="12dp"/>
 
-        <!-- FIX: Número de tarjeta (últimos 4 dígitos) -->
+        <!-- Tarjeta -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center_vertical"
-            android:layout_marginBottom="12dp"
+            android:layout_marginBottom="14dp"
             android:baselineAligned="false">
 
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="36dp"
                 android:layout_height="36dp"
                 android:layout_marginEnd="10dp"
-                app:cardCornerRadius="8dp"
+                app:cardCornerRadius="10dp"
                 app:cardElevation="0dp"
-                app:cardBackgroundColor="@color/surface_alt">
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:text="💳"
-                    android:textSize="16sp"/>
+                app:cardBackgroundColor="@color/primary_ultra_light">
+                <TextView android:layout_width="match_parent" android:layout_height="match_parent"
+                    android:gravity="center" android:text="💳" android:textSize="18sp"/>
             </com.google.android.material.card.MaterialCardView>
 
             <LinearLayout
@@ -185,25 +184,18 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                     android:text="Tarjeta de cobro"
-                    android:textColor="@color/text_hint"
-                    android:textSize="11sp"
-                    android:fontFamily="@font/poppins"/>
-
+                    android:textColor="#AAAAAA" android:textSize="11sp" android:fontFamily="@font/poppins"/>
                 <TextView
                     android:id="@+id/tvWalkerCard"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="**** **** **** ----"
-                    android:textColor="@color/text_primary"
+                    android:textColor="#1A1A1A"
                     android:textSize="14sp"
                     android:textStyle="bold"
-                    android:fontFamily="@font/poppins"
-                    android:letterSpacing="0.05"/>
+                    android:fontFamily="@font/poppins"/>
             </LinearLayout>
         </LinearLayout>
 
@@ -211,15 +203,14 @@
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnSelectWalker"
             android:layout_width="match_parent"
-            android:layout_height="44dp"
-            app:cornerRadius="100dp"
+            android:layout_height="48dp"
+            app:cornerRadius="24dp"
             android:backgroundTint="@color/primary"
-            android:textColor="@color/surface"
-            android:text="Seleccionar paseador"
+            android:textColor="#FFFFFF"
+            android:text="🐾  Seleccionar paseador"
             android:textSize="14sp"
             android:textStyle="bold"
             android:fontFamily="@font/poppins"
             android:textAllCaps="false"/>
-
     </LinearLayout>
 </com.google.android.material.card.MaterialCardView>

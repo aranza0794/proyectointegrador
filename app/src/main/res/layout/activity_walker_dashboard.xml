@@ -1,54 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--
-  activity_walker_dashboard.xml
-  IDs: tvWelcome, rvPendingRequests, btnLogout, switchAvailable,
-       tvAvailableStatus, tvRequestCount, layoutEmpty, btnWalkerHistory
--->
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/background">
+    android:background="@drawable/bg_paws">
 
-    <!-- Header verde petróleo -->
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="250dp"
+        android:layout_height="260dp"
         android:background="@color/primary">
 
-        <!-- Círculo decorativo -->
-        <View
-            android:layout_width="260dp"
-            android:layout_height="260dp"
-            android:layout_gravity="bottom|end"
-            android:layout_marginBottom="-110dp"
-            android:layout_marginEnd="-50dp"
-            android:background="@drawable/circle_background"
-            android:alpha="0.1"/>
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:layout_gravity="top|end" android:layout_marginTop="20dp" android:layout_marginEnd="16dp"
+            android:text="🐾" android:textSize="32sp" android:alpha="0.2" android:rotation="20"/>
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:layout_gravity="center|end" android:layout_marginEnd="30dp"
+            android:text="🐾" android:textSize="20sp" android:alpha="0.15" android:rotation="-10"/>
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:layout_gravity="bottom|start" android:layout_marginBottom="20dp" android:layout_marginStart="180dp"
+            android:text="🦴" android:textSize="20sp" android:alpha="0.15" android:rotation="30"/>
 
-        <!-- Huellas decorativas -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="top|end"
-            android:layout_marginTop="60dp"
-            android:layout_marginEnd="72dp"
-            android:text="🐾"
-            android:textSize="24sp"
-            android:alpha="0.25"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical|end"
-            android:layout_marginEnd="20dp"
-            android:text="🐾"
-            android:textSize="16sp"
-            android:alpha="0.18"/>
-
-        <!-- FIX: Botón perfil más abajo y más grande -->
+        <!-- Botón perfil — LinearLayout -->
         <LinearLayout
             android:id="@+id/btnLogout"
             android:layout_width="52dp"
@@ -60,14 +34,11 @@
             android:background="@drawable/circle_white_20"
             android:clickable="true"
             android:focusable="true">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="👤"
-                android:textSize="26sp"/>
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="👤" android:textSize="24sp"/>
         </LinearLayout>
 
-        <!-- FIX: Info paseador más grande y abajo -->
+        <!-- Info paseador -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -76,33 +47,38 @@
             android:paddingStart="24dp"
             android:paddingBottom="24dp">
 
-            <TextView
+            <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="30dp"
+                android:background="@drawable/badge_accent"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                android:gravity="center"
+                android:layout_marginBottom="6dp">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="🦺 Modo paseador"
+                    android:textColor="#FFFFFF" android:textSize="12sp" android:textStyle="bold"
+                    android:fontFamily="@font/poppins"/>
+            </LinearLayout>
+
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:text="Hola,"
-                android:textColor="#CCFFFFFF"
-                android:textSize="20sp"
-                android:fontFamily="@font/poppins"
-                android:layout_marginBottom="2dp"/>
+                android:textColor="#CCFFFFFF" android:textSize="18sp" android:fontFamily="@font/poppins"/>
 
             <TextView
                 android:id="@+id/tvWelcome"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=""
-                android:textColor="@color/surface"
-                android:textSize="34sp"
+                android:textColor="#FFFFFF"
+                android:textSize="32sp"
                 android:textStyle="bold"
                 android:fontFamily="@font/poppins"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="🦺 Modo paseador · Patitas en Ruta"
-                android:textColor="#AAFFFFFF"
-                android:textSize="13sp"
-                android:fontFamily="@font/poppins"
-                android:layout_marginTop="4dp"
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="Patitas en Ruta"
+                android:textColor="#AAFFFFFF" android:textSize="12sp"
+                android:fontFamily="@font/poppins" android:layout_marginTop="2dp"
                 android:layout_marginBottom="12dp"/>
 
             <!-- Switch disponibilidad -->
@@ -117,7 +93,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:checked="true"
-                    android:thumbTint="@color/surface"
+                    android:thumbTint="#FFFFFF"
                     android:trackTint="#80FFFFFF"/>
 
                 <TextView
@@ -131,14 +107,14 @@
                     android:layout_marginStart="8dp"/>
             </LinearLayout>
 
-            <!-- Botón historial blanco -->
+            <!-- Botón historial -->
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnWalkerHistory"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
-                android:layout_marginTop="14dp"
-                app:cornerRadius="100dp"
-                android:backgroundTint="@color/surface"
+                android:layout_marginTop="12dp"
+                app:cornerRadius="20dp"
+                android:backgroundTint="#FFFFFF"
                 android:textColor="@color/primary"
                 android:text="📋 Mi historial"
                 android:textSize="13sp"
@@ -150,7 +126,7 @@
         </LinearLayout>
     </FrameLayout>
 
-    <!-- Solicitudes -->
+    <!-- Solicitudes pendientes -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -173,7 +149,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Solicitudes pendientes"
-                android:textColor="@color/text_primary"
+                android:textColor="#1A1A1A"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 android:fontFamily="@font/poppins"/>
@@ -190,7 +166,7 @@
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:text="0"
-                    android:textColor="@color/surface"
+                    android:textColor="#FFFFFF"
                     android:textSize="13sp"
                     android:textStyle="bold"
                     android:fontFamily="@font/poppins"/>
@@ -211,31 +187,16 @@
                 android:visibility="gone"
                 android:padding="32dp">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="🐾"
-                    android:textSize="64sp"
-                    android:layout_marginBottom="16dp"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="🐾" android:textSize="64sp" android:layout_marginBottom="16dp"/>
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                     android:text="Sin solicitudes aún"
-                    android:textColor="@color/text_primary"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    android:fontFamily="@font/poppins"
-                    android:gravity="center"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Las nuevas solicitudes aparecerán aquí"
-                    android:textColor="@color/text_secondary"
-                    android:textSize="14sp"
-                    android:fontFamily="@font/poppins"
-                    android:gravity="center"
+                    android:textColor="#1A1A1A" android:textSize="20sp" android:textStyle="bold"
+                    android:fontFamily="@font/poppins" android:gravity="center"/>
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="Las nuevas solicitudes aparecerán aquí 🦴"
+                    android:textColor="#666666" android:textSize="14sp"
+                    android:fontFamily="@font/poppins" android:gravity="center"
                     android:layout_marginTop="8dp"/>
             </LinearLayout>
 

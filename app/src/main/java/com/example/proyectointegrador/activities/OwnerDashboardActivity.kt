@@ -7,6 +7,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import com.example.proyectointegrador.R
 import com.example.proyectointegrador.utils.SessionManager
 import com.google.android.material.button.MaterialButton
@@ -23,17 +24,24 @@ class OwnerDashboardActivity : AppCompatActivity() {
     private var walkListener: ListenerRegistration? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_owner_dashboard)
 
         session = SessionManager(this)
 
+        if (session.getUserId().isEmpty()) {
+            startActivity(Intent(this, LoginActivity::class.java).apply {
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            })
+            finish()
+            return
+        }
+
         val tvWelcome      = findViewById<TextView>(R.id.tvWelcome)
         val btnRequestWalk = findViewById<MaterialButton>(R.id.btnRequestWalk)
-        // FIX: son MaterialCardView en el nuevo XML, no LinearLayout
         val btnMyDog       = findViewById<MaterialCardView>(R.id.btnMyDog)
         val btnHistory     = findViewById<MaterialCardView>(R.id.btnHistory)
-        // FIX: btnLogout es LinearLayout en el nuevo XML
         val btnLogout      = findViewById<LinearLayout>(R.id.btnLogout)
 
         tvWelcome.text = session.getUserName()
@@ -46,7 +54,7 @@ class OwnerDashboardActivity : AppCompatActivity() {
             }
 
         btnMyDog.setOnClickListener {
-            startActivity(Intent(this, RegisterDogActivity::class.java))
+            startActivity(Intent(this, MyDogsActivity::class.java))
         }
         btnHistory.setOnClickListener {
             startActivity(Intent(this, WalkHistoryActivity::class.java))
@@ -71,7 +79,7 @@ class OwnerDashboardActivity : AppCompatActivity() {
 
     private fun startWalkStatusListener() {
         walkListener?.remove()
-        val btnRequestWalk = findViewById<MaterialButton>(R.id.btnRequestWalk)
+        val btnRequestWalk = findViewById<MaterialButton>(R.id.btnRequestWalk) ?: return
 
         walkListener = db.collection("solicitudes")
             .whereEqualTo("ownerId", session.getUserId())
@@ -101,10 +109,10 @@ class OwnerDashboardActivity : AppCompatActivity() {
 
                     when (status) {
                         "pending" -> {
-                            btnRequestWalk.text = "⏳ Esperando paseador... (toca para cancelar)"
+                            btnRequestWalk.text = "⏳ Esperando paseador..."
                             btnRequestWalk.backgroundTintList =
                                 android.content.res.ColorStateList.valueOf(
-                                    android.graphics.Color.parseColor("#E9C46A"))
+                                    android.graphics.Color.parseColor("#3DBFA8"))
                         }
                         "accepted" -> {
                             btnRequestWalk.text = "✅ Paseador en camino → Ver mapa"
@@ -122,7 +130,7 @@ class OwnerDashboardActivity : AppCompatActivity() {
                 } else {
                     activeSolicitudId  = ""
                     lastNotifiedStatus = ""
-                    btnRequestWalk.text = "🐾 Solicitar paseo"
+                    btnRequestWalk.text = "🐾  Solicitar un paseo"
                     btnRequestWalk.backgroundTintList =
                         android.content.res.ColorStateList.valueOf(
                             android.graphics.Color.parseColor("#2A9D8F"))
@@ -161,8 +169,8 @@ class OwnerDashboardActivity : AppCompatActivity() {
                 activeSolicitudId  = ""
                 lastNotifiedStatus = ""
                 val btnRequestWalk = findViewById<MaterialButton>(R.id.btnRequestWalk)
-                btnRequestWalk.text = "🐾 Solicitar paseo"
-                btnRequestWalk.backgroundTintList =
+                btnRequestWalk?.text = "🐾  Solicitar un paseo"
+                btnRequestWalk?.backgroundTintList =
                     android.content.res.ColorStateList.valueOf(
                         android.graphics.Color.parseColor("#2A9D8F"))
                 Toast.makeText(this, "Solicitud cancelada", Toast.LENGTH_SHORT).show()

@@ -1,26 +1,28 @@
 package com.example.proyectointegrador.utils
 
 import android.content.Context
+import android.content.SharedPreferences
 
 class SessionManager(context: Context) {
 
-    private val prefs = context.getSharedPreferences(
-        "dogwalk_session", Context.MODE_PRIVATE
-    )
+    private val prefs: SharedPreferences =
+        context.getSharedPreferences("PatitasEnRuta", Context.MODE_PRIVATE)
 
     fun saveSession(userId: String, userType: String, userName: String) {
         prefs.edit()
-            .putString("user_id", userId)
-            .putString("user_type", userType)
-            .putString("user_name", userName)
-            .putBoolean("is_logged_in", true)
+            .putString("userId",   userId)
+            .putString("userType", userType)
+            .putString("userName", userName)
+            .putBoolean("isLoggedIn", true)
             .apply()
     }
 
-    fun getUserId(): String = prefs.getString("user_id", "") ?: ""
-    fun getUserType(): String = prefs.getString("user_type", "") ?: ""
-    fun getUserName(): String = prefs.getString("user_name", "") ?: ""
-    fun isLoggedIn(): Boolean = prefs.getBoolean("is_logged_in", false)
+    fun getUserId():   String  = prefs.getString("userId",   "") ?: ""
+    fun getUserType(): String  = prefs.getString("userType", "") ?: ""
+    fun getUserName(): String  = prefs.getString("userName", "") ?: ""
+    fun isLoggedIn():  Boolean = prefs.getBoolean("isLoggedIn", false)
 
-    fun clearSession() = prefs.edit().clear().apply()
+    fun clearSession() {
+        prefs.edit().clear().apply()
+    }
 }

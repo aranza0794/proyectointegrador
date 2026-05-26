@@ -1,19 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/background">
+    android:background="@drawable/bg_paws">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
+    <!-- Header azul marino -->
+    <View
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@color/primary"
-        app:titleTextColor="@color/surface"
-        app:navigationIconTint="@color/surface"/>
+        android:layout_height="220dp"
+        android:layout_gravity="top"
+        android:background="@color/primary"/>
+
+    <!-- Patitas decorativas header -->
+    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:layout_gravity="top|start" android:layout_marginTop="24dp" android:layout_marginStart="14dp"
+        android:text="🐾" android:textSize="32sp" android:alpha="0.18" android:rotation="-20"/>
+    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:layout_gravity="top|end" android:layout_marginTop="16dp" android:layout_marginEnd="18dp"
+        android:text="🐾" android:textSize="26sp" android:alpha="0.15" android:rotation="25"/>
+    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:layout_gravity="top|start" android:layout_marginTop="90dp" android:layout_marginStart="50dp"
+        android:text="🦴" android:textSize="20sp" android:alpha="0.13" android:rotation="-10"/>
+    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:layout_gravity="top|end" android:layout_marginTop="95dp" android:layout_marginEnd="60dp"
+        android:text="🐾" android:textSize="18sp" android:alpha="0.12" android:rotation="15"/>
+    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:layout_gravity="top|center_horizontal" android:layout_marginTop="14dp"
+        android:text="🐾" android:textSize="16sp" android:alpha="0.12" android:rotation="5"/>
+    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:layout_gravity="top|start" android:layout_marginTop="150dp" android:layout_marginStart="120dp"
+        android:text="🐕" android:textSize="22sp" android:alpha="0.14" android:rotation="-5"/>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -23,290 +41,332 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingStart="@dimen/screen_margin"
-            android:paddingEnd="@dimen/screen_margin"
-            android:paddingTop="@dimen/spacing_lg"
-            android:paddingBottom="@dimen/spacing_xxl">
+            android:orientation="vertical">
 
-            <!-- Título -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Crear cuenta"
-                android:textColor="@color/text_primary"
-                android:textSize="@dimen/text_xxl"
-                android:textStyle="bold"
-                android:fontFamily="@font/poppins"
-                android:layout_marginBottom="@dimen/spacing_xs"/>
+            <!-- Header -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="240dp"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:paddingTop="40dp">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Completa tus datos para registrarte"
-                android:textColor="@color/text_secondary"
-                android:textSize="@dimen/text_sm"
-                android:fontFamily="@font/poppins"
-                android:layout_marginBottom="@dimen/spacing_lg"/>
+                <androidx.cardview.widget.CardView
+                    android:layout_width="90dp"
+                    android:layout_height="90dp"
+                    android:layout_marginBottom="14dp"
+                    app:cardCornerRadius="45dp"
+                    app:cardElevation="8dp"
+                    app:cardBackgroundColor="#FFFFFF">
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/logo"
+                        android:scaleType="centerCrop"
+                        android:contentDescription="Logo Patitas en Ruta"/>
+                </androidx.cardview.widget.CardView>
 
-            <!-- Tipo de usuario -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Crear Cuenta"
+                    android:textColor="#FFFFFF"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/poppins"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Únete a Patitas en Ruta 🐾"
+                    android:textColor="#FFFFFF"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="10dp"
+                    android:fontFamily="@font/poppins"
+                    android:layout_marginTop="3dp"/>
+            </LinearLayout>
+
+            <!-- Tarjeta formulario -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:cardCornerRadius="@dimen/card_radius"
-                app:cardElevation="2dp"
-                app:cardBackgroundColor="@color/surface"
-                android:layout_marginBottom="@dimen/spacing_lg">
+                android:layout_marginTop="4dp"
+                app:cardCornerRadius="28dp"
+                app:cardElevation="12dp"
+                app:cardBackgroundColor="#FFFFFF">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="@dimen/spacing_md">
+                    android:paddingStart="24dp"
+                    android:paddingEnd="24dp"
+                    android:paddingTop="32dp"
+                    android:paddingBottom="40dp">
 
+                    <!-- Nombre -->
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/tilFirstName"
+                        style="@style/Widget.DogWalk.TextInputLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="14dp"
+                        android:hint="Nombre(s) *">
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etFirstName"
+                            android:layout_width="match_parent"
+                            android:layout_height="56dp"
+                            android:inputType="textPersonName|textCapWords"
+                            android:textColor="#1B3A6B"
+                            android:textSize="15sp"
+                            android:fontFamily="@font/poppins"
+                            android:imeOptions="actionNext"/>
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <!-- Apellidos en fila -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginBottom="14dp"
+                        android:baselineAligned="false">
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/tilLastName1"
+                            style="@style/Widget.DogWalk.TextInputLayout"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_marginEnd="8dp"
+                            android:hint="Apellido paterno *">
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/etLastName1"
+                                android:layout_width="match_parent"
+                                android:layout_height="56dp"
+                                android:inputType="textPersonName|textCapWords"
+                                android:textColor="#1B3A6B"
+                                android:textSize="14sp"
+                                android:fontFamily="@font/poppins"
+                                android:imeOptions="actionNext"/>
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/tilLastName2"
+                            style="@style/Widget.DogWalk.TextInputLayout"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:hint="Apellido materno">
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/etLastName2"
+                                android:layout_width="match_parent"
+                                android:layout_height="56dp"
+                                android:inputType="textPersonName|textCapWords"
+                                android:textColor="#1B3A6B"
+                                android:textSize="14sp"
+                                android:fontFamily="@font/poppins"
+                                android:imeOptions="actionNext"/>
+                        </com.google.android.material.textfield.TextInputLayout>
+                    </LinearLayout>
+
+                    <!-- Email -->
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/tilEmail"
+                        style="@style/Widget.DogWalk.TextInputLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="14dp"
+                        android:hint="Correo electrónico *">
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etEmail"
+                            android:layout_width="match_parent"
+                            android:layout_height="56dp"
+                            android:inputType="textEmailAddress"
+                            android:textColor="#1B3A6B"
+                            android:textSize="15sp"
+                            android:fontFamily="@font/poppins"
+                            android:imeOptions="actionNext"/>
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <!-- Contraseña -->
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/tilPassword"
+                        style="@style/Widget.DogWalk.TextInputLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="14dp"
+                        android:hint="Contraseña *"
+                        app:endIconMode="password_toggle"
+                        app:endIconTint="#1B3A6B">
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etPassword"
+                            android:layout_width="match_parent"
+                            android:layout_height="56dp"
+                            android:inputType="textPassword"
+                            android:textColor="#1B3A6B"
+                            android:textSize="15sp"
+                            android:fontFamily="@font/poppins"
+                            android:imeOptions="actionNext"/>
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <!-- Teléfono -->
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/tilPhone"
+                        style="@style/Widget.DogWalk.TextInputLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="14dp"
+                        android:hint="Teléfono *">
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etPhone"
+                            android:layout_width="match_parent"
+                            android:layout_height="56dp"
+                            android:inputType="phone"
+                            android:textColor="#1B3A6B"
+                            android:textSize="15sp"
+                            android:fontFamily="@font/poppins"
+                            android:imeOptions="actionNext"/>
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <!-- Fecha nacimiento -->
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/tilBirthDate"
+                        style="@style/Widget.DogWalk.TextInputLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="20dp"
+                        android:hint="Fecha de nacimiento *"
+                        app:endIconMode="custom"
+                        app:endIconDrawable="@android:drawable/ic_menu_my_calendar"
+                        app:endIconTint="#1B3A6B">
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etBirthDate"
+                            android:layout_width="match_parent"
+                            android:layout_height="56dp"
+                            android:inputType="none"
+                            android:focusable="false"
+                            android:textColor="#1B3A6B"
+                            android:textSize="15sp"
+                            android:fontFamily="@font/poppins"/>
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <!-- Tipo de usuario — FIX: RadioGroup directo sin MaterialCardView wrapper -->
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="¿Cómo quieres usar DogWalk?"
-                        android:textColor="@color/text_primary"
-                        android:textSize="@dimen/text_sm"
+                        android:text="¿Cómo vas a usar la app?"
+                        android:textColor="#1B3A6B"
+                        android:textSize="15sp"
                         android:textStyle="bold"
                         android:fontFamily="@font/poppins"
-                        android:layout_marginBottom="@dimen/spacing_sm"/>
+                        android:layout_marginBottom="12dp"/>
 
                     <RadioGroup
-                        android:id="@+id/rgUserType"
+                        android:id="@+id/radioGroupType"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:layout_marginBottom="28dp"
+                        android:baselineAligned="false">
 
+                        <!-- FIX: RadioButton directo dentro del RadioGroup -->
                         <RadioButton
                             android:id="@+id/rbOwner"
                             android:layout_width="0dp"
-                            android:layout_height="44dp"
+                            android:layout_height="60dp"
                             android:layout_weight="1"
-                            android:text="🐶 Soy dueño"
+                            android:layout_marginEnd="8dp"
+                            android:text="🐶 Dueño"
+                            android:textColor="#1B3A6B"
+                            android:textSize="15sp"
+                            android:textStyle="bold"
+                            android:fontFamily="@font/poppins"
                             android:checked="true"
-                            android:textSize="@dimen/text_sm"
-                            android:fontFamily="@font/poppins"/>
+                            android:buttonTint="#1B3A6B"
+                            android:gravity="center"
+                            android:background="@drawable/radio_bg_selector"
+                            android:paddingStart="8dp"
+                            android:paddingEnd="8dp"/>
 
                         <RadioButton
                             android:id="@+id/rbWalker"
                             android:layout_width="0dp"
-                            android:layout_height="44dp"
+                            android:layout_height="60dp"
                             android:layout_weight="1"
-                            android:text="🦺 Soy paseador"
-                            android:textSize="@dimen/text_sm"
-                            android:fontFamily="@font/poppins"/>
+                            android:text="🦺 Paseador"
+                            android:textColor="#1B3A6B"
+                            android:textSize="15sp"
+                            android:textStyle="bold"
+                            android:fontFamily="@font/poppins"
+                            android:buttonTint="#1B3A6B"
+                            android:gravity="center"
+                            android:background="@drawable/radio_bg_selector"
+                            android:paddingStart="8dp"
+                            android:paddingEnd="8dp"/>
                     </RadioGroup>
+
+                    <!-- Número de tarjeta para paseadores -->
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/tilCardNumber"
+                        style="@style/Widget.DogWalk.TextInputLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="28dp"
+                        android:hint="Número de tarjeta bancaria"
+                        android:visibility="gone">
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etCardNumber"
+                            android:layout_width="match_parent"
+                            android:layout_height="56dp"
+                            android:inputType="number"
+                            android:textColor="#1B3A6B"
+                            android:textSize="15sp"
+                            android:fontFamily="@font/poppins"
+                            android:imeOptions="actionDone"/>
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnRegister"
+                        android:layout_width="match_parent"
+                        android:layout_height="56dp"
+                        app:cornerRadius="28dp"
+                        android:backgroundTint="#1B3A6B"
+                        android:textColor="#FFFFFF"
+                        android:text="CREAR MI CUENTA"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:letterSpacing="0.06"
+                        android:fontFamily="@font/poppins"
+                        android:textAllCaps="false"
+                        android:layout_marginBottom="20dp"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="¿Ya tienes cuenta? "
+                            android:textColor="#8AAAC8"
+                            android:textSize="14sp"
+                            android:fontFamily="@font/poppins"/>
+                        <TextView
+                            android:id="@+id/tvGoLogin"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Iniciar Sesión"
+                            android:textColor="#1B3A6B"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            android:fontFamily="@font/poppins"
+                            android:padding="4dp"/>
+                    </LinearLayout>
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- Sección datos personales -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="DATOS PERSONALES"
-                android:textColor="@color/text_secondary"
-                android:textSize="@dimen/text_xs"
-                android:letterSpacing="0.12"
-                android:fontFamily="@font/poppins"
-                android:layout_marginBottom="@dimen/spacing_sm"/>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tilFirstName"
-                style="@style/Widget.DogWalk.TextInputLayout"
-                android:hint="Nombre(s) *">
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etFirstName"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/input_height"
-                    android:inputType="textPersonName|textCapWords"
-                    android:fontFamily="@font/poppins"
-                    android:imeOptions="actionNext"/>
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <Space android:layout_width="match_parent" android:layout_height="@dimen/spacing_sm"/>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tilLastName1"
-                style="@style/Widget.DogWalk.TextInputLayout"
-                android:hint="Apellido paterno *">
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etLastName1"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/input_height"
-                    android:inputType="textPersonName|textCapWords"
-                    android:fontFamily="@font/poppins"
-                    android:imeOptions="actionNext"/>
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <Space android:layout_width="match_parent" android:layout_height="@dimen/spacing_sm"/>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tilLastName2"
-                style="@style/Widget.DogWalk.TextInputLayout"
-                android:hint="Apellido materno *">
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etLastName2"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/input_height"
-                    android:inputType="textPersonName|textCapWords"
-                    android:fontFamily="@font/poppins"
-                    android:imeOptions="actionNext"/>
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <Space android:layout_width="match_parent" android:layout_height="@dimen/spacing_md"/>
-
-            <!-- Sección contacto -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="CONTACTO"
-                android:textColor="@color/text_secondary"
-                android:textSize="@dimen/text_xs"
-                android:letterSpacing="0.12"
-                android:fontFamily="@font/poppins"
-                android:layout_marginBottom="@dimen/spacing_sm"/>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tilEmail"
-                style="@style/Widget.DogWalk.TextInputLayout"
-                android:hint="Correo electrónico *"
-                app:helperText="Ejemplo: juan.perez@gmail.com">
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etEmail"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/input_height"
-                    android:inputType="textEmailAddress"
-                    android:fontFamily="@font/poppins"
-                    android:imeOptions="actionNext"/>
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <Space android:layout_width="match_parent" android:layout_height="@dimen/spacing_sm"/>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tilPhone"
-                style="@style/Widget.DogWalk.TextInputLayout"
-                android:hint="Teléfono *"
-                app:helperText="Ejemplo: 272-256-7654">
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etPhone"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/input_height"
-                    android:inputType="phone"
-                    android:maxLength="12"
-                    android:fontFamily="@font/poppins"
-                    android:imeOptions="actionNext"/>
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <Space android:layout_width="match_parent" android:layout_height="@dimen/spacing_md"/>
-
-            <!-- Sección seguridad -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="SEGURIDAD"
-                android:textColor="@color/text_secondary"
-                android:textSize="@dimen/text_xs"
-                android:letterSpacing="0.12"
-                android:fontFamily="@font/poppins"
-                android:layout_marginBottom="@dimen/spacing_sm"/>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tilBirthDate"
-                style="@style/Widget.DogWalk.TextInputLayout"
-                android:hint="Fecha de nacimiento *"
-                app:helperText="Toca para seleccionar fecha"
-                app:endIconMode="custom"
-                app:endIconDrawable="@android:drawable/ic_menu_my_calendar">
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etBirthDate"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/input_height"
-                    android:focusable="false"
-                    android:focusableInTouchMode="false"
-                    android:cursorVisible="false"
-                    android:fontFamily="@font/poppins"
-                    android:inputType="none"/>
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <Space android:layout_width="match_parent" android:layout_height="@dimen/spacing_sm"/>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tilPassword"
-                style="@style/Widget.DogWalk.TextInputLayout"
-                android:hint="Contraseña *"
-                app:helperText="Mínimo 6 caracteres"
-                app:endIconMode="password_toggle">
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etPassword"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/input_height"
-                    android:inputType="textPassword"
-                    android:fontFamily="@font/poppins"
-                    android:imeOptions="actionDone"/>
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <!-- Tarjeta (solo paseador) -->
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tilCardNumber"
-                style="@style/Widget.DogWalk.TextInputLayout"
-                android:hint="Número de tarjeta *"
-                app:helperText="Ejemplo: 1234-5678-9012-3456"
-                android:visibility="gone">
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etCardNumber"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/input_height"
-                    android:inputType="number"
-                    android:maxLength="19"
-                    android:fontFamily="@font/poppins"
-                    android:imeOptions="actionDone"/>
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <Space android:layout_width="match_parent" android:layout_height="@dimen/spacing_xl"/>
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnRegister"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/button_height"
-                app:cornerRadius="@dimen/button_radius"
-                android:backgroundTint="@color/primary"
-                android:textColor="@color/surface"
-                android:text="Crear cuenta"
-                android:textSize="@dimen/text_body"
-                android:textStyle="bold"
-                android:fontFamily="@font/poppins"
-                android:textAllCaps="false"
-                android:layout_marginBottom="@dimen/spacing_md"/>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="¿Ya tienes cuenta? "
-                    android:textColor="@color/text_secondary"
-                    android:textSize="@dimen/text_sm"
-                    android:fontFamily="@font/poppins"/>
-
-                <TextView
-                    android:id="@+id/tvGoLogin"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Inicia sesión"
-                    android:textColor="@color/primary"
-                    android:textSize="@dimen/text_sm"
-                    android:textStyle="bold"
-                    android:fontFamily="@font/poppins"
-                    android:padding="@dimen/spacing_xs"/>
-            </LinearLayout>
-
         </LinearLayout>
     </ScrollView>
-</LinearLayout>
+</FrameLayout>

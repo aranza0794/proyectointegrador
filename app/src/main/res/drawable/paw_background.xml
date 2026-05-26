@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Fondo con patrón de huellas semitransparente -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <color android:color="@color/background"/>
+    </item>
+    <!-- Huellas decorativas en posiciones fijas simulando patrón -->
+    <item android:top="40dp" android:start="20dp" android:bottom="0dp" android:end="0dp">
+        <rotate android:fromDegrees="-20">
+            <bitmap
+                android:src="@drawable/ic_paw"
+                android:tileMode="disabled"
+                android:alpha="0.06"/>
+        </rotate>
+    </item>
+</layer-list>

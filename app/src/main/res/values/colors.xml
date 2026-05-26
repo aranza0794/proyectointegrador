@@ -1,40 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- ── Paleta principal ── -->
-    <color name="primary">#2A9D8F</color>
-    <color name="primary_dark">#1F7A6E</color>
-    <color name="primary_light">#3BBDAD</color>
-    <color name="primary_ultra_light">#E0F5F3</color>
+    <!-- Paleta: Azul claro + Azul marino + Blanco + Verde menta -->
+    <color name="primary">#1B3A6B</color>           <!-- Azul marino -->
+    <color name="primary_dark">#122850</color>
+    <color name="primary_light">#2D5AA0</color>
+    <color name="primary_ultra_light">#E8F0FB</color>
 
-    <!-- Accent (mismo verde petróleo más oscuro para contraste) -->
-    <color name="accent">#1F7A6E</color>
-    <color name="accent_light">#D0EEEB</color>
+    <color name="accent">#3DBFA8</color>             <!-- Verde menta -->
+    <color name="accent_dark">#2A9D8F</color>
+    <color name="accent_light">#E0F5F2</color>
 
-    <!-- Fondo y superficies -->
-    <color name="background">#F4F6F7</color>
+    <color name="background">#D6E8F5</color>         <!-- Azul claro fondo -->
+    <color name="background_mid">#C2DCF0</color>
     <color name="surface">#FFFFFF</color>
-    <color name="surface_alt">#E9ECEF</color>
+    <color name="surface_alt">#EAF4FB</color>
 
-    <!-- Texto -->
-    <color name="text_primary">#222222</color>
-    <color name="text_secondary">#555555</color>
-    <color name="text_hint">#999999</color>
+    <color name="text_primary">#1B3A6B</color>       <!-- Azul marino en textos -->
+    <color name="text_secondary">#3A5A8A</color>
+    <color name="text_hint">#8AAAC8</color>
 
-    <!-- Estados -->
-    <color name="error">#E63946</color>
-    <color name="error_light">#FDECEA</color>
-    <color name="success">#2A9D8F</color>
-    <color name="warning">#E9C46A</color>
+    <color name="error">#E53935</color>
+    <color name="error_light">#FFEBEE</color>
+    <color name="success">#3DBFA8</color>
+    <color name="warning">#F4A261</color>
 
-    <!-- Bordes y dividers -->
-    <color name="border">#DEE2E6</color>
-    <color name="divider">#E9ECEF</color>
-
-    <!-- Overlays -->
-    <color name="overlay_dark">#33000000</color>
-    <color name="overlay_light">#80FFFFFF</color>
-
-    <!-- Colores semitransparentes para drawables -->
-    <color name="primary_20">#332A9D8F</color>
+    <color name="border">#A8C8E8</color>
+    <color name="divider">#C0D8EE</color>
     <color name="white_20">#33FFFFFF</color>
+    <color name="black_10">#1A000000</color>
 </resources>

@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
   item_walk_request.xml
-  IDs: tvDogName, tvOwnerName, tvDogDetails, tvDogAllergy,
-       tvWalkDuration, tvWalkCost, btnReject, btnAccept
+  IDs: ivDogPhoto, tvDogInitial, tvDogName, tvOwnerName,
+       tvDogDetails, tvDogAllergy, tvWalkDuration, tvWalkCost,
+       btnReject, btnAccept
 -->
 <com.google.android.material.card.MaterialCardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="12dp"
-    app:cardCornerRadius="16dp"
-    app:cardElevation="3dp"
-    app:cardBackgroundColor="@color/surface">
+    android:layout_marginBottom="14dp"
+    app:cardCornerRadius="20dp"
+    app:cardElevation="4dp"
+    app:cardBackgroundColor="#FFFFFF">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -20,28 +21,45 @@
         android:orientation="vertical"
         android:padding="16dp">
 
-        <!-- Header: ícono perro + nombre + badge -->
+        <!-- Fila superior: FOTO del perro + nombre + dueño -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center_vertical"
-            android:layout_marginBottom="12dp">
+            android:layout_marginBottom="14dp">
 
-            <com.google.android.material.card.MaterialCardView
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:layout_marginEnd="12dp"
-                app:cardCornerRadius="24dp"
-                app:cardElevation="0dp"
-                app:cardBackgroundColor="@color/primary_ultra_light">
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:text="🐕"
-                    android:textSize="24sp"/>
-            </com.google.android.material.card.MaterialCardView>
+            <!-- FIX: Foto real del perro -->
+            <FrameLayout
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:layout_marginEnd="14dp">
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    app:cardCornerRadius="32dp"
+                    app:cardElevation="2dp"
+                    app:cardBackgroundColor="@color/primary_ultra_light">
+
+                    <!-- Foto del perro si tiene -->
+                    <ImageView
+                        android:id="@+id/ivDogPhoto"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop"
+                        android:visibility="gone"/>
+
+                    <!-- Emoji si no tiene foto -->
+                    <TextView
+                        android:id="@+id/tvDogInitial"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="🐕"
+                        android:textSize="30sp"/>
+                </com.google.android.material.card.MaterialCardView>
+            </FrameLayout>
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -54,8 +72,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text=""
-                    android:textColor="@color/text_primary"
-                    android:textSize="17sp"
+                    android:textColor="#222222"
+                    android:textSize="18sp"
                     android:textStyle="bold"
                     android:fontFamily="@font/poppins"/>
 
@@ -64,7 +82,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text=""
-                    android:textColor="@color/text_secondary"
+                    android:textColor="#666666"
                     android:textSize="13sp"
                     android:fontFamily="@font/poppins"
                     android:layout_marginTop="2dp"/>
@@ -75,7 +93,7 @@
                 android:layout_height="wrap_content"
                 android:text="NUEVA"
                 android:textSize="10sp"
-                android:textColor="@color/surface"
+                android:textColor="#FFFFFF"
                 android:clickable="false"
                 app:chipBackgroundColor="@color/primary"/>
         </LinearLayout>
@@ -84,16 +102,16 @@
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:cardCornerRadius="10dp"
+            app:cardCornerRadius="12dp"
             app:cardElevation="0dp"
-            app:cardBackgroundColor="@color/surface_alt"
-            android:layout_marginBottom="12dp">
+            app:cardBackgroundColor="#F4F6F7"
+            android:layout_marginBottom="14dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:padding="10dp"
+                android:padding="12dp"
                 android:gravity="center_vertical">
 
                 <TextView
@@ -102,7 +120,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text=""
-                    android:textColor="@color/text_secondary"
+                    android:textColor="#555555"
                     android:textSize="13sp"
                     android:fontFamily="@font/poppins"/>
 
@@ -111,7 +129,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="⚠️ Alergia"
-                    android:textColor="@color/warning"
+                    android:textColor="#E9C46A"
                     android:textSize="12sp"
                     android:textStyle="bold"
                     android:visibility="gone"/>
@@ -123,7 +141,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginBottom="14dp">
+            android:layout_marginBottom="16dp">
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -136,28 +154,26 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="⏱"
-                    android:textSize="16sp"
-                    android:layout_marginEnd="6dp"/>
+                    android:textSize="18sp"
+                    android:layout_marginEnd="8dp"/>
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
-
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Duración"
-                        android:textColor="@color/text_hint"
+                        android:textColor="#888888"
                         android:textSize="11sp"
                         android:fontFamily="@font/poppins"/>
-
                     <TextView
                         android:id="@+id/tvWalkDuration"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text=""
-                        android:textColor="@color/text_primary"
+                        android:textColor="#222222"
                         android:textSize="15sp"
                         android:textStyle="bold"
                         android:fontFamily="@font/poppins"/>
@@ -175,22 +191,20 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="💵"
-                    android:textSize="16sp"
-                    android:layout_marginEnd="6dp"/>
+                    android:textSize="18sp"
+                    android:layout_marginEnd="8dp"/>
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
-
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Ganancia"
-                        android:textColor="@color/text_hint"
+                        android:textColor="#888888"
                         android:textSize="11sp"
                         android:fontFamily="@font/poppins"/>
-
                     <TextView
                         android:id="@+id/tvWalkCost"
                         android:layout_width="wrap_content"
@@ -204,14 +218,13 @@
             </LinearLayout>
         </LinearLayout>
 
-        <!-- FIX: Botones con tamaño fijo y texto completo -->
+        <!-- Botones -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:baselineAligned="false">
 
-            <!-- FIX: Rechazar con texto completo y color legible -->
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnReject"
                 android:layout_width="0dp"
@@ -219,15 +232,14 @@
                 android:layout_weight="1"
                 android:layout_marginEnd="8dp"
                 app:cornerRadius="24dp"
-                android:backgroundTint="@color/error_light"
-                android:textColor="@color/error"
+                android:backgroundTint="#FDECEA"
+                android:textColor="#E63946"
                 android:text="Rechazar"
                 android:textSize="14sp"
                 android:textStyle="bold"
                 android:fontFamily="@font/poppins"
                 android:textAllCaps="false"/>
 
-            <!-- Aceptar -->
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnAccept"
                 android:layout_width="0dp"
@@ -236,7 +248,7 @@
                 android:layout_marginStart="8dp"
                 app:cornerRadius="24dp"
                 android:backgroundTint="@color/primary"
-                android:textColor="@color/surface"
+                android:textColor="#FFFFFF"
                 android:text="✓ Aceptar"
                 android:textSize="14sp"
                 android:textStyle="bold"

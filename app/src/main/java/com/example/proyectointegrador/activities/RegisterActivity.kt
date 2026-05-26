@@ -11,6 +11,7 @@ import android.widget.RadioGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.Toolbar
 import com.example.proyectointegrador.R
 import com.example.proyectointegrador.utils.SessionManager
@@ -27,6 +28,7 @@ class RegisterActivity : AppCompatActivity() {
     private var selectedType = "owner"
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
 
@@ -37,7 +39,7 @@ class RegisterActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.title = "Crear cuenta"
 
-        val rgUserType    = findViewById<RadioGroup>(R.id.rgUserType)
+        val rgUserType    = findViewById<RadioGroup>(R.id.radioGroupType)
         val etFirstName   = findViewById<TextInputEditText>(R.id.etFirstName)
         val etLastName1   = findViewById<TextInputEditText>(R.id.etLastName1)
         val etLastName2   = findViewById<TextInputEditText>(R.id.etLastName2)
@@ -228,26 +230,47 @@ class RegisterActivity : AppCompatActivity() {
         }
     }
 
-    // FIX: DatePickerDialog para seleccionar fecha
+    // FIX: DatePickerDialog con tema Material claro — no crashea
     private fun showDatePicker(etBirthDate: TextInputEditText) {
-        val cal = Calendar.getInstance()
+        val cal   = Calendar.getInstance()
         val year  = cal.get(Calendar.YEAR)
         val month = cal.get(Calendar.MONTH)
         val day   = cal.get(Calendar.DAY_OF_MONTH)
 
-        val picker = DatePickerDialog(this, { _, y, m, d ->
-            val formatted = "%02d/%02d/%04d".format(d, m + 1, y)
-            etBirthDate.setText(formatted)
-        }, year, month, day)
+        // FIX: Usar R.style.ThemeOverlay_MaterialComponents_Dialog
+        // en lugar de Theme_Holo_Light_Dialog que crashea en algunas versiones
+        val picker = DatePickerDialog(
+            this,
+            R.style.DogWalk_DatePickerDialog,
+            { _, y, m, d ->
+                val formatted = "%02d/%02d/%04d".format(d, m + 1, y)
+                etBirthDate.setText(formatted)
+            },
+            year, month, day
+        )
 
-        // Máximo: hoy (no puede registrarse alguien que aún no nace)
+        picker.setTitle("Fecha de nacimiento")
+
+        // Máximo: hoy
         picker.datePicker.maxDate = cal.timeInMillis
 
-        // Mínimo razonable: hace 100 años
-        cal.add(Calendar.YEAR, -100)
-        picker.datePicker.minDate = cal.timeInMillis
+        // FIX: Mínimo: 01/01/1962
+        val minCal = java.util.Calendar.getInstance()
+        minCal.set(1962, 0, 1)
+        picker.datePicker.minDate = minCal.timeInMillis
 
         picker.show()
+
+        // FIX: Forzar color negro en botones OK y Cancelar después de show()
+        // (deben llamarse después de show() para que existan)
+        picker.getButton(android.app.AlertDialog.BUTTON_POSITIVE)?.apply {
+            setTextColor(android.graphics.Color.parseColor("#2A9D8F"))
+            textSize = 14f
+        }
+        picker.getButton(android.app.AlertDialog.BUTTON_NEGATIVE)?.apply {
+            setTextColor(android.graphics.Color.parseColor("#2A9D8F"))
+            textSize = 14f
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {

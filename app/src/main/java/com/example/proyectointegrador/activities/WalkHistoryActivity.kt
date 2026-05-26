@@ -3,14 +3,13 @@ package com.example.proyectointegrador.activities
 import android.os.Bundle
 import android.view.View
 import android.widget.LinearLayout
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.proyectointegrador.R
 import com.example.proyectointegrador.adapters.WalkHistoryAdapter
-import com.example.proyectointegrador.models.WalkRequest
+import com.example.proyectointegrador.models.WalkHistory
 import com.example.proyectointegrador.utils.SessionManager
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
@@ -24,86 +23,58 @@ class WalkHistoryActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_walk_history)
 
-        val toolbar = findViewById<Toolbar>(R.id.toolbar)
-        setSupportActionBar(toolbar)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
         session = SessionManager(this)
 
+        val toolbar       = findViewById<Toolbar>(R.id.toolbar)
+        val rvWalkHistory = findViewById<RecyclerView>(R.id.rvWalkHistory)
+        val layoutEmpty   = findViewById<LinearLayout>(R.id.layoutEmpty)
+
+        setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.title = "Historial de paseos"
+
+        rvWalkHistory.layoutManager = LinearLayoutManager(this)
+
         val userType = session.getUserType()
-        supportActionBar?.title = if (userType == "owner") "Mis paseos" else "Mi historial"
-
-        val rvHistory      = findViewById<RecyclerView>(R.id.rvHistory)
-        val layoutEmpty    = findViewById<LinearLayout>(R.id.layoutEmpty)
-        val tvTotalWalks   = findViewById<TextView>(R.id.tvTotalWalks)
-        val tvTotalSpent   = findViewById<TextView>(R.id.tvTotalSpent)
-        val tvTotalMinutes = findViewById<TextView>(R.id.tvTotalMinutes)
-
-        // Cambiar labels según tipo de usuario
-        val tvSpentLabel = layoutOf(tvTotalSpent)
-        if (userType == "walker") {
-            // Para paseador "Gastado" → "Ganado"
-            findSiblingLabel(tvTotalSpent, "Gastado", "Ganado")
-        }
-
-        rvHistory.layoutManager = LinearLayoutManager(this)
-
-        // FIX: Query según tipo de usuario
-        val queryField = if (userType == "owner") "ownerId" else "walkerId"
+        val userId   = session.getUserId()
+        val field    = if (userType == "owner") "ownerId" else "walkerId"
 
         db.collection("solicitudes")
-            .whereEqualTo(queryField, session.getUserId())
-            .whereEqualTo("status", "finished")
+            .whereEqualTo(field, userId)
+            .whereEqualTo("status", "completed")
             .orderBy("endTime", Query.Direction.DESCENDING)
             .get()
-            .addOnSuccessListener { documents ->
-                val history = documents.map { doc ->
-                    WalkRequest(
+            .addOnSuccessListener { docs ->
+                val historyList = docs.documents.map { doc ->
+                    WalkHistory(
                         id              = doc.id,
-                        dogName         = doc.getString("dogName") ?: "",
-                        dogBreed        = doc.getString("dogBreed") ?: "",
-                        durationMinutes = (doc.getLong("durationMinutes") ?: 0L).toInt(),
-                        cost            = doc.getDouble("cost") ?: 0.0,
-                        status          = doc.getString("status") ?: "",
-                        startTime       = doc.getLong("startTime") ?: 0L,
-                        endTime         = doc.getLong("endTime") ?: 0L,
-                        paymentMethod   = doc.getString("paymentMethod") ?: "",
-                        walkerId        = doc.getString("walkerId") ?: "",
-                        ownedName       = doc.getString("ownerName") ?: ""
+                        ownerId         = doc.getString("ownerId")         ?: "",
+                        walkerId        = doc.getString("walkerId")        ?: "",
+                        dogName         = doc.getString("dogName")         ?: "",
+                        walkerName      = doc.getString("walkerName")      ?: "",
+                        ownedName       = doc.getString("ownedName")       ?: "",
+                        durationMinutes = (doc.getLong("durationMinutes")  ?: 0L).toInt(),
+                        cost            = doc.getDouble("cost")            ?: 0.0,
+                        paymentMethod   = doc.getString("paymentMethod")   ?: "",
+                        status          = doc.getString("status")          ?: "",
+                        ratingStars     = (doc.getLong("ratingStars")      ?: 0L).toInt(),
+                        endTime         = doc.getLong("endTime")           ?: 0L
                     )
                 }
 
-                tvTotalWalks.text   = history.size.toString()
-                tvTotalSpent.text   = "$${String.format("%.0f", history.sumOf { it.cost })}"
-                tvTotalMinutes.text = history.sumOf { it.durationMinutes }.toString()
-
-                if (history.isEmpty()) {
-                    layoutEmpty.visibility = View.VISIBLE
-                    rvHistory.visibility   = View.GONE
+                if (historyList.isEmpty()) {
+                    layoutEmpty.visibility   = View.VISIBLE
+                    rvWalkHistory.visibility = View.GONE
                 } else {
-                    layoutEmpty.visibility = View.GONE
-                    rvHistory.visibility   = View.VISIBLE
-                    // FIX: pasar userType para mostrar info correcta
-                    rvHistory.adapter = WalkHistoryAdapter(history, db, userType)
+                    layoutEmpty.visibility   = View.GONE
+                    rvWalkHistory.visibility = View.VISIBLE
+                    rvWalkHistory.adapter    = WalkHistoryAdapter(historyList, userType)
                 }
             }
             .addOnFailureListener {
-                layoutEmpty.visibility = View.VISIBLE
-                rvHistory.visibility   = View.GONE
+                layoutEmpty.visibility   = View.VISIBLE
+                rvWalkHistory.visibility = View.GONE
             }
-    }
-
-    private fun layoutOf(view: View) = view.parent as? android.view.ViewGroup
-
-    private fun findSiblingLabel(view: TextView, oldText: String, newText: String) {
-        val parent = view.parent as? android.view.ViewGroup ?: return
-        for (i in 0 until parent.childCount) {
-            val child = parent.getChildAt(i)
-            if (child is TextView && child.text == oldText) {
-                child.text = newText
-                break
-            }
-        }
     }
 
     override fun onSupportNavigateUp(): Boolean {

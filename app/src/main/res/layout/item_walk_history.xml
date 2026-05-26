@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
   item_walk_history.xml
-  IDs: tvDogName, tvDate, tvDuration, tvCost, tvPayment,
-       tvWalkerName, ratingBarItem
+  IDs: tvDogName, tvWalkerName, tvDate, tvDuration, tvCost,
+       tvStatus, ratingBarItem
 -->
 <com.google.android.material.card.MaterialCardView
     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -10,9 +10,11 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="12dp"
-    app:cardCornerRadius="16dp"
-    app:cardElevation="3dp"
-    app:cardBackgroundColor="@color/surface">
+    app:cardCornerRadius="20dp"
+    app:cardElevation="4dp"
+    app:cardBackgroundColor="#FFFFFF"
+    app:strokeColor="@color/divider"
+    app:strokeWidth="1dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -20,28 +22,24 @@
         android:orientation="vertical"
         android:padding="16dp">
 
-        <!-- Fila superior: ícono + perro + fecha -->
+        <!-- Fila superior: ícono + info + badge estado -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center_vertical"
-            android:baselineAligned="false"
-            android:layout_marginBottom="10dp">
+            android:layout_marginBottom="12dp"
+            android:baselineAligned="false">
 
             <com.google.android.material.card.MaterialCardView
-                android:layout_width="44dp"
-                android:layout_height="44dp"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
                 android:layout_marginEnd="12dp"
-                app:cardCornerRadius="22dp"
+                app:cardCornerRadius="24dp"
                 app:cardElevation="0dp"
-                app:cardBackgroundColor="@color/surface_alt">
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:text="🐕"
-                    android:textSize="22sp"/>
+                app:cardBackgroundColor="@color/primary_ultra_light">
+                <TextView android:layout_width="match_parent" android:layout_height="match_parent"
+                    android:gravity="center" android:text="🐾" android:textSize="22sp"/>
             </com.google.android.material.card.MaterialCardView>
 
             <LinearLayout
@@ -55,54 +53,99 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text=""
-                    android:textColor="@color/text_primary"
+                    android:textColor="#1A1A1A"
                     android:textSize="15sp"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold"
+                    android:fontFamily="@font/poppins"/>
 
                 <TextView
-                    android:id="@+id/tvDate"
+                    android:id="@+id/tvWalkerName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text=""
-                    android:textColor="@color/text_secondary"
+                    android:textColor="#888888"
                     android:textSize="12sp"
+                    android:fontFamily="@font/poppins"
                     android:layout_marginTop="2dp"/>
             </LinearLayout>
 
-            <com.google.android.material.chip.Chip
+            <!-- Badge estado con color dinámico -->
+            <TextView
+                android:id="@+id/tvStatus"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="✓ Completado"
-                android:textSize="10sp"
-                android:textColor="@color/accent"
-                android:clickable="false"
-                app:chipBackgroundColor="@color/accent_light"/>
+                android:text="Completado"
+                android:textColor="#FFFFFF"
+                android:textSize="11sp"
+                android:textStyle="bold"
+                android:fontFamily="@font/poppins"
+                android:background="@drawable/badge_accent"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:paddingTop="4dp"
+                android:paddingBottom="4dp"/>
         </LinearLayout>
 
-        <!-- FIX: Nombre del paseador -->
+        <!-- Separador -->
+        <View android:layout_width="match_parent" android:layout_height="1dp"
+            android:background="@color/divider" android:layout_marginBottom="12dp"/>
+
+        <!-- Detalles -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:layout_marginBottom="8dp">
+            android:layout_marginBottom="10dp">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="🦺 "
-                android:textSize="14sp"/>
+            <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                android:layout_weight="1" android:orientation="vertical" android:gravity="center">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="📅 Fecha" android:textColor="#AAAAAA" android:textSize="11sp"
+                    android:fontFamily="@font/poppins"/>
+                <TextView android:id="@+id/tvDate"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="" android:textColor="#1A1A1A" android:textSize="13sp"
+                    android:textStyle="bold" android:fontFamily="@font/poppins"/>
+            </LinearLayout>
 
-            <TextView
-                android:id="@+id/tvWalkerName"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Paseador: —"
-                android:textColor="@color/text_secondary"
-                android:textSize="13sp"/>
+            <View android:layout_width="1dp" android:layout_height="match_parent"
+                android:background="@color/divider"/>
 
-            <!-- FIX: Calificación dada -->
+            <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                android:layout_weight="1" android:orientation="vertical" android:gravity="center">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="⏱ Duración" android:textColor="#AAAAAA" android:textSize="11sp"
+                    android:fontFamily="@font/poppins"/>
+                <TextView android:id="@+id/tvDuration"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="" android:textColor="#1A1A1A" android:textSize="13sp"
+                    android:textStyle="bold" android:fontFamily="@font/poppins"/>
+            </LinearLayout>
+
+            <View android:layout_width="1dp" android:layout_height="match_parent"
+                android:background="@color/divider"/>
+
+            <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                android:layout_weight="1" android:orientation="vertical" android:gravity="center">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="💰 Costo" android:textColor="#AAAAAA" android:textSize="11sp"
+                    android:fontFamily="@font/poppins"/>
+                <TextView android:id="@+id/tvCost"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="" android:textColor="@color/primary" android:textSize="13sp"
+                    android:textStyle="bold" android:fontFamily="@font/poppins"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- Rating en huellas -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="Calificación: " android:textColor="#AAAAAA" android:textSize="12sp"
+                android:fontFamily="@font/poppins"/>
             <RatingBar
                 android:id="@+id/ratingBarItem"
                 android:layout_width="wrap_content"
@@ -110,129 +153,8 @@
                 android:numStars="5"
                 android:rating="0"
                 android:isIndicator="true"
-                android:visibility="gone"
+                android:progressTint="@color/accent"
                 style="@style/Widget.AppCompat.RatingBar.Small"/>
-        </LinearLayout>
-
-        <!-- Separador -->
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/divider"
-            android:layout_marginBottom="12dp"/>
-
-        <!-- Fila inferior: duración + costo + pago -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:baselineAligned="false">
-
-            <!-- Duración -->
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical"
-                android:gravity="center">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="⏱️"
-                    android:textSize="18sp"/>
-
-                <TextView
-                    android:id="@+id/tvDuration"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text=""
-                    android:textColor="@color/text_primary"
-                    android:textSize="14sp"
-                    android:textStyle="bold"
-                    android:layout_marginTop="2dp"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Duración"
-                    android:textColor="@color/text_hint"
-                    android:textSize="11sp"/>
-            </LinearLayout>
-
-            <View
-                android:layout_width="1dp"
-                android:layout_height="50dp"
-                android:background="@color/divider"/>
-
-            <!-- Costo -->
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical"
-                android:gravity="center">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="💰"
-                    android:textSize="18sp"/>
-
-                <TextView
-                    android:id="@+id/tvCost"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text=""
-                    android:textColor="@color/primary_dark"
-                    android:textSize="14sp"
-                    android:textStyle="bold"
-                    android:layout_marginTop="2dp"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Costo"
-                    android:textColor="@color/text_hint"
-                    android:textSize="11sp"/>
-            </LinearLayout>
-
-            <View
-                android:layout_width="1dp"
-                android:layout_height="50dp"
-                android:background="@color/divider"/>
-
-            <!-- Pago -->
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical"
-                android:gravity="center">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="💳"
-                    android:textSize="18sp"/>
-
-                <TextView
-                    android:id="@+id/tvPayment"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text=""
-                    android:textColor="@color/text_primary"
-                    android:textSize="14sp"
-                    android:textStyle="bold"
-                    android:layout_marginTop="2dp"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Pago"
-                    android:textColor="@color/text_hint"
-                    android:textSize="11sp"/>
-            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 </com.google.android.material.card.MaterialCardView>

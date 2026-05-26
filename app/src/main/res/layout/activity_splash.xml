@@ -1,77 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--
-  activity_splash.xml
-  Pantalla de carga inicial. Muestra el logo y nombre de la app
-  mientras se verifica si el usuario ya tiene sesión activa.
--->
 <FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/primary">
 
-    <!-- Círculo decorativo superior derecho -->
-    <View
-        android:layout_width="220dp"
-        android:layout_height="220dp"
-        android:layout_gravity="top|end"
-        android:layout_marginTop="-60dp"
-        android:layout_marginEnd="-60dp"
-        android:background="@drawable/circle_primary_light"
-        android:alpha="0.3"/>
+    <!-- Patitas decorativas fondo -->
+    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:layout_gravity="top|start" android:layout_marginTop="40dp" android:layout_marginStart="20dp"
+        android:text="🐾" android:textSize="40sp" android:alpha="0.15" android:rotation="-20"/>
+    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:layout_gravity="top|end" android:layout_marginTop="100dp" android:layout_marginEnd="30dp"
+        android:text="🐾" android:textSize="28sp" android:alpha="0.12" android:rotation="30"/>
+    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:layout_gravity="center|start" android:layout_marginStart="10dp"
+        android:text="🐾" android:textSize="24sp" android:alpha="0.10" android:rotation="-10"/>
+    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:layout_gravity="center|end" android:layout_marginEnd="15dp"
+        android:text="🐾" android:textSize="32sp" android:alpha="0.12" android:rotation="15"/>
+    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:layout_gravity="bottom|start" android:layout_marginBottom="120dp" android:layout_marginStart="40dp"
+        android:text="🐾" android:textSize="36sp" android:alpha="0.15" android:rotation="25"/>
+    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end" android:layout_marginBottom="60dp" android:layout_marginEnd="20dp"
+        android:text="🐾" android:textSize="22sp" android:alpha="0.10" android:rotation="-30"/>
 
-    <!-- Círculo decorativo inferior izquierdo -->
-    <View
-        android:layout_width="160dp"
-        android:layout_height="160dp"
-        android:layout_gravity="bottom|start"
-        android:layout_marginBottom="-40dp"
-        android:layout_marginStart="-40dp"
-        android:background="@drawable/circle_primary_light"
-        android:alpha="0.2"/>
-
-    <!-- Contenido central -->
+    <!-- Logo y nombre centrado -->
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:gravity="center"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:gravity="center">
 
-        <!-- Ícono de la pata del perro (usa un emoji o drawable) -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="🐾"
-            android:textSize="80sp"
-            android:layout_marginBottom="16dp"/>
+        <!-- Círculo logo -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="130dp"
+            android:layout_height="130dp"
+            android:layout_marginBottom="24dp"
+            app:cardCornerRadius="65dp"
+            app:cardElevation="16dp"
+            app:cardBackgroundColor="#FFFFFF"
+            xmlns:app="http://schemas.android.com/apk/res-auto">
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/logo"
+                android:scaleType="centerCrop"
+                android:contentDescription="Logo Patitas en Ruta"/>
+        </androidx.cardview.widget.CardView>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Patitas en Ruta"
-            android:textColor="@color/surface"
-            android:textSize="42sp"
+            android:textColor="#FFFFFF"
+            android:textSize="30sp"
             android:textStyle="bold"
-            android:letterSpacing="0.05"/>
+            android:fontFamily="@font/poppins"
+            android:layout_marginBottom="8dp"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Tu paseo, nuestra misión"
+            android:text="Paseos seguros para tu perro 🐕"
             android:textColor="#CCFFFFFF"
-            android:textSize="15sp"
-            android:layout_marginTop="8dp"
-            android:letterSpacing="0.02"/>
-
+            android:textSize="14sp"
+            android:fontFamily="@font/poppins"/>
     </LinearLayout>
 
-    <!-- Indicador de carga en la parte inferior -->
-    <ProgressBar
+    <!-- Versión abajo -->
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|center_horizontal"
-        android:layout_marginBottom="60dp"
-        android:indeterminateTint="@color/surface"/>
+        android:layout_gravity="bottom|center"
+        android:layout_marginBottom="32dp"
+        android:text="v1.0"
+        android:textColor="#88FFFFFF"
+        android:textSize="12sp"
+        android:fontFamily="@font/poppins"/>
 
 </FrameLayout>

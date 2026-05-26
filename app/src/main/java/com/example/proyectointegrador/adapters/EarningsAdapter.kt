@@ -6,14 +6,16 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.proyectointegrador.R
-import com.example.proyectointegrador.models.WalkRequest
+import com.example.proyectointegrador.models.WalkHistory
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
 class EarningsAdapter(
-    private val earnings: List<WalkRequest>
+    private val earnings: List<WalkHistory>
 ) : RecyclerView.Adapter<EarningsAdapter.EarningViewHolder>() {
+
+    private val dateFormat = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault())
 
     inner class EarningViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val tvEarningDogName:  TextView = itemView.findViewById(R.id.tvEarningDogName)
@@ -30,13 +32,12 @@ class EarningsAdapter(
 
     override fun onBindViewHolder(holder: EarningViewHolder, position: Int) {
         val item = earnings[position]
-        val dateFormat = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault())
 
-        holder.tvEarningDogName.text  = "${item.dogName} • ${item.durationMinutes} min"
-        holder.tvEarningDate.text     = if (item.endTime > 0)
+        holder.tvEarningDogName.text = "${item.dogName} • ${item.durationMinutes} min"
+        holder.tvEarningDate.text    = if (item.endTime > 0)
             dateFormat.format(Date(item.endTime)) else "—"
-        holder.tvEarningAmount.text   = "+$${String.format("%.2f", item.cost)}"
-        holder.tvEarningPayment.text  = when (item.paymentMethod) {
+        holder.tvEarningAmount.text  = "+$${String.format("%.2f", item.cost)}"
+        holder.tvEarningPayment.text = when (item.paymentMethod) {
             "cash"     -> "💵 Efectivo"
             "transfer" -> "💳 Transferencia"
             else       -> "—"

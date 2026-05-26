@@ -3,7 +3,6 @@ package com.example.proyectointegrador.activities
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.SeekBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -47,43 +46,73 @@ class RequestWalkActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.title = "Solicitar paseo"
 
-        val cardNoDog        = findViewById<MaterialCardView>(R.id.cardNoDog)
         val cardDogInfo      = findViewById<MaterialCardView>(R.id.cardDogInfo)
         val tvDogName        = findViewById<TextView>(R.id.tvDogName)
         val tvDogBreed       = findViewById<TextView>(R.id.tvDogBreed)
         val chipGroupDogs    = findViewById<ChipGroup>(R.id.chipGroupDogs)
-        val seekBarDuration  = findViewById<SeekBar>(R.id.seekBarDuration)
-        val tvDuration       = findViewById<TextView>(R.id.tvDuration)
-        val tvCost           = findViewById<TextView>(R.id.tvCost)
-        val chipGroupPayment = findViewById<ChipGroup>(R.id.chipGroupPayment)
-        val btnSeeWalkers    = findViewById<MaterialButton>(R.id.btnSeeWalkers)
-
-        // Inicializar display
-        updateDisplay(tvDuration, tvCost, selectedMinutes)
+        val tvPrice          = findViewById<TextView>(R.id.tvPrice)
+        val tvCustomDuration = findViewById<TextView>(R.id.tvCustomDuration)
+        val btn30            = findViewById<com.google.android.material.button.MaterialButton>(R.id.btn30)
+        val btn45            = findViewById<com.google.android.material.button.MaterialButton>(R.id.btn45)
+        val btn60            = findViewById<com.google.android.material.button.MaterialButton>(R.id.btn60)
+        val btn90            = findViewById<com.google.android.material.button.MaterialButton>(R.id.btn90)
+        val btnCash          = findViewById<com.google.android.material.button.MaterialButton>(R.id.chipCash)
+        val btnTransfer      = findViewById<com.google.android.material.button.MaterialButton>(R.id.chipTransfer)
+        val btnSeeWalkers    = findViewById<MaterialButton>(R.id.btnRequestWalk)
 
         // FIX: Cargar TODOS los perros del dueño
-        loadDogs(cardNoDog, cardDogInfo, tvDogName, tvDogBreed, chipGroupDogs)
+        loadDogs(cardDogInfo, tvDogName, tvDogBreed, chipGroupDogs)
 
-        // SeekBar con mínimo 30 minutos
-        seekBarDuration.max      = maxMinutes - minMinutes
-        seekBarDuration.progress = 0
-        seekBarDuration.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
-            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                selectedMinutes = minMinutes + progress
-                updateDisplay(tvDuration, tvCost, selectedMinutes)
-            }
-            override fun onStartTrackingTouch(seekBar: SeekBar?) {}
-            override fun onStopTrackingTouch(seekBar: SeekBar?) {}
-        })
+        // FIX: Botones de tiempo predefinidos
+        val timeButtons = listOf(btn30, btn45, btn60, btn90)
+        val timeMins    = listOf(30, 45, 60, 90)
 
-        // Método de pago
-        chipGroupPayment.setOnCheckedStateChangeListener { _, checkedIds ->
-            selectedPayment = when {
-                checkedIds.contains(R.id.chipCash)     -> "cash"
-                checkedIds.contains(R.id.chipTransfer) -> "transfer"
-                else -> "cash"
+        fun selectTime(minutes: Int) {
+            selectedMinutes = minutes
+            val cost = minutes * pricePerMin
+            tvPrice.text = "$$cost"
+            tvCustomDuration.text = "$minutes minutos seleccionados · $$cost MXN"
+            timeButtons.forEachIndexed { i, btn ->
+                if (timeMins[i] == minutes) {
+                    btn.backgroundTintList = android.content.res.ColorStateList.valueOf(
+                        android.graphics.Color.parseColor("#2A9D8F"))
+                    btn.setTextColor(android.graphics.Color.WHITE)
+                } else {
+                    btn.backgroundTintList = android.content.res.ColorStateList.valueOf(
+                        android.graphics.Color.parseColor("#F0F4F4"))
+                    btn.setTextColor(android.graphics.Color.parseColor("#666666"))
+                }
             }
         }
+
+        btn30.setOnClickListener { selectTime(30) }
+        btn45.setOnClickListener { selectTime(45) }
+        btn60.setOnClickListener { selectTime(60) }
+        btn90.setOnClickListener { selectTime(90) }
+        selectTime(30)
+
+        // Método de pago
+        fun selectPayment(method: String) {
+            selectedPayment = method
+            if (method == "cash") {
+                btnCash.backgroundTintList = android.content.res.ColorStateList.valueOf(
+                    android.graphics.Color.parseColor("#2A9D8F"))
+                btnCash.setTextColor(android.graphics.Color.WHITE)
+                btnTransfer.backgroundTintList = android.content.res.ColorStateList.valueOf(
+                    android.graphics.Color.parseColor("#F0F4F4"))
+                btnTransfer.setTextColor(android.graphics.Color.parseColor("#666666"))
+            } else {
+                btnTransfer.backgroundTintList = android.content.res.ColorStateList.valueOf(
+                    android.graphics.Color.parseColor("#2A9D8F"))
+                btnTransfer.setTextColor(android.graphics.Color.WHITE)
+                btnCash.backgroundTintList = android.content.res.ColorStateList.valueOf(
+                    android.graphics.Color.parseColor("#F0F4F4"))
+                btnCash.setTextColor(android.graphics.Color.parseColor("#666666"))
+            }
+        }
+        btnCash.setOnClickListener { selectPayment("cash") }
+        btnTransfer.setOnClickListener { selectPayment("transfer") }
+        selectPayment("cash")
 
         btnSeeWalkers.setOnClickListener {
             if (selectedDogId.isEmpty()) {
@@ -106,77 +135,76 @@ class RequestWalkActivity : AppCompatActivity() {
     }
 
     private fun loadDogs(
-        cardNoDog: MaterialCardView,
         cardDogInfo: MaterialCardView,
         tvDogName: TextView,
         tvDogBreed: TextView,
         chipGroupDogs: ChipGroup
     ) {
+        // FIX: Solo cargar perros del dueño actual, sin fallback global
+        val ownerId = session.getUserId()
+        if (ownerId.isEmpty()) {
+            Toast.makeText(this, "Error de sesión", Toast.LENGTH_SHORT).show()
+            return
+        }
+
         db.collection("perros")
-            .whereEqualTo("ownerId", session.getUserId())
+            .whereEqualTo("ownerId", ownerId)
             .get()
             .addOnSuccessListener { docs ->
                 if (docs.isEmpty) {
-                    // Buscar sin filtro por si ownerId está vacío
-                    db.collection("perros").get()
-                        .addOnSuccessListener { allDogs ->
-                            if (allDogs.isEmpty) {
-                                cardNoDog.visibility   = View.VISIBLE
-                                cardDogInfo.visibility = View.GONE
-                                chipGroupDogs.visibility = View.GONE
-                            } else {
-                                setupDogSelector(
-                                    allDogs.documents, cardNoDog, cardDogInfo,
-                                    tvDogName, tvDogBreed, chipGroupDogs
-                                )
-                            }
-                        }
+                    // El dueño no tiene perros registrados
+                    cardDogInfo.visibility   = View.GONE
+                    chipGroupDogs.visibility = View.GONE
+                    Toast.makeText(this,
+                        "Primero registra a tu perro 🐕",
+                        Toast.LENGTH_LONG).show()
                 } else {
                     setupDogSelector(
-                        docs.documents, cardNoDog, cardDogInfo,
+                        docs.documents, cardDogInfo,
                         tvDogName, tvDogBreed, chipGroupDogs
                     )
                 }
+            }
+            .addOnFailureListener {
+                Toast.makeText(this, "Error al cargar perros", Toast.LENGTH_SHORT).show()
             }
     }
 
     private fun setupDogSelector(
         dogs: List<com.google.firebase.firestore.DocumentSnapshot>,
-        cardNoDog: MaterialCardView,
         cardDogInfo: MaterialCardView,
         tvDogName: TextView,
         tvDogBreed: TextView,
         chipGroupDogs: ChipGroup
     ) {
-        cardNoDog.visibility = View.GONE
+        // FIX: Siempre mostrar chips sin importar cuántos perros haya
+        cardDogInfo.visibility   = View.VISIBLE
+        chipGroupDogs.visibility = View.VISIBLE
+        chipGroupDogs.removeAllViews()
+        chipGroupDogs.isSingleSelection   = true
+        chipGroupDogs.isSelectionRequired = true
 
-        if (dogs.size == 1) {
-            // Solo un perro — seleccionarlo automáticamente
-            val dog = dogs.first()
-            selectDog(dog, tvDogName, tvDogBreed, cardDogInfo)
-            chipGroupDogs.visibility = View.GONE
-        } else {
-            // Varios perros — mostrar chips para elegir
-            cardDogInfo.visibility   = View.VISIBLE
-            chipGroupDogs.visibility = View.VISIBLE
-
-            dogs.forEach { dog ->
-                val name = dog.getString("name") ?: ""
-                val chip = Chip(this).apply {
-                    text       = "🐕 $name"
-                    isCheckable = true
-                    textSize   = 14f
-                }
-                chip.setOnClickListener {
-                    selectDog(dog, tvDogName, tvDogBreed, cardDogInfo)
-                }
-                chipGroupDogs.addView(chip)
+        dogs.forEachIndexed { index, dog ->
+            val name = dog.getString("name") ?: "Perro ${index + 1}"
+            val chip = com.google.android.material.chip.Chip(this).apply {
+                text        = "🐕 $name"
+                isCheckable = true
+                textSize    = 14f
+                chipBackgroundColor = android.content.res.ColorStateList.valueOf(
+                    android.graphics.Color.parseColor("#E8F0FB"))
+                setTextColor(android.graphics.Color.parseColor("#1B3A6B"))
+                chipStrokeColor = android.content.res.ColorStateList.valueOf(
+                    android.graphics.Color.parseColor("#1B3A6B"))
+                chipStrokeWidth = 1.5f
+                isChecked = (index == 0)
             }
-
-            // Seleccionar el primero por defecto
-            selectDog(dogs.first(), tvDogName, tvDogBreed, cardDogInfo)
-            (chipGroupDogs.getChildAt(0) as? Chip)?.isChecked = true
+            chip.setOnCheckedChangeListener { _, checked ->
+                if (checked) selectDog(dog, tvDogName, tvDogBreed, cardDogInfo)
+            }
+            chipGroupDogs.addView(chip)
         }
+        // Seleccionar primero por defecto
+        selectDog(dogs.first(), tvDogName, tvDogBreed, cardDogInfo)
     }
 
     private fun selectDog(

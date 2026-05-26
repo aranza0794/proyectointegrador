@@ -24,16 +24,15 @@ class TrackWalkActivity : AppCompatActivity() {
     private lateinit var session: SessionManager
     private lateinit var mapView: MapView
     private var walkerMarker: Marker? = null
-    private var currentWalkId   = ""
-    private var currentStatus   = ""
+    private var currentWalkId      = ""
+    private var currentStatus      = ""
     private var lastNotifiedStatus = ""
-    private val mexicoCenter    = GeoPoint(23.6345, -102.5528)
+    private val mexicoCenter       = GeoPoint(23.6345, -102.5528)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Configuration.getInstance().userAgentValue = packageName
         setContentView(R.layout.activity_track_walk)
-
         session = SessionManager(this)
 
         val tvStatus     = findViewById<TextView>(R.id.tvStatus)
@@ -50,9 +49,7 @@ class TrackWalkActivity : AppCompatActivity() {
                         .setPositiveButton("Sí, salir") { _, _ -> goToDashboard() }
                         .setNegativeButton("Quedarse", null)
                         .show()
-                } else {
-                    goToDashboard()
-                }
+                } else goToDashboard()
             }
         })
 
@@ -62,86 +59,83 @@ class TrackWalkActivity : AppCompatActivity() {
         mapView.controller.setZoom(5.0)
         mapView.controller.setCenter(mexicoCenter)
 
+        // Buscar solicitud activa del dueño
         db.collection("solicitudes")
             .whereEqualTo("ownerId", session.getUserId())
             .get()
             .addOnSuccessListener { docs ->
-                val doc = docs.documents.firstOrNull { d ->
-                    val s = d.getString("status") ?: ""
+                val doc = docs.documents.firstOrNull {
+                    val s = it.getString("status") ?: ""
                     s == "pending" || s == "accepted" || s == "active"
-                } ?: return@addOnSuccessListener
+                } ?: run {
+                    tvStatus.text = "No hay paseo activo"
+                    return@addOnSuccessListener
+                }
 
                 currentWalkId = doc.id
                 val walkerId  = doc.getString("walkerId") ?: ""
-                val dogName   = doc.getString("dogName") ?: ""
+                val dogName   = doc.getString("dogName")  ?: ""
                 val duration  = doc.getLong("durationMinutes") ?: 0L
 
-                tvDogInfo.text = "$dogName • ${duration} min"
+                tvDogInfo.text = "$dogName • $duration min"
 
                 if (walkerId.isNotEmpty()) {
                     db.collection("usuarios").document(walkerId).get()
-                        .addOnSuccessListener { walkerDoc ->
-                            tvWalkerName.text =
-                                "Paseador: ${walkerDoc.getString("name") ?: "—"}"
+                        .addOnSuccessListener { w ->
+                            tvWalkerName.text = "Paseador: ${w.getString("name") ?: "—"}"
                         }
                 }
 
-                // Escuchar cambios en tiempo real
+                // Listener en tiempo real
                 db.collection("solicitudes").document(currentWalkId)
                     .addSnapshotListener { snapshot, error ->
-                        if (error != null) {
-                            tvStatus.text = "⚠️ Sin conexión. Reconectando..."
-                            return@addSnapshotListener
-                        }
-                        if (snapshot == null) return@addSnapshotListener
+                        if (error != null || snapshot == null) return@addSnapshotListener
 
                         val status = snapshot.getString("status") ?: ""
-                        val lat    = snapshot.getDouble("walkerLat") ?: 0.0
-                        val lng    = snapshot.getDouble("walkerLng") ?: 0.0
+                        // FIX: leer coordenadas del paseador
+                        val lat = snapshot.getDouble("walkerLat") ?: 0.0
+                        val lng = snapshot.getDouble("walkerLng") ?: 0.0
                         currentStatus = status
 
-                        // FIX: Notificar al dueño cuando cambia el estado
                         if (status != lastNotifiedStatus) {
                             when (status) {
-                                "accepted" -> {
-                                    Toast.makeText(this,
-                                        "✅ ¡El paseador aceptó tu solicitud!",
-                                        Toast.LENGTH_LONG).show()
-                                }
-                                "active" -> {
-                                    Toast.makeText(this,
-                                        "🐕 ¡El paseo ha iniciado!",
-                                        Toast.LENGTH_LONG).show()
-                                }
+                                "accepted" -> Toast.makeText(this,
+                                    "✅ ¡El paseador aceptó!", Toast.LENGTH_LONG).show()
+                                "active"   -> Toast.makeText(this,
+                                    "🐕 ¡El paseo inició!", Toast.LENGTH_LONG).show()
                             }
                             lastNotifiedStatus = status
                         }
 
                         when (status) {
                             "pending" -> {
-                                tvStatus.text       = "⏳ Esperando que el paseador acepte..."
+                                tvStatus.text       = "⏳ Esperando paseador..."
                                 chipLive.visibility = View.GONE
                             }
                             "accepted" -> {
-                                tvStatus.text       = "✅ ¡Paseador aceptó! En camino..."
+                                tvStatus.text       = "✅ Paseador en camino"
                                 chipLive.visibility = View.GONE
                             }
                             "active" -> {
                                 tvStatus.text       = "🐕 Paseo en curso"
                                 chipLive.visibility = View.VISIBLE
+                                // FIX: actualizar marcador con coordenadas reales
                                 if (lat != 0.0 && lng != 0.0) {
                                     updateWalkerOnMap(lat, lng)
                                 }
                             }
-                            "finished" -> {
+                            // FIX: "completed" en lugar de "finished"
+                            "completed" -> {
                                 tvStatus.text       = "🎉 ¡Paseo finalizado!"
                                 chipLive.visibility = View.GONE
-                                val intent = Intent(this, PaymentActivity::class.java)
-                                intent.putExtra("walk_id", currentWalkId)
-                                startActivity(intent)
+                                startActivity(Intent(this, PaymentActivity::class.java).apply {
+                                    putExtra("walk_id",   currentWalkId)
+                                    putExtra("walker_id", walkerId)
+                                    putExtra("owner_id",  session.getUserId())
+                                })
                                 finish()
                             }
-                            "rejected", "cancelled" -> {
+                            "cancelled", "rejected" -> {
                                 tvStatus.text       = "❌ Solicitud cancelada"
                                 chipLive.visibility = View.GONE
                             }
@@ -149,8 +143,7 @@ class TrackWalkActivity : AppCompatActivity() {
                     }
             }
             .addOnFailureListener {
-                val tvStatus = findViewById<TextView>(R.id.tvStatus)
-                tvStatus.text = "⚠️ Sin conexión. Verifica tu internet."
+                tvStatus.text = "⚠️ Sin conexión"
             }
     }
 
@@ -158,11 +151,10 @@ class TrackWalkActivity : AppCompatActivity() {
         val point = GeoPoint(lat, lng)
         if (walkerMarker != null) {
             walkerMarker!!.position = point
-            mapView.invalidate()
         } else {
             walkerMarker = Marker(mapView).apply {
                 position = point
-                title    = "Paseador"
+                title    = "🦺 Paseador"
                 snippet  = "Ubicación en tiempo real"
                 setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
             }
@@ -174,9 +166,9 @@ class TrackWalkActivity : AppCompatActivity() {
     }
 
     private fun goToDashboard() {
-        val intent = Intent(this, OwnerDashboardActivity::class.java)
-        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
-        startActivity(intent)
+        startActivity(Intent(this, OwnerDashboardActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+        })
         finish()
     }
 

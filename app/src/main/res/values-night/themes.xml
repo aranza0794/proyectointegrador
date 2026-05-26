@@ -1,15 +1,18 @@
 <resources>
-    <style name="Theme.DogWalk" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <item name="colorPrimary">@color/primary</item>
-        <item name="colorPrimaryDark">@color/primary_dark</item>
-        <item name="colorPrimaryVariant">@color/primary_dark</item>
-        <item name="colorOnPrimary">@color/surface</item>
-        <item name="colorSecondary">@color/accent</item>
-        <item name="colorOnSecondary">@color/surface</item>
-        <item name="android:colorBackground">@color/background</item>
-        <item name="colorSurface">@color/surface</item>
-        <item name="colorOnSurface">@color/text_primary</item>
-        <item name="android:statusBarColor">@color/primary_dark</item>
-        <item name="colorError">@color/error</item>
+    <style name="Theme.DogWalk" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="colorPrimary">#1B3A6B</item>
+        <item name="colorPrimaryDark">#122850</item>
+        <item name="colorOnPrimary">#FFFFFF</item>
+        <item name="colorSecondary">#3DBFA8</item>
+        <item name="android:colorBackground">#D6E8F5</item>
+        <item name="colorSurface">#FFFFFF</item>
+        <item name="colorOnSurface">#1B3A6B</item>
+        <item name="android:statusBarColor">#122850</item>
+        <item name="android:textColor">#1B3A6B</item>
+        <item name="android:textColorPrimary">#1B3A6B</item>
+        <item name="android:editTextColor">#1B3A6B</item>
+        <item name="android:windowBackground">#D6E8F5</item>
+        <item name="editTextStyle">@style/Widget.DogWalk.EditText</item>
+        <item name="android:fontFamily">@font/poppins</item>
     </style>
 </resources>
